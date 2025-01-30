@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.1529330422057296,
+        "y": 6.473839455992257
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8384715971711143,
+        "y": 6.5136440244390466
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.561123321769186,
+        "y": 6.893079059317069
+      },
+      "prevControl": {
+        "x": 1.2186814117217974,
+        "y": 7.4608705342766815
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 540.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 145.0466979165107,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Practice",
+  "previewStartingState": {
+    "rotation": -179.23029623049678,
+    "velocity": 0.0
+  },
+  "useDefaultConstraints": false
+}

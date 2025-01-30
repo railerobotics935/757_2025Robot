@@ -1,0 +1,82 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.7851100183074684,
+        "y": 6.0705288623692
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.18550279545726,
+        "y": 7.619100686785011
+      },
+      "isLocked": false,
+      "linkedName": "1"
+    },
+    {
+      "anchor": {
+        "x": 3.7176950203632075,
+        "y": 5.867781190107834
+      },
+      "prevControl": {
+        "x": 3.6381230769690776,
+        "y": 4.169968132733336
+      },
+      "nextControl": {
+        "x": 3.7924584940084975,
+        "y": 7.46299674417474
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.169256702149768,
+        "y": 5.867781190107834
+      },
+      "prevControl": {
+        "x": 2.5330777934289146,
+        "y": 4.244579398249139
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6,
+      "rotationDegrees": -92.1795465937926,
+      "rotateFast": true
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Deploy intake",
+      "waypointRelativePos": 1.5,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 440.0,
+    "maxAngularAcceleration": 540.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -178.66778014613047,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "Practice",
+  "previewStartingState": null,
+  "useDefaultConstraints": true
+}
