@@ -18,10 +18,10 @@
 #include <frc/Timer.h>
 
 #include "pathplanner/lib/auto/AutoBuilder.h"
-/*#include "pathplanner/lib/util/HolonomicPathFollowerConfig.h"
-#include "pathplanner/lib/util/PIDConstants.h"
-#include "pathplanner/lib/util/ReplanningConfig.h"
-*/
+#include "pathplanner/lib/commands/FollowPathCommand.h"
+//#include "pathplanner/lib/util/PIDConstants.h"
+#include "pathplanner/lib/controllers/PPHolonomicDriveController.h"
+
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
 
@@ -63,24 +63,7 @@ DriveSubsystem::DriveSubsystem()
                 {0.05, 0.05, 0.001}, // Standard Deviation of the encoder position value
                 {0.2, 0.2, 0.05}} // Standard Deviation of vision pose esitmation
 {
-  
-// Configure the AutoBuilder last
-AutoBuilder::configureHolonomic(
-    [this](){ return GetOdometryPose(); }, // Robot pose supplier
-    [this](frc::Pose2d pose){ ResetOdometry(pose); }, // Method to reset odometry (will be called if your auto has a starting pose)
-    [this](){ return GetRobotRelativeSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-    [this](frc::ChassisSpeeds speeds){ DriveWithChassisSpeeds(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-    HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-        PIDConstants(AutoConstants::kPTanslationController, AutoConstants::kITanslationController, AutoConstants::kDTanslationController), // Translation PID constants
-        PIDConstants(AutoConstants::kPRotationController, AutoConstants::kIRotationController, AutoConstants::kDRotationController), // Rotation PID constants
-        ModuleConstants::kModuleMaxLinearVelocity, // Max module speed, in m/s
-        kDriveBaseRadius, // Drive base radius in meters. Distance from robot center to furthest module.
-        ReplanningConfig() // Default path replanning config. See the API for the options here
-    ),
-    // Supplier that determines if paths should be flipped to the other side of the field. This will helps keep the cordinate system on the blue side
-    [this](){return InRedAlliance();},
-    this // Reference to this subsystem to set requirements
-  );
+
 
   // Initialize shuffleboard communication
   auto nt_inst = nt::NetworkTableInstance::GetDefault();
