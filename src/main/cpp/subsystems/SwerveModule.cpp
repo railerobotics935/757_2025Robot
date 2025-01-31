@@ -30,7 +30,7 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
   m_drivingEncoder.SetPosition(0);
 }
 
-void SwerveModule::ConfigureSparkMax() {
+/*void SwerveModule::ConfigureSparkMax() {
   // Factory reset, so we get the SPARKS MAX to a known state before configuring
   // them. This is useful in case a SPARK MAX is swapped out.
   m_drivingSparkMax.RestoreFactoryDefaults();
@@ -96,7 +96,7 @@ void SwerveModule::ConfigureSparkMax() {
   // operation, it will maintain the above configurations.
   m_drivingSparkMax.BurnFlash();
   m_turningSparkMax.BurnFlash();
-}
+}*/
 
 frc::SwerveModuleState SwerveModule::GetState() {
   return {units::meters_per_second_t{m_drivingEncoder.GetVelocity()},
@@ -117,9 +117,9 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
       frc::Rotation2d(units::radian_t{m_turningEncoderOffset});
 
   // Optimize the reference state to avoid spinning further than 90 degrees.
-  frc::SwerveModuleState optimizedDesiredState{frc::SwerveModuleState::Optimize(
+  frc::SwerveModuleState optimizedDesiredState{/*frc::SwerveModuleState::Optimize(
       correctedDesiredState, frc::Rotation2d(units::radian_t{
-                                 m_turningAbsoluteEncoder.GetPosition()}))};
+                                 m_turningAbsoluteEncoder.GetPosition()}))*/};
 
   // Command driving and turning SPARKS MAX towards their respective setpoints.
   m_drivingPIDController.SetReference((double)optimizedDesiredState.speed,

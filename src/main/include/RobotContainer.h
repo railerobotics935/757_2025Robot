@@ -19,32 +19,10 @@
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
 #include "subsystems/DriveSubsystem.h"
-#include "subsystems/IntakeSubsystem.h"
-#include "subsystems/ShooterSubsystem.h"
-#include "subsystems/StagerSubsystem.h"
-#include "subsystems/ClimberSubsystem.h"
-#include "subsystems/GuftSubsystem.h"
 
-#include "commands/auto/SetCloseShooterSpeeds.h"
-#include "commands/auto/SetFarShooterSpeeds.h"
-#include "commands/auto/StageForShooting.h"
-#include "commands/auto/StopEverything.h"
-#include "commands/auto/StopStager.h"
 #include "commands/drive/DriveWithController.h"
 #include "commands/drive/DriveFacingGoal.h"
 #include "commands/drive/SlowDrive.h"
-#include "commands/intake/ManualStager.h"
-#include "commands/intake/SimpleIntake.h"
-#include "commands/intake/SmartIntake.h"
-#include "commands/intake/SmartOuttake.h"
-#include "commands/intake/StopIntake.h"
-#include "commands/shooter/DefaultShooter.h"
-#include "commands/shooter/ManualNteShooter.h"
-#include "commands/shooter/SmartShooter.h"
-#include "commands/shooter/ManualCloseShoot.h"
-#include "commands/climber/ExtendClimber.h"
-#include "commands/climber/RetractClimber.h"
-#include "commands/climber/StopClimber.h"
 #include "commands/drive/DriveWithController.h"
 
 /**
@@ -79,12 +57,6 @@ class RobotContainer {
 
   // The robot's subsystems
   DriveSubsystem m_drive;
-  IntakeSubsystem m_intake;
-  ShooterSubsystem m_shooter;
-  StagerSubsystem m_stager;
-  ClimberSubsystem m_climber;
-  GuftSubsystem m_guft;
-
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
 
@@ -103,9 +75,5 @@ class RobotContainer {
   std::string m_sourceTravel = "SourceTravel";  
 
   DriveWithController m_driveWithController{&m_drive, &m_driveController};
-  ManualStager m_manualStager{&m_stager, &m_operatorController};
-  StopIntake m_stopIntake{&m_intake};
-  DefaultShooter m_defaultShooter{&m_shooter};
-  StopClimber m_stopClimber{&m_climber};
 
 };

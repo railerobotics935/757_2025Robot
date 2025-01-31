@@ -27,12 +27,6 @@
 
 #include "subsystems/DriveSubsystem.h"
 #include "Constants.h"
-#include "commands/shooter/AmpShoot.h"
-
-#include "commands/auto/SetSmartShooterSpeeds.h"
-#include "commands/shooter/SmartShootWhileMoving.h"
-#include "commands/shooter/DefaultGuft.h"
-#include "commands/shooter/ClimberShooter.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -46,18 +40,9 @@ using namespace pathplanner;
  * is, if it is better or not
 */
 
-RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset}, m_guft{GuftConstants::kGuftOffset} {
+RobotContainer::RobotContainer() {
   m_revPDH.SetSwitchableChannel(true); //-------------------------------------------------------------------------------------
 
-  // Initialize all of your commands and subsystems here
-  // Configuring command bindings for pathplanner
-  // TODO: Create custom commands for all of these
-  NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
-  NamedCommands::registerCommand("SetShooterSpeeds", SetCloseShooterSpeeds{&m_shooter}.ToPtr());//SetSmartShooterSpeeds{&m_shooter, &m_drive}.ToPtr());
-  NamedCommands::registerCommand("SetFarShooterSpeeds", SetFarShooterSpeeds{&m_shooter}.ToPtr());
-  NamedCommands::registerCommand("StageForShooting", StageForShooting{&m_stager}.ToPtr());
-  NamedCommands::registerCommand("EndShooting", StopStager{&m_stager}.ToPtr());
-  NamedCommands::registerCommand("StopEverything", StopEverything{&m_stager, &m_shooter}.ToPtr());
   
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -66,11 +51,6 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset}, m_
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
-  m_intake.SetDefaultCommand(std::move(m_stopIntake));
-  m_shooter.SetDefaultCommand(std::move(m_defaultShooter));
-  m_stager.SetDefaultCommand(std::move(m_manualStager));
-  m_climber.SetDefaultCommand(std::move(m_stopClimber));
-  m_guft.SetDefaultCommand(DefaultGuft{&m_guft}.ToPtr());
   
   // Add auto name options
   m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
@@ -112,31 +92,7 @@ void RobotContainer::ConfigureButtonBindings() {
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
   //driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
   driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
-  intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
-  outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
-  extendClimberButton.WhileTrue(ExtendClimber{&m_climber}.ToPtr());
-  retractClimberButton.WhileTrue(RetractClimber{&m_climber}.ToPtr());
 
-  // Also move the shooter into a different position, can be cancled if a different command is sent.
-  extendClimberButton.OnTrue(ClimberShooter{&m_shooter}.ToPtr().WithInterruptBehavior(frc2::Command::InterruptionBehavior::kCancelSelf));
-  retractClimberButton.OnTrue(ClimberShooter{&m_shooter}.ToPtr().WithInterruptBehavior(frc2::Command::InterruptionBehavior::kCancelSelf));
-  
-  //NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  //smartShootWhileMovingButton.WhileTrue(SmartShootWhileMoving{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  //visionIntakeButton.OnTrue(frc2::cmd::Parallel(m_drive.DriveToAmp(), SmartIntake{&m_intake, &m_stager}.ToPtr()));
-
-  // Manual shooting buttons
-  //smartShooterButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
-  //smartShooterButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  manualCloseShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
-  ampShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_guft}.ToPtr());
-
-  /*
-  NTEShooterButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)1.0);
-    m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)150,(units::revolutions_per_minute_t)3700);
-  }, {&m_shooter}));
-  */
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
