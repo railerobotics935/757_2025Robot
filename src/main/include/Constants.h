@@ -26,9 +26,9 @@
 
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNMODULESPARKMAX
-#define USEXBOXCONTROLLER
-#define PRINTDEBUG
+//#define BURNMODULESPARKMAX
+//#define USEXBOXCONTROLLER
+//#define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
 //#define
 
@@ -47,14 +47,16 @@ namespace RobotConstants {
 constexpr double kVoltageCompentationValue = 11.0;
 
 const units::meter_t kWheelBase =
-  0.500_m;  // Distance between centers of front and back wheels on robot
+    0.6795_m;  // Distance between centers of front and back wheels on robot
+const units::meter_t kWheelWidth =
+    0.51_m; // Distance between centers of left and right wheels on robot
 
 }
 
 namespace DriveConstants {
 // Driving Parameters - Note that these are not the maximum capable speeds of
 // the robot, rather the allowed maximum speeds
-constexpr units::meters_per_second_t kMaxSpeed = 4.3_mps;
+constexpr units::meters_per_second_t kMaxSpeed = 6.7_mps;
 constexpr units::radians_per_second_t kMaxAngularSpeed{2.0 * std::numbers::pi};
 
 constexpr double kDirectionSlewRate = 6.0;   // radians per second
@@ -62,15 +64,15 @@ constexpr double kMagnitudeSlewRate = 7.0;   // percent per second (1 = 100%)
 constexpr double kRotationalSlewRate = 8.0;  // percent per second (1 = 100%)
 
 // CAN Sparkmax id numbers
-constexpr int kFrontLeftDriveMotorPort = 22;
-constexpr int kFrontRightDriveMotorPort = 17;
-constexpr int kBackLeftDriveMotorPort = 21;
-constexpr int kBackRightDriveMotorPort = 18;
+constexpr int kFrontLeftDriveMotorPort = 18;
+constexpr int kFrontRightDriveMotorPort = 10;
+constexpr int kBackLeftDriveMotorPort = 20;
+constexpr int kBackRightDriveMotorPort = 28;
 
-constexpr int kFrontLeftTurningMotorPort = 23;
-constexpr int kFrontRightTurningMotorPort = 16;
-constexpr int kBackLeftTurningMotorPort = 20;
-constexpr int kBackRightTurningMotorPort = 19;
+constexpr int kFrontLeftTurningMotorPort = 19;
+constexpr int kFrontRightTurningMotorPort = 11;
+constexpr int kBackLeftTurningMotorPort = 21;
+constexpr int kBackRightTurningMotorPort = 29;
 
 // PID Controller for the auto rotation of the robot
 constexpr double kRotationP = 2.5;
@@ -90,7 +92,7 @@ constexpr double kFrontRightDriveEncoderOffset = (3.2676) - (std::numbers::pi / 
 constexpr double kBackLeftDriveEncoderOffset =  (2.0477) - (2.0 * std::numbers::pi / 3) + std::numbers::pi + 0.050; //(0.6988 + (std::numbers::pi / 2)); 
 constexpr double kBackRightDriveEncoderOffset = (3.8439 + (std::numbers::pi / 2)) - 0.019; //(2.0472 + (std::numbers::pi)); 
 
-constexpr auto kDriveBaseRadius = 0.46_m;
+constexpr auto kDriveBaseRadius = 0.4248_m;
 
 }  // namespace DriveConstants
 
@@ -100,21 +102,15 @@ namespace ModuleConstants {
 // direction of the steering motor in the MAXSwerve Module.
 constexpr bool kTurningEncoderInverted = true;
 
-// The MAXSwerve module can be configured with one of three pinion gears: 12T,
-// 13T, or 14T. This changes the drive speed of the module (a pinion gear with
-// more teeth will result in a robot that drives faster).
-constexpr int kDrivingMotorPinionTeeth = 13;
-
 // Calculations required for driving motor conversion factors and feed forward
 constexpr double kDrivingMotorFreeSpeedRps =
     5676.0 / 60;  // NEO free speed is 5676 RPM
-constexpr units::meter_t kWheelDiameter = 0.0762_m;
+constexpr units::meter_t kWheelDiameter = 0.0953_m;
 constexpr units::meter_t kWheelCircumference =
     kWheelDiameter * std::numbers::pi;
-// 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
-// teeth on the bevel pinion
-constexpr double kDrivingMotorReduction =
-    (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
+
+// 6.75:1 Gear Ratio for Driving Motors
+constexpr double kDrivingMotorReduction = 6.75;
 constexpr double kDriveWheelFreeSpeedRps =
     (kDrivingMotorFreeSpeedRps * kWheelCircumference.value()) /
     kDrivingMotorReduction;
@@ -153,7 +149,7 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kDrivingMotorIdleMode =  rev::spa
 constexpr rev::spark::SparkMaxConfig::IdleMode kTurningMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 
 constexpr units::ampere_t kDrivingMotorCurrentLimit = 40_A;
-constexpr units::ampere_t kTurningMotorCurrentLimit = 20_A;
+constexpr units::ampere_t kTurningMotorCurrentLimit = 40_A;
 
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2

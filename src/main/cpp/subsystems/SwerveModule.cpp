@@ -8,6 +8,10 @@
 
 #include <frc/geometry/Rotation2d.h>
 
+#include <rev/config/SparkMaxConfig.h>
+
+#include <frc/controller/PIDController.h>
+
 #include "Constants.h"
 
 using namespace ModuleConstants;
@@ -17,86 +21,70 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
     : m_drivingSparkMax(drivingCANId, rev::spark::SparkMax::MotorType::kBrushless),
       m_turningSparkMax(turningCANId, rev::spark::SparkMax::MotorType::kBrushless) {
 
-  /*#ifdef BURNMODULESPARKMAX 
+  #ifdef BURNMODULESPARKMAX 
   ConfigureSparkMax();
   std::cout << "Flash Burned on Swerve Module\r\n";
   #else
   std::cout << "Flash was not burned on Swerve Module\r\n";
   #endif
-*/
+
   m_turningEncoderOffset = turningEncoderOffset;
   m_desiredState.angle =
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
   m_drivingEncoder.SetPosition(0);
 }
 
-/*void SwerveModule::ConfigureSparkMax() {
+void SwerveModule::ConfigureSparkMax() {
   // Factory reset, so we get the SPARKS MAX to a known state before configuring
   // them. This is useful in case a SPARK MAX is swapped out.
-  m_drivingSparkMax.RestoreFactoryDefaults();
-  m_turningSparkMax.RestoreFactoryDefaults();
-    
-  m_drivingSparkMax.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
-  m_turningSparkMax.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+  rev::spark::SparkMaxConfig driveSparkMaxConfig{};
 
-  // Apply position and velocity conversion factors for the driving encoder. The
-  // native units for position and velocity are rotations and RPM, respectively,
-  // but we want meters and meters per second to use with WPILib's swerve APIs.
-  m_drivingEncoder.SetPositionConversionFactor(kDrivingEncoderPositionFactor);
-  m_drivingEncoder.SetVelocityConversionFactor(kDrivingEncoderVelocityFactor);
+  driveSparkMaxConfig
+  .VoltageCompensation(RobotConstants::kVoltageCompentationValue)
+  .SetIdleMode(kDrivingMotorIdleMode)
+  .SmartCurrentLimit(kDrivingMotorCurrentLimit.value());
 
-  // Apply position and velocity conversion factors for the turning encoder. We
-  // want these in radians and radians per second to use with WPILib's swerve
-  // APIs.
-  m_turningAbsoluteEncoder.SetPositionConversionFactor(
-      kTurningEncoderPositionFactor);
-  m_turningAbsoluteEncoder.SetVelocityConversionFactor(
-      kTurningEncoderVelocityFactor);
+  driveSparkMaxConfig.absoluteEncoder
+  .PositionConversionFactor(kDrivingEncoderPositionFactor)
+  .VelocityConversionFactor(kDrivingEncoderVelocityFactor);
 
-  // Invert the turning encoder, since the output shaft rotates in the opposite
-  // direction of the steering motor in the MAXSwerve Module.
-  m_turningAbsoluteEncoder.SetInverted(kTurningEncoderInverted);
+  driveSparkMaxConfig.closedLoop
+  .Pidf(kDrivingP, kDrivingI, kDrivingD, kDrivingFF)
+  .OutputRange(kDrivingMinOutput, kDrivingMaxOutput);
 
-  // Enable PID wrap around for the turning motor. This will allow the PID
-  // controller to go through 0 to get to the setpoint i.e. going from 350
-  // degrees to 10 degrees will go through 0 rather than the other direction
-  // which is a longer route.
-  m_turningPIDController.SetPositionPIDWrappingEnabled(true);
-  m_turningPIDController.SetPositionPIDWrappingMinInput(
-      kTurningEncoderPositionPIDMinInput.value());
-  m_turningPIDController.SetPositionPIDWrappingMaxInput(
-      kTurningEncoderPositionPIDMaxInput.value());
+  m_drivingSparkMax.Configure(driveSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);
+  
+
+  rev::spark::SparkMaxConfig turningSparkMaxConfig{};
+
+  turningSparkMaxConfig
+  .VoltageCompensation(RobotConstants::kVoltageCompentationValue)
+  .SetIdleMode(kTurningMotorIdleMode)
+  .SmartCurrentLimit(kTurningMotorCurrentLimit.value());
+
+  turningSparkMaxConfig.absoluteEncoder
+  .PositionConversionFactor(kTurningEncoderPositionFactor)
+  .VelocityConversionFactor( kTurningEncoderVelocityFactor)
+  .Inverted(kTurningEncoderInverted);
+
+  turningSparkMaxConfig.closedLoop
+  .Pidf(kTurningP, kTurningI, kTurningD, kTurningFF)
+  .OutputRange(kTurningMinOutput, kTurningMaxOutput)
+  .SetFeedbackSensor(rev::spark::ClosedLoopConfig::FeedbackSensor::kAbsoluteEncoder)
+  .PositionWrappingEnabled(true)
+  .PositionWrappingMinInput(kTurningEncoderPositionPIDMinInput.value())
+  .PositionWrappingMaxInput(kTurningEncoderPositionPIDMaxInput.value());
+
+  m_turningSparkMax.Configure(turningSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);
+  
+
         
   // Set the PID Controller to use the duty cycle encoder on the swerve
   // module instead of the built in NEO550 encoder.
-  m_turningPIDController.SetFeedbackDevice(m_turningAbsoluteEncoder);
+  
 
-  // Set the PID gains for the driving motor. Note these are example gains, and
-  // you may need to tune them for your own robot!
-  m_drivingPIDController.SetP(kDrivingP);
-  m_drivingPIDController.SetI(kDrivingI);
-  m_drivingPIDController.SetD(kDrivingD);
-  m_drivingPIDController.SetFF(kDrivingFF);
-  m_drivingPIDController.SetOutputRange(kDrivingMinOutput, kDrivingMaxOutput);
 
-  // Set the PID gains for the turning motor. Note these are example gains, and
-  // you may need to tune them for your own robot!
-  m_turningPIDController.SetP(kTurningP);
-  m_turningPIDController.SetI(kTurningI);
-  m_turningPIDController.SetD(kTurningD);
-  m_turningPIDController.SetFF(kTurningFF);
-  m_turningPIDController.SetOutputRange(kTurningMinOutput, kTurningMaxOutput);
-
-  m_drivingSparkMax.SetIdleMode(kDrivingMotorIdleMode);
-  m_turningSparkMax.SetIdleMode(kTurningMotorIdleMode);
-  m_drivingSparkMax.SetSmartCurrentLimit(kDrivingMotorCurrentLimit.value());
-  m_turningSparkMax.SetSmartCurrentLimit(kTurningMotorCurrentLimit.value());
-
-  // Save the SPARK MAX configurations. If a SPARK MAX browns out during
-  // operation, it will maintain the above configurations.
-  m_drivingSparkMax.BurnFlash();
-  m_turningSparkMax.BurnFlash();
-}*/
+}
 
 frc::SwerveModuleState SwerveModule::GetState() {
   return {units::meters_per_second_t{m_drivingEncoder.GetVelocity()},
