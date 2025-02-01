@@ -21,8 +21,6 @@
 #include "subsystems/DriveSubsystem.h"
 
 #include "commands/drive/DriveWithController.h"
-#include "commands/drive/DriveFacingGoal.h"
-#include "commands/drive/SlowDrive.h"
 #include "commands/drive/DriveWithController.h"
 
 /**
@@ -59,20 +57,6 @@ class RobotContainer {
   DriveSubsystem m_drive;
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
-
-  // Auto options coresponding to the name of the autos                                             
-  std::string m_speaker21 = "Speaker21";
-  std::string m_amp12 = "Amp12";
-  std::string m_speaker21Far = "Speaker21Far";
-  std::string m_speaker241 = "Speaker241";
-  std::string m_speaker213 = "Speaker213";
-  std::string m_speaker23 = "Speaker23";
-  std::string m_amp1 = "Amp1";
-  std::string m_shootOne = "ShootOne";
-  std::string m_source3 = "Source3";
-  std::string m_source32 = "Source32";
-  std::string m_speaker2 = "Speaker2";  
-  std::string m_sourceTravel = "SourceTravel";  
 
   DriveWithController m_driveWithController{&m_drive, &m_driveController};
 

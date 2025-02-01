@@ -52,19 +52,6 @@ RobotContainer::RobotContainer() {
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
   
-  // Add auto name options
-  m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
-  m_autoChooser.AddOption("Speaker21Far", m_speaker21Far);
-  m_autoChooser.AddOption("Speaker241", m_speaker241);
-  m_autoChooser.AddOption("Speaker213", m_speaker213);
-  m_autoChooser.AddOption("Speaker23", m_speaker23);
-  m_autoChooser.AddOption("Speaker2", m_speaker2); 
-  m_autoChooser.AddOption("Amp12", m_amp12);
-  m_autoChooser.AddOption("Amp1", m_amp1);
-  m_autoChooser.AddOption("Source3", m_source3);
-  m_autoChooser.AddOption("Source32", m_source32);
-  m_autoChooser.AddOption("ShootOne", m_shootOne);
-  m_autoChooser.AddOption("SourceTravel", m_sourceTravel);
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
 
@@ -74,24 +61,12 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); 
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex);
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); 
-  frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
-  frc2::JoystickButton smartShootWhileMovingButton(&m_driveController, ControllerConstants::kShootWhileMovingButtonIndex);
-  frc2::JoystickButton visionIntakeButton(&m_driveController, ControllerConstants::kDriveToAmpButtonIndex);
-  frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); 
-  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
-  frc2::JoystickButton smartShooterButton(&m_operatorController, ControllerConstants::kSmartShooterButton);
-  frc2::JoystickButton manualCloseShootButton(&m_operatorController, ControllerConstants::kManualCloseShootButton);
-  frc2::JoystickButton ampShooterButton(&m_operatorController, ControllerConstants::kAmpShooterButton);
-  frc2::JoystickButton NTEShooterButton(&m_operatorController, ControllerConstants::kNTEShooterButton);
-  frc2::JoystickButton extendClimberButton(&m_driveController, ControllerConstants::kExtendShooterButtonIndex);
-  frc2::JoystickButton retractClimberButton(&m_driveController, ControllerConstants::kRetractShooterButtonIndex);
 
   // Bind commands to button triggers
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
-  //driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
-  driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
+
 
 }
 

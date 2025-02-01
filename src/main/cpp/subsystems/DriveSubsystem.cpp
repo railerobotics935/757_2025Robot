@@ -62,6 +62,8 @@ DriveSubsystem::DriveSubsystem()
                 frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)},
                 {0.05, 0.05, 0.001}, // Standard Deviation of the encoder position value
                 {0.2, 0.2, 0.05}} // Standard Deviation of vision pose esitmation
+
+                
 {
 
 
@@ -108,7 +110,6 @@ DriveSubsystem::DriveSubsystem()
   //nte_ki.SetDouble(0.002);
   //nte_kd.SetDouble(0.05);
 
-  nte_robot_distance_to_goal = nt_table->GetEntry("Pose Estimation/Distance to Goal");
   
   // Send Field to shuffleboard
   frc::Shuffleboard::GetTab("Field").Add(m_field);
@@ -170,8 +171,7 @@ void DriveSubsystem::UpdateNTE() {
   // Set robot position to shuffleboard field
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
-  // Update robot distance from goal
-  nte_robot_distance_to_goal.SetDouble((double)RobotDistanceToGoal(m_poseEstimator.GetEstimatedPosition()));
+
 
 }
 
@@ -539,96 +539,9 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
   nte_numberOfTagsAdded.SetInteger(numberOfValidTags);
   nte_debugTimeForPoseEstimation.SetDouble((double)m_timer.GetFPGATimestamp() - startEstiamtionTime);
 #endif
-} 
+}       
+  
 
-int DriveSubsystem::GetBestNoteId() {
-  // Step 1: Get List of Notes and Robots
-  m_listOfNotes.clear();
-  m_listOfRobots.clear();
-  for (int i = 0; i < 16; i++) {
-    if (m_OakDLiteCameraSensor.ObjectIsNote(i) && m_OakDLiteCameraSensor.ObjectIsTracked(i))
-      m_listOfNotes.push_back(i);
-    else if (!m_OakDLiteCameraSensor.ObjectIsNote(i) && m_OakDLiteCameraSensor.ObjectIsTracked(i))
-      m_listOfRobots.push_back(i);    
-  }
-
-  // Step 2: (TODO) eleminate any notes too close to robots
-
-  // Step 3: Determine Closest Note and update class value
-  if (m_listOfNotes.size() > 0) {
-    double minDistanceFromRobot = 100000000.0;
-    for (int i = 0; i < (int)m_listOfNotes.size(); i++) {
-      if (m_OakDLiteCameraSensor.GetDistanceFromRobot(i) < minDistanceFromRobot) {
-        minDistanceFromRobot = m_OakDLiteCameraSensor.GetDistanceFromRobot(i);
-        m_bestNoteId = i;
-      }
-    }
-    // return the good note
-    return m_bestNoteId;
-  }
-  // If no Notes, return -1
-  else
-    return -1;
-}
-
-// Functions that pass values from sensor forward. 
-// TODO: Rewrite some of these to process in a sepretate subsystem - vision
-frc::Translation2d DriveSubsystem::GetRobotRelativeTranslation(int object) {
-  return m_OakDLiteCameraSensor.GetRobotRelativeTranslation(object);
-}
-
-frc::Translation2d DriveSubsystem::GetFieldRelativeTranslation(int object) {
-  return m_OakDLiteCameraSensor.GetFieldRelativeTranslation(object);
-}
-
-frc::Translation2d DriveSubsystem::GetRobotTranslationFieldReleative(int object) {
-  return m_OakDLiteCameraSensor.GetRobotTranslationFieldReleative(object);
-}
-
-double DriveSubsystem::GetDistanceFromRobot(int object) {
-  return m_OakDLiteCameraSensor.GetDistanceFromRobot(object);
-}
-/*
-frc2::CommandPtr DriveSubsystem::DriveToAmp() {
-    // Create poses based on robot position and where the goal is
-  if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
-    m_bezierPoints = {GetPose().Translation(), frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(), (GameConstants::kRobotPoseForBlueAmp.Translation().Y() - (units::meter_t)1.0)}, 
-                      frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(),(GameConstants::kRobotPoseForBlueAmp.Translation().Y() - (units::meter_t)1.0)},  frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(), (GameConstants::kRobotPoseForRedAmp.Translation().Y())}};
-    //m_fieldPoses = {GetPose(), GameConstants::kRobotPoseForBlueAmp};
-  }
-  else {
-    m_bezierPoints = {GetPose().Translation(), frc::Translation2d{GameConstants::kRobotPoseForRedAmp.Translation().X(), (GameConstants::kRobotPoseForRedAmp.Translation().Y() - (units::meter_t)1.0)}, 
-                      frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(), (GameConstants::kRobotPoseForRedAmp.Translation().Y() - (units::meter_t)1.0)}, frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(), (GameConstants::kRobotPoseForRedAmp.Translation().Y())}};
-    //m_fieldPoses = {GetPose(), GameConstants::kRobotPoseForRedAmp};
-  }
-
-  // Create path
-  auto path = std::make_shared<pathplanner::PathPlannerPath>(
-      m_bezierPoints,
-      pathplanner::PathConstraints(2.5_mps, 3.0_mps_sq, 360_deg_per_s, 720_deg_per_s_sq), // The constraints for this path. If using a differential drivetrain, the angular constraints have no effect.
-      pathplanner::GoalEndState(0.0_mps, frc::Rotation2d{(units::radian_t)-std::numbers::pi/2}) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
-  );
-
-  // create bezier points out of them
-  return pathplanner::AutoBuilder::followPathWithEvents(path);
-}
-
-frc2::CommandPtr DriveSubsystem::VisionIntakePath() {
-  // TODO: If no note is good, craete a dummy path to follow so we are happy and don't try to ask for a note position that dosn't exsist
-  // Create poses based on robot position and where the goal is
-  // run command to get best note id and grab the pose at the same time
-  m_fieldPoses = {GetOdometryPose(), frc::Pose2d{GetFieldRelativeTranslation(GetBestNoteId()), GetOdometryPose().Rotation()}};
-
-  auto path = std::make_shared<pathplanner::PathPlannerPath>(
-      pathplanner::PathPlannerPath::bezierFromPoses(m_fieldPoses),
-      pathplanner::PathConstraints(3.5_mps, 3.5_mps_sq, 360_deg_per_s, 720_deg_per_s_sq), // The constraints for this path. If using a differential drivetrain, the angular constraints have no effect.
-      pathplanner::GoalEndState(1.0_mps, GetPose().Rotation()) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
-  );
-
-  // create bezier points out of them
-  return pathplanner::AutoBuilder::followPathWithEvents(path);
-}
-*/
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Utility math functions
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -637,29 +550,4 @@ double DriveSubsystem::SignedSquare(double input) {
     return -std::pow(input, 2);
   else
     return std::pow(input, 2);
-}
-
-frc::Translation2d DriveSubsystem::TranslationToGoal(frc::Pose2d robotPose) {
-  
-  // Determine the speaker position based on allience color
-  if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
-    // Get position of center of blue speaker
-    centerOfSpeaker = fieldLayout.GetTagPose(7).value().ToPose2d(); 
-  } else {
-    // Get position of center of red speaker
-    centerOfSpeaker = fieldLayout.GetTagPose(4).value().ToPose2d(); 
-  }
-  
-  // Find Translation of robot
-  return robotPose.operator-(centerOfSpeaker).Translation();
-}
-
-double DriveSubsystem::RobotDistanceToGoal(frc::Pose2d robotPose) {
-  //Find the distance between the robot and the goal
-  return std::sqrt(std::pow((double)TranslationToGoal(robotPose).X(), 2) + std::pow((double)TranslationToGoal(robotPose).Y(), 2));
-}
-
-frc::Rotation2d DriveSubsystem::AngleToGoal(frc::Translation2d targetTranslation) {
-  // do math
-  return frc::Rotation2d{(units::radian_t)std::atan(((double)targetTranslation.Y())/((double)targetTranslation.X()))}.operator+((units::degree_t)180.0);
 }

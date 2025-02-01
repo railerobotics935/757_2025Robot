@@ -20,11 +20,12 @@
 #include <frc/controller/PIDController.h>
 #include <frc2/command/PIDSubsystem.h>
 #include <frc/Timer.h>
+#include <frc/geometry/Translation2d.h>
+#include <units/length.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
 #include "sensors/ApriltagSensor.h"
-#include "sensors/OakDLiteSensor.h"
 
 class DriveSubsystem : public frc2::SubsystemBase {
 public:
@@ -178,20 +179,12 @@ public:
   */
 //  frc2::CommandPtr DriveToAmp(); Unstable/untested
 
-  /** 
-   * Returns a pathplanner command to drive to a note using odometry
-  */
 //  frc2::CommandPtr VisionIntakePath(); Unstable/untested
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Oak-D Lite Camera Sensor helper methods
 //------------------------------------------------------------------------------------------------------------------------------------
-  /**
-   * Used internaly to determine whitch note the camera may see to travel too
-   * 
-   * @returns the id of the best note
-  */
-  int GetBestNoteId();
+  
 
   /**
    * @param object The ID number for the object wanted to identify
@@ -207,7 +200,6 @@ public:
 
   /**
    * @param object The ID number for the object wanted to identify
-   * @return The Note Translation to the robot relative 
   */
   frc::Translation2d GetRobotTranslationFieldReleative(int object);
 
@@ -236,7 +228,7 @@ public:
    * @param robotPose is the position of the robot on the field
    * @return the transformation of the robot
   */
-  frc::Translation2d TranslationToGoal(frc::Pose2d robotPose);
+
 
   /**
    * Turns translation2d given by TranslationToGoal to distance between the robot and 
@@ -252,14 +244,13 @@ public:
    * 
    * @param targetTranslation is the position of the robot on the field
    * @return the rotation of the robot
-  */
-  frc::Rotation2d AngleToGoal(frc::Translation2d targetTranslation);
+   */
 
-  frc::SwerveDriveKinematics<4> m_driveKinematics{
-    frc::Translation2d{RobotConstants::kWheelBase / 2, RobotConstants::kShooterSideWidth / 2},
-    frc::Translation2d{RobotConstants::kWheelBase / 2, -RobotConstants::kShooterSideWidth / 2},
-    frc::Translation2d{-RobotConstants::kWheelBase / 2, RobotConstants::kIntakeSideWidth / 2},
-    frc::Translation2d{-RobotConstants::kWheelBase / 2, -RobotConstants::kIntakeSideWidth / 2}};
+frc::SwerveDriveKinematics<4> m_driveKinematics{
+    frc::Translation2d{units::meter_t(RobotConstants::kWheelBase / 2),units::meter_t(10)},
+    frc::Translation2d{units::meter_t(RobotConstants::kWheelBase / 2), units::meter_t(10)},
+    frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2), units::meter_t(10)},
+    frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2), units::meter_t(10)}};
 
 private:
   // Declaring all of the network table entries
@@ -347,13 +338,7 @@ private:
   // Apriltag sensor 
   ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstants::FrontCamera::kPose3d};
   ApriltagSensor m_backLeftCameraSensor{"BackLeftCam", CameraConstants::BackLeftCamera::kPose3d};
-  ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstants::BackRightCamera::kPose3d};
-  OakDLiteSensor m_OakDLiteCameraSensor{"OakDLiteCam", CameraConstants::OakDLiteCamera::kPose3d, &m_poseEstimator};
-
-  // Processing variables for the 
-  int m_bestNoteId;
-  std::vector<int> m_listOfNotes;
-  std::vector<int> m_listOfRobots;
+  ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstants::BackRightCamera::kPose3d}; 
 
 // Drive to amp command
   // Field poess and array to hold bezier points

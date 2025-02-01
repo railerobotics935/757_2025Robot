@@ -17,13 +17,13 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
     : m_drivingSparkMax(drivingCANId, rev::spark::SparkMax::MotorType::kBrushless),
       m_turningSparkMax(turningCANId, rev::spark::SparkMax::MotorType::kBrushless) {
 
-  #ifdef BURNMODULESPARKMAX 
+  /*#ifdef BURNMODULESPARKMAX 
   ConfigureSparkMax();
   std::cout << "Flash Burned on Swerve Module\r\n";
   #else
   std::cout << "Flash was not burned on Swerve Module\r\n";
   #endif
-
+*/
   m_turningEncoderOffset = turningEncoderOffset;
   m_desiredState.angle =
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});

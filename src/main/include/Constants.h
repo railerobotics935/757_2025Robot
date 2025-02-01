@@ -26,12 +26,7 @@
 
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNSHOOTERSPARKMAX 
-#define BURNGUFTSPARKMAX 
-#define BURNSTAGERSPARKMAX
 #define BURNMODULESPARKMAX
-#define BURNCLIMBERSPARKMAX
-
 #define USEXBOXCONTROLLER
 #define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
@@ -46,24 +41,11 @@
  * they are needed.
  */
 
-namespace GameConstants {
-  // Constants to hold game peices constatns or 
-  constexpr units::meter_t kSpeakerGoalWidth = 1.051052_m; // in meters
-  constexpr units::meter_t kNoteOutsideDiameter = 0.3556_m; // in meters
-
-  // Goal Position for the robot
-  constexpr frc::Pose2d kRobotPoseForBlueAmp = {(units::meter_t)1.8415, (units::meter_t)7.6042, (units::radian_t)1.5 * std::numbers::pi}; // tag 6 minus 0.4 meter
-  constexpr frc::Pose2d kRobotPoseForRedAmp = {(units::meter_t)14.700758, (units::meter_t)7.6042, (units::radian_t)1.5 * std::numbers::pi}; // tag 5 minus 0.4 meter
-}
 
 namespace RobotConstants {
 
 constexpr double kVoltageCompentationValue = 11.0;
 
-const units::meter_t kIntakeSideWidth =
-  0.825_m;  // Distance between centers of right and left wheels on robot
-const units::meter_t kShooterSideWidth =
-  0.370_m;  // Distance between centers of right and left wheels on robot
 const units::meter_t kWheelBase =
   0.500_m;  // Distance between centers of front and back wheels on robot
 
@@ -178,127 +160,6 @@ constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s /
 constexpr auto kModuleMaxLinearVelocity = 4.65_mps;
 }  // namespace ModuleConstants
 
-namespace IntakeConstants {
-// Intake motor 
-constexpr int kMotorID = 24;
-constexpr rev::spark::SparkMax::MotorType kMotorType = rev::spark::SparkMax::MotorType::kBrushless;
-} // namespace IntakeConstant
-
-namespace StagerConstants {
-// Stager motornm
-constexpr int kMotorID = 25;
-constexpr int kFollowerID = 26;
-constexpr rev::spark::SparkMax::MotorType kMotorType = rev::spark::SparkMax::MotorType::kBrushless;
-} // namespace StagerConstants
-
-namespace ShooterConstants {
-// shooter motor 
-constexpr int kTopShooterID = 27;
-constexpr int kBottomShooterID = 28;
-constexpr int kPitchID = 29;
-constexpr rev::spark::SparkMax::MotorType kShooterMotorType = rev::spark::SparkMax::MotorType::kBrushless;
-constexpr rev::spark::SparkMax::MotorType kBottomMotorType = rev::spark::SparkMax::MotorType::kBrushless;
-constexpr rev::spark::SparkMax::MotorType kPitchMotorType = rev::spark::SparkMax::MotorType::kBrushless;
-
-// Calculations required for driving motor conversion factors and feed forward
-constexpr double kShooterMotorFreeSpeedRps =
-    5676.0 / 60;  // NEO free speed is 5676 RPM
-
-// Setup conversion factor for shooter encoders
-constexpr double kShooterGearboxRatio = 0.5; // Large gear is 36T smaller is 18T
-constexpr double kShooterPositionFactor = 1 / kShooterGearboxRatio; // revolutions
-constexpr double kShooterEncoderVelocityFactor = kShooterPositionFactor;  // revolutions per minute
-
-// Pitch encoder
-constexpr double kPitchPositionFactor = (std::numbers::pi * 2); // radians
-constexpr double kPitchEncoderVelocityFactor = (2 * std::numbers::pi); // radians per second
-
-// PID Constants for the speed of the shooter   RR had  0.0001, 0.0005, 0
-constexpr double kTopShooterP = 0.00025;//  0.00025 
-constexpr double kTopShooterI = 0.00000;//  0.000000 
-constexpr double kTopShooterD = 0.01;//  0.01 
-constexpr double kTopShooterFF = 0.000095;//  0.000095 // and 0.00016 Effects steady state error
-constexpr double kTopShooterMin = -1.0;
-constexpr double kTopShooterMax = 1.0;
-
-// PID Constants for the speed of the shooter   RR had  0.0001, 0.0005, 0
-constexpr double kBottomShooterP = 0.00025;//  0.00025 
-constexpr double kBottomShooterI = 0.00000;//  0.000000 
-constexpr double kBottomShooterD = 0.01;//  0.01 
-constexpr double kBottomShooterFF = 0.000095;//  0.000095 // and 0.00016 Effects steady state error
-constexpr double kBottomShooterMin = -1.0;
-constexpr double kBottomShooterMax = 1.0;
-
-// PID Constants for the pitch of shooter
-constexpr double kPitchP = 3.2;
-constexpr double kPitchI = 0.001;
-constexpr double kPitchD = 0.15;
-constexpr double kPitchFF = 0.0;
-constexpr double kPitchMin = -0.5;
-constexpr double kPitchMax = 0.5;
-
-// Limits so the shooter pitch can't be over extened
-constexpr double kMinPitchAngle = 0.7; // Radians
-constexpr double kMaxPitchAngle = 1.3; // Radians
-
-// Offset for the pitch
-constexpr double kPitchOffset = (4.413 + 2.614) - (std::numbers::pi); // calabrated it on a calibration, so pi instead of pi/2
-
-constexpr units::ampere_t kShooterMotorCurrentLimit = 40_A;
-constexpr units::ampere_t kBottomMotorCurrentLimit = 40_A;
-constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
-
-} // namespace ShooterConstants
-
-namespace GuftConstants {
-// Guft motor 
-constexpr int kGuftID = 15;
-constexpr rev::spark::SparkMax::MotorType kGuftMotorType = rev::spark::SparkMax::MotorType::kBrushless;
-
-// Pitch encoder
-constexpr double kGuftPositionFactor = (std::numbers::pi * 2); // radians
-constexpr double kGuftEncoderVelocityFactor = (2 * std::numbers::pi); // radians per second
-
-// PID Constants for the pitch of Guft
-constexpr double kGuftP = 2.0;
-constexpr double kGuftI = 0.0001;
-constexpr double kGuftD = 0.05;
-constexpr double kGuftFF = 0.0;
-constexpr double kGuftMin = -0.7;
-constexpr double kGuftMax = 0.7;
-
-// Limits so the Guft pitch can't be over extened
-constexpr double kMinGuftAngle = 0.40; // Radians
-constexpr double kMaxGuftAngle = 2.98; // Radians
-
-// Offset for the pitch
-constexpr double kGuftOffset = (0.0) - (std::numbers::pi/2); // calabrated it on a calibration, so pi instead of pi/2
-
-constexpr units::ampere_t kGuftMotorCurrentLimit = 20_A;
-
-} // namespace GuftConstants
-
-namespace ClimberConstants {
-
-
-  namespace LeftClimber {
-    constexpr int kID = 14;
-    constexpr int kLimitSwitchPort = 9;
-  }
-
-  namespace RightClimber {
-    constexpr int kID = 13;
-    constexpr int kLimitSwitchPort = 8;
-  }
-
-constexpr double kClimberGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
-constexpr double kPositionFactor = 4.0 * std::numbers::pi / kClimberGearRatio; // in meters
-constexpr double kVelocityFactor = kPositionFactor;
-
-constexpr units::ampere_t kMotorCurrentLimit = 40_A;
-constexpr rev::spark::SparkMax::MotorType kMotorType = rev::spark::SparkMax::MotorType::kBrushless;
-
-} // namespace ClimberConstants
 
 namespace AutoConstants {
 
@@ -349,40 +210,16 @@ constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
 #ifdef USEXBOXCONTROLLER
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
 constexpr int kOperatorRightYIndex = 5; // An input UP creates a NEGATIVE output
-constexpr int kStagerIntakeTrigger = 3; // R Trigger
-constexpr int kStagerOuttakeTrigger = 2; //  L Trigger
 #else
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
 constexpr int kOperatorRightYIndex = 3; // An input UP creates a NEGATIVE output
-constexpr int kStagerIntakeTrigger = 7; // RB
-constexpr int kStagerOuttakeTrigger = 8; //  LB
+
 #endif
 // Drive Controller
-constexpr int kExtendShooterButtonIndex = 6; // RB
-constexpr int kRetractShooterButtonIndex = 5; // LB
 constexpr int kFieldRelativeButtonIndex = 7; // CL
 constexpr int kRobotRelativeButtonIndex = 8; // CR
-constexpr int kShootWhileMovingButtonIndex = 4; // Y
-constexpr int kDriveToAmpButtonIndex = 1; // A
 constexpr int kResetGyroButtonIndex = 2; // B
-constexpr int kDriveFacingGoalButtonIndex = 3; // X
 
-// Operator controller 
-#ifdef USEXBOXCONTROLLER
-constexpr int kIntakeButtonIndex = 6; // RB
-constexpr int kOuttakeButtonIndex = 5; // LB
-constexpr int kNTEShooterButton = 4; // Y
-constexpr int kAmpShooterButton = 2; // B
-constexpr int kSmartShooterButton = 3; // X
-constexpr int kManualCloseShootButton = 1; // A
-#else
-constexpr int kIntakeButtonIndex = 6; // RT
-constexpr int kOuttakeButtonIndex = 5; // LT
-constexpr int kNTEShooterButton = 4; // Y
-constexpr int kAmpShooterButton = 3; // B
-constexpr int kSmartShooterButton = 1; // X
-constexpr int kManualCloseShootButton = 2; // A
-#endif
 } // namespace ControllerConstants
 
 namespace OIConstants {
@@ -423,12 +260,6 @@ namespace BackLeftCamera {
 namespace BackRightCamera {
     const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)-0.4125, (units::meter_t)0.2286};
     const frc::Rotation3d kRotation3d{(units::radian_t)std::numbers::pi * 0.1116883853, (units::radian_t)std::numbers::pi * 0.1116883853, (units::radian_t)std::numbers::pi * 0.75};
-    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
-} // namespace BackRightCamera
-
-namespace OakDLiteCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)-0.08, (units::meter_t)0.2286};
-    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace BackRightCamera
 

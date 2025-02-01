@@ -36,7 +36,6 @@
  *      DONE: Learn how to make a command/what type
  *      TODO: Collect data on shooter to figure out what angle our shooter needs to be at for shooting
  *      TODO: Use data to auto aim
- *      TODO: Use sensor data to determine when to shoot note
  *    TODO: check location
  *      TODO: Use Pose/camera to deterime correct position
  *    VEIRIFY: Shoot While moving

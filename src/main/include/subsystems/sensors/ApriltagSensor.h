@@ -39,7 +39,6 @@ public:
 
   /**
    * @param tag the ID number for the apriltag wanted to identify
-   * @return An array of standard deviations scaled by the distance form the shooter
   */
   wpi::array<double, 3> GetStandardDeviations(int tag);
 
