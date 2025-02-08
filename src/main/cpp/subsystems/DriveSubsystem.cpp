@@ -32,22 +32,22 @@ using namespace pathplanner;
 DriveSubsystem::DriveSubsystem()
   : m_frontLeft{kFrontLeftDriveMotorPort,
                 kFrontLeftTurningMotorPort,
-                kFrontLeftDriveEncoderOffset},
+                kFrontLeftCANCoderId},
 
     m_frontRight{
         kFrontRightDriveMotorPort,       
         kFrontRightTurningMotorPort,
-        kFrontRightDriveEncoderOffset},
+        kFrontRightCANCoderId},
     
     m_backLeft{
         kBackLeftDriveMotorPort,       
         kBackLeftTurningMotorPort,
-        kBackLeftDriveEncoderOffset},
+        kBackLeftCANCoderId},
 
     m_backRight{
         kBackRightDriveMotorPort,       
         kBackRightTurningMotorPort,  
-        kBackRightDriveEncoderOffset},
+        kBackRightCANCoderId},
 
     m_odometry{m_driveKinematics,
                 -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
@@ -89,10 +89,12 @@ DriveSubsystem::DriveSubsystem()
   nte_bl_real_speed = nt_table->GetEntry("Swerve Drive/Back Left/Real Speed");
   nte_br_real_speed = nt_table->GetEntry("Swerve Drive/Back Right/Real Speed");
 
-  nte_fl_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Front Left/Encoder Voltage");
-  nte_fr_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Front Right/Encoder Voltage");
-  nte_bl_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Back Left/Encoder Voltage");
-  nte_br_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Back Right/Encoder Voltage");
+  nte_fl_encoder_position = nt_table->GetEntry("Swerve Drive/Front Left/Encoder Position");
+  nte_fr_encoder_position = nt_table->GetEntry("Swerve Drive/Front Right/Encoder Position");
+  nte_bl_encoder_position = nt_table->GetEntry("Swerve Drive/Back Left/Encoder Position");
+  nte_br_encoder_position = nt_table->GetEntry("Swerve Drive/Back Right/Encoder Position");
+
+  
 
   nte_gyro_angle = nt_table->GetEntry("Swerve Drive/Gyro Angle");
   nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
@@ -140,7 +142,7 @@ void DriveSubsystem::Periodic() {
   if (GetLinearRobotSpeed() < 1.0 && GetTurnRate() < 20.0)
     EstimatePoseWithApriltag();
   
-  //UpdateNTE();
+  UpdateNTE();
 
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
@@ -163,12 +165,12 @@ void DriveSubsystem::UpdateNTE() {
   nte_robot_x.SetDouble((double)m_odometry.GetPose().X());
   nte_robot_y.SetDouble((double)m_odometry.GetPose().Y());
 
-  //nte_fl_raw_encoder_voltage.SetDouble(m_frontLeft.GetEncoderVoltage());
-  //nte_fr_raw_encoder_voltage.SetDouble(m_frontRight.GetEncoderVoltage());
-  //nte_bl_raw_encoder_voltage.SetDouble(m_backLeft.GetEncoderVoltage());
-  //nte_br_raw_encoder_voltage.SetDouble(m_backRight.GetEncoderVoltage());
+  nte_fl_encoder_position.SetDouble((double)m_frontLeft.GetPosition().angle.Radians());
+  nte_fr_encoder_position.SetDouble((double)m_frontRight.GetPosition().angle.Radians());
+  nte_bl_encoder_position.SetDouble((double)m_backLeft.GetPosition().angle.Radians());
+  nte_br_encoder_position.SetDouble((double)m_backRight.GetPosition().angle.Radians());
 
-  // Set robot position to shuffleboard field
+  // Set robot position to shuffleboard field :)
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
 
@@ -270,14 +272,14 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   m_backRight.SetDesiredState(br);
 
   // Network table entries
-  //nte_fl_set_angle.SetDouble((double)fl.angle.Radians());
-  //nte_fr_set_angle.SetDouble((double)fr.angle.Radians());
-  //nte_bl_set_angle.SetDouble((double)bl.angle.Radians());
-  //nte_br_set_angle.SetDouble((double)br.angle.Radians());
-  //nte_fl_set_speed.SetDouble((double)fl.speed);
-  //nte_fr_set_speed.SetDouble((double)fr.speed);
-  //nte_bl_set_speed.SetDouble((double)bl.speed);
-  //nte_br_set_speed.SetDouble((double)br.speed);
+  nte_fl_set_angle.SetDouble((double)fl.angle.Radians());
+  nte_fr_set_angle.SetDouble((double)fr.angle.Radians());
+  nte_bl_set_angle.SetDouble((double)bl.angle.Radians());
+  nte_br_set_angle.SetDouble((double)br.angle.Radians());
+  nte_fl_set_speed.SetDouble((double)fl.speed);
+  nte_fr_set_speed.SetDouble((double)fr.speed);
+  nte_bl_set_speed.SetDouble((double)bl.speed);
+  nte_br_set_speed.SetDouble((double)br.speed);
   
 }
 

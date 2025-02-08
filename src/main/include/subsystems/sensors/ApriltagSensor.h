@@ -74,7 +74,7 @@ private:
   frc::Pose3d m_calculatedRobotPose;
   
   // Create path to deploy directory
-  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
+  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2025-reefscape.json"};
 
   // Field layout to get apriltag pose
   frc::AprilTagFieldLayout m_fieldLayout{deployDirectory.string()};

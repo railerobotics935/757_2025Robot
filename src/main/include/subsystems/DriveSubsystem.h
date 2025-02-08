@@ -255,6 +255,7 @@ frc::SwerveDriveKinematics<4> m_driveKinematics{
 private:
   // Declaring all of the network table entries
   nt::NetworkTableEntry nte_fl_set_angle;
+  //frc::SmartDashboard::SetNumber("Set Angle Front Left", nte_fl_set_angle);
   nt::NetworkTableEntry nte_fr_set_angle;
   nt::NetworkTableEntry nte_bl_set_angle;
   nt::NetworkTableEntry nte_br_set_angle;
@@ -272,10 +273,10 @@ private:
   nt::NetworkTableEntry nte_bl_real_speed;
   nt::NetworkTableEntry nte_br_real_speed;
 
-  nt::NetworkTableEntry nte_fl_raw_encoder_voltage;
-  nt::NetworkTableEntry nte_fr_raw_encoder_voltage;
-  nt::NetworkTableEntry nte_bl_raw_encoder_voltage;
-  nt::NetworkTableEntry nte_br_raw_encoder_voltage;
+  nt::NetworkTableEntry nte_fl_encoder_position;
+  nt::NetworkTableEntry nte_fr_encoder_position;
+  nt::NetworkTableEntry nte_bl_encoder_position;
+  nt::NetworkTableEntry nte_br_encoder_position;
 
   nt::NetworkTableEntry nte_gyro_angle;
   nt::NetworkTableEntry nte_robot_x;
@@ -329,7 +330,7 @@ private:
   bool m_fieldRelative = true;
 
   // Create path to deploy directory
-  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
+  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2025-reefscape.json"};
 
   // Initialize variables
   frc::AprilTagFieldLayout fieldLayout{deployDirectory.string()}; 

@@ -17,9 +17,10 @@
 using namespace ModuleConstants;
 
 SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
-                               const double turningEncoderOffset)
+                               const int turnSensorCANId)
     : m_drivingSparkMax(drivingCANId, rev::spark::SparkMax::MotorType::kBrushless),
-      m_turningSparkMax(turningCANId, rev::spark::SparkMax::MotorType::kBrushless) {
+      m_turningSparkMax(turningCANId, rev::spark::SparkMax::MotorType::kBrushless),
+      m_turningAbsoluteEncoder(turnSensorCANId) {
 
   #ifdef BURNMODULESPARKMAX 
   ConfigureSparkMax();
@@ -28,10 +29,18 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
   std::cout << "Flash was not burned on Swerve Module\r\n";
   #endif
 
-  m_turningEncoderOffset = turningEncoderOffset;
+//  m_turningSparkMax.SetInverted(true);
+
   m_desiredState.angle =
-      frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
+      frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetAbsolutePosition().GetValueAsDouble()});
   m_drivingEncoder.SetPosition(0);
+
+  // Limit the PID Controller's input range between -pi and pi and set the input
+  // to be continuous.
+  // if motor is misbehaving, check turning direction
+  m_turningSparkMax.SetInverted(true);
+  m_turningPIDController.EnableContinuousInput(-units::radian_t(std::numbers::pi), units::radian_t(std::numbers::pi));
+  
 }
 
 void SwerveModule::ConfigureSparkMax() {
@@ -64,9 +73,10 @@ void SwerveModule::ConfigureSparkMax() {
 
   turningSparkMaxConfig.absoluteEncoder
   .PositionConversionFactor(kTurningEncoderPositionFactor)
-  .VelocityConversionFactor( kTurningEncoderVelocityFactor)
-  .Inverted(kTurningEncoderInverted);
+  .VelocityConversionFactor(kTurningEncoderVelocityFactor);
+//  .Inverted(kTurningEncoderInverted);
 
+#if 0
   turningSparkMaxConfig.closedLoop
   .Pidf(kTurningP, kTurningI, kTurningD, kTurningFF)
   .OutputRange(kTurningMinOutput, kTurningMaxOutput)
@@ -74,26 +84,23 @@ void SwerveModule::ConfigureSparkMax() {
   .PositionWrappingEnabled(true)
   .PositionWrappingMinInput(kTurningEncoderPositionPIDMinInput.value())
   .PositionWrappingMaxInput(kTurningEncoderPositionPIDMaxInput.value());
+#endif
 
   m_turningSparkMax.Configure(turningSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);
   
-
-        
+       
   // Set the PID Controller to use the duty cycle encoder on the swerve
   // module instead of the built in NEO550 encoder.
-  
-
-
 }
 
 frc::SwerveModuleState SwerveModule::GetState() {
   return {units::meters_per_second_t{m_drivingEncoder.GetVelocity()},
-          units::radian_t{m_turningAbsoluteEncoder.GetPosition() - m_turningEncoderOffset}};
+          units::radian_t{m_turningAbsoluteEncoder.GetAbsolutePosition().GetValueAsDouble() * 2 * std::numbers::pi}};
 }
 
 frc::SwerveModulePosition SwerveModule::GetPosition() {
   return {units::meter_t{m_drivingEncoder.GetPosition()},
-          units::radian_t{m_turningAbsoluteEncoder.GetPosition() - m_turningEncoderOffset}};
+          units::radian_t{m_turningAbsoluteEncoder.GetAbsolutePosition().GetValueAsDouble() * 2 * std::numbers::pi}};
 }
 
 void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
@@ -112,10 +119,15 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
   // Command driving and turning SPARKS MAX towards their respective setpoints.
   m_drivingPIDController.SetReference((double)optimizedDesiredState.speed,
                                       rev::spark::SparkMax::ControlType::kVelocity);
-  m_turningPIDController.SetReference(
-      optimizedDesiredState.angle.Radians().value(),
-      rev::spark::SparkMax::ControlType::kPosition);
+
+  // PID Controller in Roborio
+  const auto turnOutput = m_turningPIDController.Calculate(
+      units::radian_t(m_turningAbsoluteEncoder.GetAbsolutePosition().GetValueAsDouble() * 2 * std::numbers::pi), (correctedDesiredState.angle).Radians());
+
+  const auto turnFeedforward = m_turnFeedforward.Calculate(m_turningPIDController.GetSetpoint().velocity);
+
+  m_turningSparkMax.SetVoltage(units::volt_t{turnOutput});
 
   m_desiredState = desiredState;
-}
+} 
 
