@@ -131,3 +131,6 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
   m_desiredState = desiredState;
 } 
 
+void SwerveModule::SetTurningPID(double Kp, double Ki, double Kd) {
+  m_turningPIDController.SetPID(Kp, Ki, Kd);
+}

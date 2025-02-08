@@ -41,8 +41,8 @@ class SwerveModule {
    * Burn configuration onto sparkmax motorcontrollers
   */
   void ConfigureSparkMax();
-
-  // void ResetEncoders(); currently using absolute encoders, so you can't reset them digitaly
+  
+  void SetTurningPID(double Kp, double Ki, double Kd);
 
  private:
   // We have to use meters here instead of radians due to the fact that
@@ -68,7 +68,7 @@ class SwerveModule {
 
   frc::ProfiledPIDController<units::radians> m_turningPIDController{
 //      12.5, 190.0, 0.15,
-      0.1, 0.0, 0.0,
+      ModuleConstants::kTurningP, ModuleConstants::kTurningI, ModuleConstants::kTurningD,
       {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}};
 
   frc::SimpleMotorFeedforward<units::radians> m_turnFeedforward{0.5_V, 0.5_V / 1_rad_per_s};

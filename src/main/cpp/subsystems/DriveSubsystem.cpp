@@ -94,15 +94,21 @@ DriveSubsystem::DriveSubsystem()
   nte_bl_encoder_position = nt_table->GetEntry("Swerve Drive/Back Left/Encoder Position");
   nte_br_encoder_position = nt_table->GetEntry("Swerve Drive/Back Right/Encoder Position");
 
-  
-
   nte_gyro_angle = nt_table->GetEntry("Swerve Drive/Gyro Angle");
   nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
   nte_robot_y = nt_table->GetEntry("Swerve Drive/Robot Y");
 
-  nte_kp = nt_table->GetEntry("SwerveDrive/PID/KP");
-  nte_ki = nt_table->GetEntry("SwerveDrive/PID/KI");
-  nte_kd = nt_table->GetEntry("SwerveDrive/PID/KD"); 
+  nte_kp = nt_table->GetEntry("Swerve Drive/Turning/kP");
+  nte_ki = nt_table->GetEntry("Swerve Drive/Turning/kI");
+  nte_kd = nt_table->GetEntry("Swerve Drive/Turning/kD"); 
+
+  nte_kp.SetDouble(ModuleConstants::kTurningP);
+  nte_ki.SetDouble(ModuleConstants::kTurningI);
+  nte_kd.SetDouble(ModuleConstants::kTurningD);
+
+  kp_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kP").Subscribe(m_turning_Kp);
+  ki_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kI").Subscribe(m_turning_Ki);
+  kd_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kD").Subscribe(m_turning_Kd);
 
   nte_debugTimeForPoseEstimation = nt_table->GetEntry("Debug Values/Pose Estimation");
   nte_debugTimeForAddVistionData = nt_table->GetEntry("Debug Values/Add Vision Data");  
@@ -143,6 +149,7 @@ void DriveSubsystem::Periodic() {
     EstimatePoseWithApriltag();
   
   UpdateNTE();
+  GetPIDParameters();
 
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
@@ -152,6 +159,7 @@ void DriveSubsystem::Periodic() {
 }
 
 void DriveSubsystem::UpdateNTE() {
+
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());
   nte_bl_real_angle.SetDouble((double)m_backLeft.GetState().angle.Radians());
@@ -165,6 +173,8 @@ void DriveSubsystem::UpdateNTE() {
   nte_robot_x.SetDouble((double)m_odometry.GetPose().X());
   nte_robot_y.SetDouble((double)m_odometry.GetPose().Y());
 
+
+
   nte_fl_encoder_position.SetDouble((double)m_frontLeft.GetPosition().angle.Radians());
   nte_fr_encoder_position.SetDouble((double)m_frontRight.GetPosition().angle.Radians());
   nte_bl_encoder_position.SetDouble((double)m_backLeft.GetPosition().angle.Radians());
@@ -177,6 +187,24 @@ void DriveSubsystem::UpdateNTE() {
 
 }
 
+void DriveSubsystem::GetPIDParameters() {
+  double pValue = kp_sub.Get();
+  double iValue = ki_sub.Get();
+  double dValue = kd_sub.Get();
+  if ((pValue != m_turning_Kp) ||
+      (iValue != m_turning_Ki) ||
+      (dValue != m_turning_Kd)) {
+    m_turning_Kp = pValue;
+    m_turning_Ki = iValue;
+    m_turning_Kd = dValue;
+    m_frontLeft.SetTurningPID(m_turning_Kp, m_turning_Ki, m_turning_Kd);
+    m_frontRight.SetTurningPID(m_turning_Kp, m_turning_Ki, m_turning_Kd);
+    m_backLeft.SetTurningPID(m_turning_Kp, m_turning_Ki, m_turning_Kd);
+    m_backRight.SetTurningPID(m_turning_Kp, m_turning_Ki, m_turning_Kd);
+
+  }
+}
+
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            units::meters_per_second_t ySpeed,
                            units::radians_per_second_t rot,
@@ -186,7 +214,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   double ySpeedCommanded;
 
   if (rateLimit) {
-    // Convert XY to polar for rate limiting
+    // Convert XY to polar for rate limitingd
     double inputTranslationDir = atan2(ySpeed.value(), xSpeed.value());
     double inputTranslationMag =
         sqrt(pow(xSpeed.value(), 2) + pow(ySpeed.value(), 2));

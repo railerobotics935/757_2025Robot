@@ -14,6 +14,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
+#include <networktables/DoubleTopic.h>
 #include <frc/smartdashboard/Field2d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
@@ -22,6 +23,7 @@
 #include <frc/Timer.h>
 #include <frc/geometry/Translation2d.h>
 #include <units/length.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -45,6 +47,11 @@ public:
    * Updates all of the network table entries
   */
   void UpdateNTE();
+
+  /**
+   * Gets PID values from Elastic
+   */
+  void GetPIDParameters();
 
   /**
    * Drives the robot at given x, y and theta speeds. Speeds range from [-1, 1]
@@ -252,6 +259,7 @@ frc::SwerveDriveKinematics<4> m_driveKinematics{
     frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2), units::meter_t(10)},
     frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2), units::meter_t(10)}};
 
+
 private:
   // Declaring all of the network table entries
   nt::NetworkTableEntry nte_fl_set_angle;
@@ -286,6 +294,10 @@ private:
   nt::NetworkTableEntry nte_ki;
   nt::NetworkTableEntry nte_kd;
 
+  nt::DoubleSubscriber kp_sub;
+  nt::DoubleSubscriber ki_sub;
+  nt::DoubleSubscriber kd_sub;
+
   nt::NetworkTableEntry nte_robot_distance_to_goal;
 
   nt::NetworkTableEntry nte_debugTimeForPoseEstimation;
@@ -302,6 +314,10 @@ private:
   SwerveModule m_frontRight;
   SwerveModule m_backLeft;
   SwerveModule m_backRight;
+
+  double m_turning_Kp = ModuleConstants::kTurningP;
+  double m_turning_Ki = ModuleConstants::kTurningI;
+  double m_turning_Kd = ModuleConstants::kTurningD;
 
   // The gyro sensor
   frc::ADIS16470_IMU m_gyro{frc::ADIS16470_IMU::IMUAxis::kZ, frc::ADIS16470_IMU::IMUAxis::kY, frc::ADIS16470_IMU::IMUAxis::kX};

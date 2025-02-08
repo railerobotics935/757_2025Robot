@@ -81,9 +81,9 @@ constexpr int kBackLeftCANCoderId = 1;
 constexpr int kBackRightCANCoderId = 2;
 
 // PID Controller for the auto rotation of the robot
-constexpr double kRotationP = 0.0;//2.5;
-constexpr double kRotationI = 0.0;//0.002;
-constexpr double kRotationD = 0.0;//0.2;
+constexpr double kRotationP = 2.5;
+constexpr double kRotationI = 0.002;
+constexpr double kRotationD = 0.2;
 
 
 // Offsets in radians for the encoders. the first number to to make zero forward, after that we
@@ -128,7 +128,7 @@ constexpr units::radian_t kTurningEncoderPositionPIDMinInput = 0_rad;
 constexpr units::radian_t kTurningEncoderPositionPIDMaxInput =
     units::radian_t{kTurningEncoderPositionFactor};
 
-constexpr double kDrivingP = 1.0;
+constexpr double kDrivingP = 0.0;
 constexpr double kDrivingI = 0.0;
 constexpr double kDrivingD = 0.0;
 constexpr double kDrivingFF = 0.0;//(1 / kDriveWheelFreeSpeedRps);
