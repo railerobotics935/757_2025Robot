@@ -49,9 +49,11 @@ public:
   void UpdateNTE();
 
   /**
-   * Gets PID values from Elastic
+   * Gets Turning PID values from Elastic
    */
-  void GetPIDParameters();
+  void GetTurningPIDParameters();
+
+  void GetDrivingPIDParameters();
 
   /**
    * Drives the robot at given x, y and theta speeds. Speeds range from [-1, 1]
@@ -290,13 +292,21 @@ private:
   nt::NetworkTableEntry nte_robot_x;
   nt::NetworkTableEntry nte_robot_y;
 
-  nt::NetworkTableEntry nte_kp;
-  nt::NetworkTableEntry nte_ki;
-  nt::NetworkTableEntry nte_kd;
+  nt::NetworkTableEntry nte_ktp;
+  nt::NetworkTableEntry nte_kti;
+  nt::NetworkTableEntry nte_ktd;
 
-  nt::DoubleSubscriber kp_sub;
-  nt::DoubleSubscriber ki_sub;
-  nt::DoubleSubscriber kd_sub;
+  nt::DoubleSubscriber ktp_sub;
+  nt::DoubleSubscriber kti_sub;
+  nt::DoubleSubscriber ktd_sub;
+
+  nt::NetworkTableEntry nte_kdp;
+  nt::NetworkTableEntry nte_kdi;
+  nt::NetworkTableEntry nte_kdd;
+
+  nt::DoubleSubscriber kdp_sub;
+  nt::DoubleSubscriber kdi_sub;
+  nt::DoubleSubscriber kdd_sub;
 
   nt::NetworkTableEntry nte_robot_distance_to_goal;
 
@@ -318,6 +328,10 @@ private:
   double m_turning_Kp = ModuleConstants::kTurningP;
   double m_turning_Ki = ModuleConstants::kTurningI;
   double m_turning_Kd = ModuleConstants::kTurningD;
+
+  double m_driving_Kp = ModuleConstants::kDrivingP;
+  double m_driving_Ki = ModuleConstants::kDrivingI;
+  double m_driving_Kd = ModuleConstants::kDrivingD;
 
   // The gyro sensor
   frc::ADIS16470_IMU m_gyro{frc::ADIS16470_IMU::IMUAxis::kZ, frc::ADIS16470_IMU::IMUAxis::kY, frc::ADIS16470_IMU::IMUAxis::kX};

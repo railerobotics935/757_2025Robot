@@ -98,25 +98,37 @@ DriveSubsystem::DriveSubsystem()
   nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
   nte_robot_y = nt_table->GetEntry("Swerve Drive/Robot Y");
 
-  nte_kp = nt_table->GetEntry("Swerve Drive/Turning/kP");
-  nte_ki = nt_table->GetEntry("Swerve Drive/Turning/kI");
-  nte_kd = nt_table->GetEntry("Swerve Drive/Turning/kD"); 
+  nte_ktp = nt_table->GetEntry("Swerve Drive/Turning/kP");
+  nte_kti = nt_table->GetEntry("Swerve Drive/Turning/kI");
+  nte_ktd = nt_table->GetEntry("Swerve Drive/Turning/kD"); 
 
-  nte_kp.SetDouble(ModuleConstants::kTurningP);
-  nte_ki.SetDouble(ModuleConstants::kTurningI);
-  nte_kd.SetDouble(ModuleConstants::kTurningD);
+  nte_ktp.SetDouble(ModuleConstants::kTurningP);
+  nte_kti.SetDouble(ModuleConstants::kTurningI);
+  nte_ktd.SetDouble(ModuleConstants::kTurningD);
 
-  kp_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kP").Subscribe(m_turning_Kp);
-  ki_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kI").Subscribe(m_turning_Ki);
-  kd_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kD").Subscribe(m_turning_Kd);
+  ktp_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kP").Subscribe(ModuleConstants::kTurningP);
+  kti_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kI").Subscribe(ModuleConstants::kTurningI);
+  ktd_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kD").Subscribe(ModuleConstants::kTurningD);
+
+  nte_kdp = nt_table->GetEntry("Swerve Drive/Driving/kP");
+  nte_kdi = nt_table->GetEntry("Swerve Drive/Driving/kI");
+  nte_kdd = nt_table->GetEntry("Swerve Drive/Driving/kD"); 
+
+  nte_kdp.SetDouble(ModuleConstants::kDrivingP);
+  nte_kdi.SetDouble(ModuleConstants::kDrivingI);
+  nte_kdd.SetDouble(ModuleConstants::kDrivingD);
+
+  kdp_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kP").Subscribe(ModuleConstants::kDrivingP);
+  kdi_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kI").Subscribe(ModuleConstants::kDrivingI);
+  kdd_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kD").Subscribe(ModuleConstants::kDrivingD);
 
   nte_debugTimeForPoseEstimation = nt_table->GetEntry("Debug Values/Pose Estimation");
   nte_debugTimeForAddVistionData = nt_table->GetEntry("Debug Values/Add Vision Data");  
   nte_numberOfTagsAdded = nt_table->GetEntry("Debug Values/Number Of Tags Processed");
 
-  //nte_kp.SetDouble(2.5);
-  //nte_ki.SetDouble(0.002);
-  //nte_kd.SetDouble(0.05);
+  //nte_ktp.SetDouble(2.5);
+  //nte_kti.SetDouble(0.002);
+  //nte_ktd.SetDouble(0.05);
 
   
   // Send Field to shuffleboard
@@ -149,13 +161,14 @@ void DriveSubsystem::Periodic() {
     EstimatePoseWithApriltag();
   
   UpdateNTE();
-  GetPIDParameters();
+  GetTurningPIDParameters();
+  GetDrivingPIDParameters();
 
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
-  //m_robotAngleController.SetP(nte_kp.GetDouble(4.5));
-  //m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
-  //m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
+  //m_robotAngleController.SetP(nte_ktp.GetDouble(4.5));
+  //m_robotAngleController.SetI(nte_kti.GetDouble(0.002));
+  //m_robotAngleController.SetD(nte_ktd.GetDouble(0.05));
 }
 
 void DriveSubsystem::UpdateNTE() {
@@ -187,10 +200,10 @@ void DriveSubsystem::UpdateNTE() {
 
 }
 
-void DriveSubsystem::GetPIDParameters() {
-  double pValue = kp_sub.Get();
-  double iValue = ki_sub.Get();
-  double dValue = kd_sub.Get();
+void DriveSubsystem::GetTurningPIDParameters() {
+  double pValue = ktp_sub.Get();
+  double iValue = kti_sub.Get();
+  double dValue = ktd_sub.Get();
   if ((pValue != m_turning_Kp) ||
       (iValue != m_turning_Ki) ||
       (dValue != m_turning_Kd)) {
@@ -201,6 +214,24 @@ void DriveSubsystem::GetPIDParameters() {
     m_frontRight.SetTurningPID(m_turning_Kp, m_turning_Ki, m_turning_Kd);
     m_backLeft.SetTurningPID(m_turning_Kp, m_turning_Ki, m_turning_Kd);
     m_backRight.SetTurningPID(m_turning_Kp, m_turning_Ki, m_turning_Kd);
+
+  }
+}
+
+void DriveSubsystem::GetDrivingPIDParameters() {
+  double pValue = kdp_sub.Get();
+  double iValue = kdi_sub.Get();
+  double dValue = kdd_sub.Get();
+  if ((pValue != m_driving_Kp) ||
+      (iValue != m_driving_Ki) ||
+      (dValue != m_driving_Kd)) {
+    m_driving_Kp = pValue;
+    m_driving_Ki = iValue;
+    m_driving_Kd = dValue;
+    m_frontLeft.SetTurningPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
+    m_frontRight.SetTurningPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
+    m_backLeft.SetTurningPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
+    m_backRight.SetTurningPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
 
   }
 }
