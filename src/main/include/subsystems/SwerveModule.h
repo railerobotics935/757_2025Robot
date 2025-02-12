@@ -43,6 +43,8 @@ class SwerveModule {
   void ConfigureSparkMax();
   
   void SetTurningPID(double Kp, double Ki, double Kd);
+  void SetDrivingPID(double Kp, double Ki, double Kd);
+
 
  private:
   // We have to use meters here instead of radians due to the fact that

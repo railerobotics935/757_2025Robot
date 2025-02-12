@@ -128,25 +128,25 @@ constexpr units::radian_t kTurningEncoderPositionPIDMinInput = 0_rad;
 constexpr units::radian_t kTurningEncoderPositionPIDMaxInput =
     units::radian_t{kTurningEncoderPositionFactor};
 
-constexpr double kDrivingP = 0.0;
+constexpr double kDrivingP = 0.04;
 constexpr double kDrivingI = 0.0;
 constexpr double kDrivingD = 0.0;
-constexpr double kDrivingFF = 0.0;//(1 / kDriveWheelFreeSpeedRps);
+constexpr double kDrivingFF = (1 / kDriveWheelFreeSpeedRps);
 constexpr double kDrivingMinOutput = -1;
 constexpr double kDrivingMaxOutput = 1;
 
-constexpr double kTurningP = 0.1;
+constexpr double kTurningP = 12.5;
 constexpr double kTurningI = 0;
-constexpr double kTurningD = 0; //was originally 0.15
+constexpr double kTurningD = 0.06; //was originally 0.15
 constexpr double kTurningFF = 0;
 constexpr double kTurningMinOutput = -1;
 constexpr double kTurningMaxOutput = 1;
 
-constexpr rev::spark::SparkMaxConfig::IdleMode kDrivingMotorIdleMode =  rev::spark::SparkMaxConfig::IdleMode::kBrake;
+constexpr rev::spark::SparkMaxConfig::IdleMode kDrivingMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 constexpr rev::spark::SparkMaxConfig::IdleMode kTurningMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 
 constexpr units::ampere_t kDrivingMotorCurrentLimit = 40_A;
-constexpr units::ampere_t kTurningMotorCurrentLimit = 40_A;
+constexpr units::ampere_t kTurningMotorCurrentLimit = 20_A;
 
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2

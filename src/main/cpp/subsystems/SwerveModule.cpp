@@ -29,8 +29,6 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
   std::cout << "Flash was not burned on Swerve Module\r\n";
   #endif
 
-//  m_turningSparkMax.SetInverted(true);
-
   m_desiredState.angle =
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetAbsolutePosition().GetValueAsDouble()});
   m_drivingEncoder.SetPosition(0);
@@ -38,9 +36,9 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
   // Limit the PID Controller's input range between -pi and pi and set the input
   // to be continuous.
   // if motor is misbehaving, check turning direction
+  m_drivingSparkMax.SetInverted(false);
   m_turningSparkMax.SetInverted(true);
   m_turningPIDController.EnableContinuousInput(-units::radian_t(std::numbers::pi), units::radian_t(std::numbers::pi));
-  
 }
 
 void SwerveModule::ConfigureSparkMax() {
@@ -53,9 +51,11 @@ void SwerveModule::ConfigureSparkMax() {
   .SetIdleMode(kDrivingMotorIdleMode)
   .SmartCurrentLimit(kDrivingMotorCurrentLimit.value());
 
-  driveSparkMaxConfig.absoluteEncoder
+  driveSparkMaxConfig.encoder
   .PositionConversionFactor(kDrivingEncoderPositionFactor)
   .VelocityConversionFactor(kDrivingEncoderVelocityFactor);
+
+  std::cout << "drive encoder velocity factor: " << kDrivingEncoderVelocityFactor << std::endl;
 
   driveSparkMaxConfig.closedLoop
   .Pidf(kDrivingP, kDrivingI, kDrivingD, kDrivingFF)
@@ -117,7 +117,10 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
                                  m_turningAbsoluteEncoder.GetPosition()}))*/};
 
   // Command driving and turning SPARKS MAX towards their respective setpoints.
-  m_drivingPIDController.SetReference((double)optimizedDesiredState.speed,
+//  m_drivingPIDController.SetReference((double)optimizedDesiredState.speed,
+//                                      rev::spark::SparkMax::ControlType::kVelocity);
+
+  m_drivingPIDController.SetReference((double)correctedDesiredState.speed,
                                       rev::spark::SparkMax::ControlType::kVelocity);
 
   // PID Controller in Roborio
@@ -133,4 +136,16 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
 
 void SwerveModule::SetTurningPID(double Kp, double Ki, double Kd) {
   m_turningPIDController.SetPID(Kp, Ki, Kd);
+}
+
+void SwerveModule::SetDrivingPID(double Kp, double Ki, double Kd) {
+#if 0
+  rev::spark::SparkMaxConfig driveSparkMaxConfig{};
+
+  driveSparkMaxConfig.closedLoop
+    .Pidf(Kp, Ki, Kd, kDrivingFF)
+    .OutputRange(kDrivingMinOutput, kDrivingMaxOutput);
+
+  m_drivingSparkMax.Configure(driveSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);
+#endif
 }

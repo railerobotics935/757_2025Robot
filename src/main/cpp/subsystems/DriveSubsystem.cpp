@@ -50,16 +50,16 @@ DriveSubsystem::DriveSubsystem()
         kBackRightCANCoderId},
 
     m_odometry{m_driveKinematics,
-                -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
+                m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
-                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}},
+                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}},
 
     m_poseEstimator{m_driveKinematics,
-                -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
+                m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
-                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)},
+                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)},
                 {0.05, 0.05, 0.001}, // Standard Deviation of the encoder position value
                 {0.2, 0.2, 0.05}} // Standard Deviation of vision pose esitmation
 
@@ -98,29 +98,29 @@ DriveSubsystem::DriveSubsystem()
   nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
   nte_robot_y = nt_table->GetEntry("Swerve Drive/Robot Y");
 
-  nte_ktp = nt_table->GetEntry("Swerve Drive/Turning/kP");
-  nte_kti = nt_table->GetEntry("Swerve Drive/Turning/kI");
-  nte_ktd = nt_table->GetEntry("Swerve Drive/Turning/kD"); 
+  nte_ktp = nt_table->GetEntry("Swerve Drive/Turning/ktP");
+  nte_kti = nt_table->GetEntry("Swerve Drive/Turning/ktI");
+  nte_ktd = nt_table->GetEntry("Swerve Drive/Turning/ktD"); 
 
   nte_ktp.SetDouble(ModuleConstants::kTurningP);
   nte_kti.SetDouble(ModuleConstants::kTurningI);
   nte_ktd.SetDouble(ModuleConstants::kTurningD);
 
-  ktp_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kP").Subscribe(ModuleConstants::kTurningP);
-  kti_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kI").Subscribe(ModuleConstants::kTurningI);
-  ktd_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/kD").Subscribe(ModuleConstants::kTurningD);
+  ktp_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/ktP").Subscribe(ModuleConstants::kTurningP);
+  kti_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/ktI").Subscribe(ModuleConstants::kTurningI);
+  ktd_sub = nt_table->GetDoubleTopic("Swerve Drive/Turning/ktD").Subscribe(ModuleConstants::kTurningD);
 
-  nte_kdp = nt_table->GetEntry("Swerve Drive/Driving/kP");
-  nte_kdi = nt_table->GetEntry("Swerve Drive/Driving/kI");
-  nte_kdd = nt_table->GetEntry("Swerve Drive/Driving/kD"); 
+  nte_kdp = nt_table->GetEntry("Swerve Drive/Driving/kdP");
+  nte_kdi = nt_table->GetEntry("Swerve Drive/Driving/kdI");
+  nte_kdd = nt_table->GetEntry("Swerve Drive/Driving/kdD"); 
 
   nte_kdp.SetDouble(ModuleConstants::kDrivingP);
   nte_kdi.SetDouble(ModuleConstants::kDrivingI);
   nte_kdd.SetDouble(ModuleConstants::kDrivingD);
 
-  kdp_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kP").Subscribe(ModuleConstants::kDrivingP);
-  kdi_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kI").Subscribe(ModuleConstants::kDrivingI);
-  kdd_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kD").Subscribe(ModuleConstants::kDrivingD);
+  kdp_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kdP").Subscribe(ModuleConstants::kDrivingP);
+  kdi_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kdI").Subscribe(ModuleConstants::kDrivingI);
+  kdd_sub = nt_table->GetDoubleTopic("Swerve Drive/Driving/kdD").Subscribe(ModuleConstants::kDrivingD);
 
   nte_debugTimeForPoseEstimation = nt_table->GetEntry("Debug Values/Pose Estimation");
   nte_debugTimeForAddVistionData = nt_table->GetEntry("Debug Values/Add Vision Data");  
@@ -149,11 +149,11 @@ bool DriveSubsystem::InRedAlliance() {
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  m_odometry.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
+  m_odometry.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                     {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), 
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
-  m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+  m_poseEstimator.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
                       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
   // set odometry relative to the apriltag
@@ -204,6 +204,7 @@ void DriveSubsystem::GetTurningPIDParameters() {
   double pValue = ktp_sub.Get();
   double iValue = kti_sub.Get();
   double dValue = ktd_sub.Get();
+
   if ((pValue != m_turning_Kp) ||
       (iValue != m_turning_Ki) ||
       (dValue != m_turning_Kd)) {
@@ -222,16 +223,18 @@ void DriveSubsystem::GetDrivingPIDParameters() {
   double pValue = kdp_sub.Get();
   double iValue = kdi_sub.Get();
   double dValue = kdd_sub.Get();
+
   if ((pValue != m_driving_Kp) ||
       (iValue != m_driving_Ki) ||
       (dValue != m_driving_Kd)) {
     m_driving_Kp = pValue;
     m_driving_Ki = iValue;
     m_driving_Kd = dValue;
-    m_frontLeft.SetTurningPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
-    m_frontRight.SetTurningPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
-    m_backLeft.SetTurningPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
-    m_backRight.SetTurningPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
+
+    m_frontLeft.SetDrivingPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
+    m_frontRight.SetDrivingPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
+    m_backLeft.SetDrivingPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
+    m_backRight.SetDrivingPID(m_driving_Kp, m_driving_Ki, m_driving_Kd);
 
   }
 }
@@ -318,7 +321,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
                 frc::Rotation2d(units::radian_t{
-                    -m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}))
+                    m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}))
           : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
 
   m_driveKinematics.DesaturateWheelSpeeds(&states, DriveConstants::kMaxSpeed);
@@ -431,7 +434,7 @@ void DriveSubsystem::DriveFacingGoal(units::meters_per_second_t xSpeed,
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
                 frc::Rotation2d(units::radian_t{
-                    -m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}))
+                    m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}))
           : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
 
   m_driveKinematics.DesaturateWheelSpeeds(&states, DriveConstants::kMaxSpeed);
@@ -475,14 +478,14 @@ void DriveSubsystem::SetModuleStates(
     wpi::array<frc::SwerveModuleState, 4> desiredStates) {
   m_driveKinematics.DesaturateWheelSpeeds(&desiredStates,
                                          ModuleConstants::kModuleMaxLinearVelocity);
-  m_frontLeft.SetDesiredState(desiredStates[0]);
-  m_frontRight.SetDesiredState(desiredStates[1]);
-  m_backLeft.SetDesiredState(desiredStates[2]);
-  m_backRight.SetDesiredState(desiredStates[3]);
+  m_frontLeft.SetDesiredState(desiredStates[4]);
+  m_frontRight.SetDesiredState(desiredStates[3]);
+  m_backLeft.SetDesiredState(desiredStates[1]);
+  m_backRight.SetDesiredState(desiredStates[2]);
 }
 
 units::degree_t DriveSubsystem::GetHeading() const {
-  return -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw);
+  return m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw);
 }
 
 double DriveSubsystem::GetLinearRobotSpeed() {
@@ -503,7 +506,7 @@ void DriveSubsystem::SetFieldRelative() {
 }
 
 double DriveSubsystem::GetTurnRate() {
-  return (double)-m_gyro.GetRate(frc::ADIS16470_IMU::kYaw);
+  return (double)m_gyro.GetRate(frc::ADIS16470_IMU::kYaw);
 }
 
 frc::Pose2d DriveSubsystem::GetPose() {
