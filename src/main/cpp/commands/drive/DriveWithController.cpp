@@ -4,6 +4,8 @@
 #include "Constants.h"
 #include "commands/drive/DriveWithController.h"
 
+#define PRINTDEBUG
+
 DriveWithController::DriveWithController(DriveSubsystem* drive, frc::XboxController* driveController)
     : m_drive{drive}, m_driveController{driveController} {
   // Register that this command requires the subsystem.
@@ -22,7 +24,7 @@ void DriveWithController::Execute() {
   const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05);
   const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
   const auto rot = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.05);
-  
+
   m_drive->Drive(units::meters_per_second_t{m_drive->SignedSquare(xSpeed)},
     units::meters_per_second_t{m_drive->SignedSquare(ySpeed)},
     units::radians_per_second_t{m_drive->SignedSquare(rot)}, 

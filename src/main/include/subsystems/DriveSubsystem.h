@@ -14,6 +14,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
+#include <networktables/DoubleTopic.h>
 #include <frc/smartdashboard/Field2d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
@@ -22,6 +23,7 @@
 #include <frc/Timer.h>
 #include <frc/geometry/Translation2d.h>
 #include <units/length.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -45,6 +47,13 @@ public:
    * Updates all of the network table entries
   */
   void UpdateNTE();
+
+  /**
+   * Gets Turning PID values from Elastic
+   */
+  void GetTurningPIDParameters();
+
+  void GetDrivingPIDParameters();
 
   /**
    * Drives the robot at given x, y and theta speeds. Speeds range from [-1, 1]
@@ -252,9 +261,11 @@ frc::SwerveDriveKinematics<4> m_driveKinematics{
     frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2), units::meter_t(10)},
     frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2), units::meter_t(10)}};
 
+
 private:
   // Declaring all of the network table entries
   nt::NetworkTableEntry nte_fl_set_angle;
+  //frc::SmartDashboard::SetNumber("Set Angle Front Left", nte_fl_set_angle);
   nt::NetworkTableEntry nte_fr_set_angle;
   nt::NetworkTableEntry nte_bl_set_angle;
   nt::NetworkTableEntry nte_br_set_angle;
@@ -272,18 +283,30 @@ private:
   nt::NetworkTableEntry nte_bl_real_speed;
   nt::NetworkTableEntry nte_br_real_speed;
 
-  nt::NetworkTableEntry nte_fl_raw_encoder_voltage;
-  nt::NetworkTableEntry nte_fr_raw_encoder_voltage;
-  nt::NetworkTableEntry nte_bl_raw_encoder_voltage;
-  nt::NetworkTableEntry nte_br_raw_encoder_voltage;
+  nt::NetworkTableEntry nte_fl_encoder_position;
+  nt::NetworkTableEntry nte_fr_encoder_position;
+  nt::NetworkTableEntry nte_bl_encoder_position;
+  nt::NetworkTableEntry nte_br_encoder_position;
 
   nt::NetworkTableEntry nte_gyro_angle;
   nt::NetworkTableEntry nte_robot_x;
   nt::NetworkTableEntry nte_robot_y;
 
-  nt::NetworkTableEntry nte_kp;
-  nt::NetworkTableEntry nte_ki;
-  nt::NetworkTableEntry nte_kd;
+  nt::NetworkTableEntry nte_ktp;
+  nt::NetworkTableEntry nte_kti;
+  nt::NetworkTableEntry nte_ktd;
+
+  nt::DoubleSubscriber ktp_sub;
+  nt::DoubleSubscriber kti_sub;
+  nt::DoubleSubscriber ktd_sub;
+
+  nt::NetworkTableEntry nte_kdp;
+  nt::NetworkTableEntry nte_kdi;
+  nt::NetworkTableEntry nte_kdd;
+
+  nt::DoubleSubscriber kdp_sub;
+  nt::DoubleSubscriber kdi_sub;
+  nt::DoubleSubscriber kdd_sub;
 
   nt::NetworkTableEntry nte_robot_distance_to_goal;
 
@@ -301,6 +324,14 @@ private:
   SwerveModule m_frontRight;
   SwerveModule m_backLeft;
   SwerveModule m_backRight;
+
+  double m_turning_Kp = ModuleConstants::kTurningP;
+  double m_turning_Ki = ModuleConstants::kTurningI;
+  double m_turning_Kd = ModuleConstants::kTurningD;
+
+  double m_driving_Kp = ModuleConstants::kDrivingP;
+  double m_driving_Ki = ModuleConstants::kDrivingI;
+  double m_driving_Kd = ModuleConstants::kDrivingD;
 
   // The gyro sensor
   frc::ADIS16470_IMU m_gyro{frc::ADIS16470_IMU::IMUAxis::kZ, frc::ADIS16470_IMU::IMUAxis::kY, frc::ADIS16470_IMU::IMUAxis::kX};
@@ -329,7 +360,7 @@ private:
   bool m_fieldRelative = true;
 
   // Create path to deploy directory
-  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
+  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2025-reefscape.json"};
 
   // Initialize variables
   frc::AprilTagFieldLayout fieldLayout{deployDirectory.string()}; 
