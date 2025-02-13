@@ -216,6 +216,10 @@ constexpr int kFieldRelativeButtonIndex = 7; // CL
 constexpr int kRobotRelativeButtonIndex = 8; // CR
 constexpr int kResetGyroButtonIndex = 2; // B
 
+// Operator Controller
+constexpr int kIntakeButtonIndex = 6;
+constexpr int kOuttakeButtonIndex = 5;
+
 } // namespace ControllerConstants
 
 namespace OIConstants {
@@ -261,25 +265,30 @@ namespace BackRightCamera {
 
 } // namespace CameraConstants
 
-namespace ShootingCalculations {
-  /**
-   * @param distance The distance from the goal to the robot
-   * 
-   * @return The angle in radians based off of the curve calculations
-  */
-  double GetAngleFromDistance(double distance);
+namespace ClimberConstants {
 
-  /**
-   * @param distance The distance from the goal to the robot
-   * 
-   * @return The speed in RPM based off of the curve calculations
-  */
-  double GetSpeedFromDistance(double distance);
 
-  /**
-   * @param distance The distance from the goal to the robot
-   * 
-   * @return The time in seconds based off of the curve calculations
-  */
-  double GetTimeFromDistnace(double distance);
-}
+  namespace LeftClimber {
+    constexpr int kID = 14;
+    constexpr int kLimitSwitchPort = 9;
+  }
+
+  namespace RightClimber {
+    constexpr int kID = 13;
+    constexpr int kLimitSwitchPort = 8;
+  }
+
+constexpr double kClimberGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
+constexpr double kPositionFactor = 4.0 * std::numbers::pi / kClimberGearRatio; // in meters
+constexpr double kVelocityFactor = kPositionFactor;
+
+constexpr units::ampere_t kMotorCurrentLimit = 40_A;
+constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
+
+} // namespace ClimberConstants
+
+namespace IntakeConstants {
+// Intake motor 
+constexpr int kMotorID = 24;
+constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
+} // namespace IntakeConstant

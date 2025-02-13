@@ -148,7 +148,7 @@ void DriveSubsystem::Periodic() {
   //m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
   //m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
 }
-
+// This updates the Network table entries
 void DriveSubsystem::UpdateNTE() {
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());
@@ -174,7 +174,7 @@ void DriveSubsystem::UpdateNTE() {
 
 
 }
-
+// This drives the robot with given x, y, and theta speeds. The linear speeds contain the angular speeds
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            units::meters_per_second_t ySpeed,
                            units::radians_per_second_t rot,
@@ -204,6 +204,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
     double elapsedTime = currentTime - m_prevTime;
     double angleDif = SwerveUtils::AngleDifference(inputTranslationDir,
                                                    m_currentTranslationDir);
+    //Steps an angle toward a disired target angle.
     if (angleDif < 0.45 * std::numbers::pi) {
       m_currentTranslationDir = SwerveUtils::StepTowardsCircular(
           m_currentTranslationDir, inputTranslationDir,
@@ -214,13 +215,15 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
       if (m_currentTranslationMag > 1e-4) {  // some small number to avoid floating-point errors with equality checking
         // keep currentTranslationDir unchanged
         m_currentTranslationMag = m_magLimiter.Calculate(0.0);
-      } 
+      }
+      // Makes the angle into an angle between 0 and 2*pi.
       else {
         m_currentTranslationDir =
             SwerveUtils::WrapAngle(m_currentTranslationDir + std::numbers::pi);
         m_currentTranslationMag = m_magLimiter.Calculate(inputTranslationMag);
       }
-    } 
+    }
+    // steps an angle towards a disired target angle.
     else {
       m_currentTranslationDir = SwerveUtils::StepTowardsCircular(
           m_currentTranslationDir, inputTranslationDir,
@@ -228,7 +231,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
       m_currentTranslationMag = m_magLimiter.Calculate(0.0);
     }
     m_prevTime = currentTime;
-
+    
     xSpeedCommanded = m_currentTranslationMag * cos(m_currentTranslationDir);
     ySpeedCommanded = m_currentTranslationMag * sin(m_currentTranslationDir);
     m_currentRotation = m_rotLimiter.Calculate(rot.value());
@@ -280,7 +283,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   //nte_br_set_speed.SetDouble((double)br.speed);
   
 }
-
+//Drives the robot at given x and y, and it faces the angle given.
 void DriveSubsystem::DriveFacingGoal(units::meters_per_second_t xSpeed,
                                       units::meters_per_second_t ySpeed, 
                                       frc::Rotation2d rotation, 

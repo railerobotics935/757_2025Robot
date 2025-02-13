@@ -43,7 +43,9 @@ using namespace pathplanner;
 RobotContainer::RobotContainer() {
   m_revPDH.SetSwitchableChannel(true); //-------------------------------------------------------------------------------------
 
-  
+  NamedCommands::registerCommand("SimpleIntake", SimpleIntake{&m_intake}.ToPtr());
+  NamedCommands::registerCommand("SimpleOuttake", SimpleOuttake{&m_intake}.ToPtr());
+
   // Configure the button bindings
   ConfigureButtonBindings();
 
@@ -51,6 +53,7 @@ RobotContainer::RobotContainer() {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
+  m_intake.SetDefaultCommand(std::move(m_stopIntake));
   
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
@@ -60,12 +63,16 @@ void RobotContainer::ConfigureButtonBindings() {
   // Create new button bindings
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); 
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex);
-  frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); 
+  frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex);
+  frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex);
+  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
 
   // Bind commands to button triggers
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
+  intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
+  outtakeButton.WhileTrue(SimpleOuttake{&m_intake}.ToPtr());
 
 
 }

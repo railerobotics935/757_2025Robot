@@ -35,7 +35,7 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
 }
 
 void SwerveModule::ConfigureSparkMax() {
-  // Factory reset, so we get the SPARKS MAX to a known state before configuring
+  // Factory reset for driving SPARK MAX, so we get the SPARKS MAX to a known state before configuring
   // them. This is useful in case a SPARK MAX is swapped out.
   rev::spark::SparkMaxConfig driveSparkMaxConfig{};
 
@@ -54,7 +54,8 @@ void SwerveModule::ConfigureSparkMax() {
 
   m_drivingSparkMax.Configure(driveSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);
   
-
+  // Factory reset for turning SPARK MAX, so we get the SPARKS MAX to a known state before configuring
+  // them. This is useful in case a SPARK MAX is swapped out.
   rev::spark::SparkMaxConfig turningSparkMaxConfig{};
 
   turningSparkMaxConfig
@@ -76,21 +77,14 @@ void SwerveModule::ConfigureSparkMax() {
   .PositionWrappingMaxInput(kTurningEncoderPositionPIDMaxInput.value());
 
   m_turningSparkMax.Configure(turningSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);
-  
-
-        
-  // Set the PID Controller to use the duty cycle encoder on the swerve
-  // module instead of the built in NEO550 encoder.
-  
-
 
 }
-
+// Gets the current state of the swerve module.
 frc::SwerveModuleState SwerveModule::GetState() {
   return {units::meters_per_second_t{m_drivingEncoder.GetVelocity()},
           units::radian_t{m_turningAbsoluteEncoder.GetPosition() - m_turningEncoderOffset}};
 }
-
+//Gets the current position of the swerve module.
 frc::SwerveModulePosition SwerveModule::GetPosition() {
   return {units::meter_t{m_drivingEncoder.GetPosition()},
           units::radian_t{m_turningAbsoluteEncoder.GetPosition() - m_turningEncoderOffset}};
