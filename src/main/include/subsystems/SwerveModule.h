@@ -61,7 +61,7 @@ class SwerveModule {
   rev::spark::SparkClosedLoopController m_drivingPIDController = m_drivingSparkMax.GetClosedLoopController();
   
 
-  double m_turningEncoderOffset = 0.0;
+  double m_turningEncoderOffset = 0.0; // maybe
   frc::SwerveModuleState m_desiredState{units::meters_per_second_t{0.0},
                                         frc::Rotation2d()};
 

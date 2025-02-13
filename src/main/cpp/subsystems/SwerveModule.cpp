@@ -36,7 +36,7 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
   // Limit the PID Controller's input range between -pi and pi and set the input
   // to be continuous.
   // if motor is misbehaving, check turning direction
-  m_drivingSparkMax.SetInverted(false);
+  m_drivingSparkMax.SetInverted(true);
   m_turningSparkMax.SetInverted(true);
   m_turningPIDController.EnableContinuousInput(-units::radian_t(std::numbers::pi), units::radian_t(std::numbers::pi));
 }
@@ -139,7 +139,7 @@ void SwerveModule::SetTurningPID(double Kp, double Ki, double Kd) {
 }
 
 void SwerveModule::SetDrivingPID(double Kp, double Ki, double Kd) {
-#if 0
+//#if 0
   rev::spark::SparkMaxConfig driveSparkMaxConfig{};
 
   driveSparkMaxConfig.closedLoop
@@ -147,5 +147,5 @@ void SwerveModule::SetDrivingPID(double Kp, double Ki, double Kd) {
     .OutputRange(kDrivingMinOutput, kDrivingMaxOutput);
 
   m_drivingSparkMax.Configure(driveSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);
-#endif
+//#endif
 }
