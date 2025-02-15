@@ -56,7 +56,7 @@ const units::meter_t kWheelWidth =
 namespace DriveConstants {
 // Driving Parameters - Note that these are not the maximum capable speeds of
 // the robot, rather the allowed maximum speeds
-constexpr units::meters_per_second_t kMaxSpeed = 6.7_mps;
+constexpr units::meters_per_second_t kMaxSpeed = 4.0_mps;
 constexpr units::radians_per_second_t kMaxAngularSpeed{2.0 * std::numbers::pi};
 constexpr double kDirectionSlewRate = 6.0;   // radians per second
 constexpr double kMagnitudeSlewRate = 7.0;   // percent per second (1 = 100%)
@@ -128,16 +128,16 @@ constexpr units::radian_t kTurningEncoderPositionPIDMinInput = 0_rad;
 constexpr units::radian_t kTurningEncoderPositionPIDMaxInput =
     units::radian_t{kTurningEncoderPositionFactor};
 
-constexpr double kDrivingP = 0.04;
+constexpr double kDrivingP = 0.1;
 constexpr double kDrivingI = 0.0;
 constexpr double kDrivingD = 0.0;
 constexpr double kDrivingFF = (1 / kDriveWheelFreeSpeedRps);
 constexpr double kDrivingMinOutput = -1;
 constexpr double kDrivingMaxOutput = 1;
 
-constexpr double kTurningP = 12.5;
-constexpr double kTurningI = 0;
-constexpr double kTurningD = 0.06; //was originally 0.15
+constexpr double kTurningP = 2.0;
+constexpr double kTurningI = 0.01;
+constexpr double kTurningD = 0.004; //was originally 0.15
 constexpr double kTurningFF = 0;
 constexpr double kTurningMinOutput = -1;
 constexpr double kTurningMaxOutput = 1;
@@ -286,6 +286,6 @@ constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLow
 
 namespace IntakeConstants {
 // Intake motor 
-constexpr int kMotorID = 24;
+constexpr int kMotorID = 27;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
 } // namespace IntakeConstant

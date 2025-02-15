@@ -256,10 +256,10 @@ public:
    */
 
 frc::SwerveDriveKinematics<4> m_driveKinematics{
-    frc::Translation2d{units::meter_t(RobotConstants::kWheelBase / 2),units::meter_t(10)},
-    frc::Translation2d{units::meter_t(RobotConstants::kWheelBase / 2), units::meter_t(10)},
-    frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2), units::meter_t(10)},
-    frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2), units::meter_t(10)}};
+    frc::Translation2d{units::meter_t(RobotConstants::kWheelBase / 2),units::meter_t(RobotConstants::kWheelWidth/2)},
+    frc::Translation2d{units::meter_t(RobotConstants::kWheelBase / 2),units::meter_t(-RobotConstants::kWheelWidth/2)},
+    frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2),units::meter_t(RobotConstants::kWheelWidth/2)},
+    frc::Translation2d{units::meter_t(-RobotConstants::kWheelBase / 2),units::meter_t(-RobotConstants::kWheelWidth/2)}};
 
 
 private:
