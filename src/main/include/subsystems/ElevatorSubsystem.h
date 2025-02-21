@@ -15,14 +15,14 @@
 
 #include "Constants.h"
 
-class ClimberSubsystem : public frc2::SubsystemBase {
+class ElevatorSubsystem : public frc2::SubsystemBase {
  public:
   /**
-   * Creates a Climber subsystem.
-   * Currently for both indiviual climbers (two phystical subsystems)
+   * Creates a Elevator subsystem.
+   * Currently for both indiviual elevators (two phystical subsystems)
    * but coding it as one
   */
-  ClimberSubsystem();
+  ElevatorSubsystem();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -30,26 +30,26 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   void Periodic() override; 
 
   /**
-   * @returns True if the left climber limit switch is pressed
+   * @returns True if the base elevator limit switch is pressed
   */
-  bool LeftClimberAtBase();
+  bool ElevatorAtBase();
 
   /**
-   * @returns True if the right climber limit switch is pressed
+   * @returns True if the upper elevator limit switch is pressed
   */
-  bool RightClimberAtBase();
+  bool ElevatorRisen();
 
   /**
-   * Set the climber moter to a power
+   * Set the elevator moter to a power
    * 
    * @param power Power to set the motor power
   */
-  void SetClimberPower(double power);
+  void SetElevatorPower(double power);
 
   /**
-   * Set the climber motor power invidualy
+   * Set the elevator motor power invidualy
   */
-  void SetIndividualClimberPower(double power);
+  void SetIndividualElevatorPower(double power);
 
   /**
    * Updates NetworkTableEntries
@@ -58,20 +58,20 @@ class ClimberSubsystem : public frc2::SubsystemBase {
 
  private:
 
-  nt::NetworkTableEntry m_leftCllimberLimitSwtich;
-  nt::NetworkTableEntry m_leftClimberDistance;
-  nt::NetworkTableEntry m_rightCllimberLimitSwtich;
-  nt::NetworkTableEntry m_rightClimberDistance;
+  nt::NetworkTableEntry m_baseElevatorLimitSwitch;
+  nt::NetworkTableEntry m_ElevatorDistance;
+  nt::NetworkTableEntry m_upperElevatorLimitSwitch;
+
 
   // Motor Controllers
-  rev::spark::SparkMax m_leftClimberMotor{ClimberConstants::LeftClimber::kID, ClimberConstants::kMotorType};
-  rev::spark::SparkMax m_rightClimberMotor{ClimberConstants::RightClimber::kID, ClimberConstants::kMotorType};
+  rev::spark::SparkMax m_elevatorMotor{ElevatorConstants::LeftElevator::kID, ElevatorConstants::kMotorType};
+  rev::spark::SparkMax m_rightElevatorMotor{ElevatorConstants::RightElevator::kID, ElevatorConstants::kMotorType};
   
   // Encoders motor controllers
-  rev::spark::SparkRelativeEncoder m_leftClimberEncoder = m_leftClimberMotor.GetEncoder();
-  rev::spark::SparkRelativeEncoder m_rightClimberEncoder = m_rightClimberMotor.GetEncoder();
+  rev::spark::SparkRelativeEncoder m_elevatorEncoder = m_elevatorMotor.GetEncoder();
+  // rev::spark::SparkRelativeEncoder m_rightElevatorEncoder = m_rightElevatorMotor.GetEncoder();
 
   // Limit switch is a digital input in the DIO port (digital input output)
-  frc::DigitalInput m_leftLimitSwitch{ClimberConstants::LeftClimber::kLimitSwitchPort};
-  frc::DigitalInput m_rightLimitSwitch{ClimberConstants::RightClimber::kLimitSwitchPort};
+  frc::DigitalInput m_baseLimitSwitch{ElevatorConstants::LeftElevator::kLimitSwitchPort};
+  frc::DigitalInput m_upperLimitSwitch{ElevatorConstants::RightElevator::kLimitSwitchPort};
 };

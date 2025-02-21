@@ -318,9 +318,6 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   units::radians_per_second_t rotDelivered =
       m_currentRotation * DriveConstants::kMaxAngularSpeed;
 
-    std::cout << "xSpeed Delivered: " << xSpeedDelivered.value() << std::endl;
-    std::cout << "ySpeed Delivered: " << ySpeedDelivered.value() << std::endl;
-
   auto states = m_driveKinematics.ToSwerveModuleStates(
       m_fieldRelative
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(

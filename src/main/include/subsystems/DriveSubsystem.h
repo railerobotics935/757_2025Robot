@@ -17,6 +17,7 @@
 #include <networktables/DoubleTopic.h>
 #include <frc/smartdashboard/Field2d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
+#include <frc/apriltag/AprilTagDetection.h>
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/controller/PIDController.h>
 #include <frc2/command/PIDSubsystem.h>

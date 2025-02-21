@@ -16,7 +16,7 @@
 
 #include <string.h>
 
-#define MAX_NUM_TAGS 16
+#define MAX_NUM_TAGS 22
 
 
 class ApriltagSensor {

@@ -54,6 +54,7 @@ RobotContainer::RobotContainer() {
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
   m_intake.SetDefaultCommand(std::move(m_stopIntake));
+  m_elevator.SetDefaultCommand(std::move(m_stopElevator));
   
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
@@ -66,6 +67,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex);
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex);
   frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
+  frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kRaiseElevatorTrigger);
+  frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kLowerElevatorTrigger);
 
   // Bind commands to button triggers
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
@@ -73,6 +76,8 @@ void RobotContainer::ConfigureButtonBindings() {
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
   intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
   outtakeButton.WhileTrue(SimpleOuttake{&m_intake}.ToPtr());
+  raiseElevatorButton.WhileTrue(ExtendElevator{&m_elevator}.ToPtr());
+  lowerElevatorButton.WhileTrue(RetractElevator{&m_elevator}.ToPtr());
 
 
 }

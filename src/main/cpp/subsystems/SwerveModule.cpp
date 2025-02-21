@@ -105,28 +105,18 @@ frc::SwerveModulePosition SwerveModule::GetPosition() {
 }
 
 void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
-  // Apply chassis angular offset to the desired state.
-  frc::SwerveModuleState correctedDesiredState{};
-  correctedDesiredState.speed = desiredState.speed;
-  correctedDesiredState.angle =
-      desiredState.angle +
-      frc::Rotation2d(units::radian_t{m_turningEncoderOffset});
 
   // Optimize the reference state to avoid spinning further than 90 degrees.
-  frc::SwerveModuleState optimizedDesiredState{/*frc::SwerveModuleState::Optimize(
-      correctedDesiredState, frc::Rotation2d(units::radian_t{
-                                 m_turningAbsoluteEncoder.GetPosition()}))*/};
+  frc::SwerveModuleState optimizedDesiredState{frc::SwerveModuleState::Optimize(desiredState,
+   units::radian_t(m_turningAbsoluteEncoder.GetAbsolutePosition().GetValueAsDouble() * 2 * std::numbers::pi))};
 
   // Command driving and turning SPARKS MAX towards their respective setpoints.
-//  m_drivingPIDController.SetReference((double)optimizedDesiredState.speed,
-//                                      rev::spark::SparkMax::ControlType::kVelocity);
-
-  m_drivingPIDController.SetReference((double)correctedDesiredState.speed,
+  m_drivingPIDController.SetReference((double)optimizedDesiredState.speed,
                                       rev::spark::SparkMax::ControlType::kVelocity);
 
   // PID Controller in Roborio
   const auto turnOutput = m_turningPIDController.Calculate(
-      units::radian_t(m_turningAbsoluteEncoder.GetAbsolutePosition().GetValueAsDouble() * 2 * std::numbers::pi), (correctedDesiredState.angle).Radians());
+      units::radian_t(m_turningAbsoluteEncoder.GetAbsolutePosition().GetValueAsDouble() * 2 * std::numbers::pi), (optimizedDesiredState.angle).Radians());
 
   const auto turnFeedforward = m_turnFeedforward.Calculate(m_turningPIDController.GetSetpoint().velocity);
 

@@ -20,7 +20,7 @@ ApriltagSensor::ApriltagSensor(std::string cameraName, frc::Pose3d cameraPose3d)
 	auto nt_table = nt_inst.GetTable("SmartDashboard");
 
   // Cycle through each tag ID and get entry for each - status and pose
-  char s_tableEntryPath[32]; 
+  char s_tableEntryPath[44]; 
   for (uint8_t i = 0; i < MAX_NUM_TAGS; i++) {
     // Status holds a sting, either "TRACKED" or "LOST"
     sprintf(s_tableEntryPath, "%s/Tag[%d]/Status", m_cameraName.c_str(), i);
@@ -78,7 +78,7 @@ wpi::array<double, 3> ApriltagSensor::GetStandardDeviations(int tag) {
 }
 
 bool ApriltagSensor::TagIsTracked(int tag) {
-  // If tag is traked, return true, else return false
+  // If tag is tracked, return true, else return false
   if (nte_status[tag].GetString("LOST") == "TRACKED")
     return true;
   else

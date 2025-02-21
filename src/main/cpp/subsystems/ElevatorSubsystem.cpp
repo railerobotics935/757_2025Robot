@@ -6,95 +6,93 @@
 #include "Constants.h"
 #include <networktables/NetworkTableInstance.h>
 
-using namespace ClimberConstants;
+using namespace ElevatorConstants;
 
-ClimberSubsystem::ClimberSubsystem() {
+ElevatorSubsystem::ElevatorSubsystem() {
 
   // Burn flash only if desired - true set in constants
   #ifdef BURNCLIMBERSPARKMAX
   // Restore deafults
-  m_leftClimberMotor.RestoreFactoryDefaults();
-  m_rightClimberMotor.RestoreFactoryDefaults();
+ m_elevatorMotor.RestoreFactoryDefaults();
+  m_rightElevatorMotor.RestoreFactoryDefaults();
   
   // Set converstion factors for encoders
-  m_leftClimberEncoder.SetPositionConversionFactor(kPositionFactor);
-  m_leftClimberEncoder.SetVelocityConversionFactor(kVelocityFactor);
+ m_elevatorEncoder.SetPositionConversionFactor(kPositionFactor);
+ m_elevatorEncoder.SetVelocityConversionFactor(kVelocityFactor);
 
-  m_rightClimberEncoder.SetPositionConversionFactor(kPositionFactor);
-  m_rightClimberEncoder.SetVelocityConversionFactor(kVelocityFactor);
+  m_rightElevatorEncoder.SetPositionConversionFactor(kPositionFactor);
+  m_rightElevatorEncoder.SetVelocityConversionFactor(kVelocityFactor);
   
   // Set Idle mode (what to do when not commanded at a speed)
-  m_leftClimberMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
-  m_rightClimberMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
-  m_leftClimberMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
-  m_rightClimberMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
+ m_elevatorMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+  m_rightElevatorMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+ m_elevatorMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
+  m_rightElevatorMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
   
   // Invert the left becasue its mirrored
-  m_leftClimberMotor.SetInverted(true);
+ m_elevatorMotor.SetInverted(true);
 
-  m_leftClimberMotor.BurnFlash();
-  m_rightClimberMotor.BurnFlash();
+ m_elevatorMotor.BurnFlash();
+  m_rightElevatorMotor.BurnFlash();
 
-  std::cout << "Flash Burned on climber subsystem\r\n";
+  std::cout << "Flash Burned on elevator subsystem\r\n";
   #else
-  std::cout << "Flash was not burned on climber subsystem\r\n";
+  std::cout << "Flash was not burned on elevator subsystem\r\n";
   #endif
 
   // Initialize shuffleboard communication
   auto nt_inst = nt::NetworkTableInstance::GetDefault();
   
-  auto nt_table = nt_inst.GetTable("Climber");
+  auto nt_table = nt_inst.GetTable("Elevator");
 
-  m_leftCllimberLimitSwtich = nt_table->GetEntry("Left Climber/Limit Switch");
-  m_leftClimberDistance = nt_table->GetEntry("Left Climber/Distance Extended");
-  m_rightCllimberLimitSwtich = nt_table->GetEntry("Right Climber/Limit Switch");
-  m_rightClimberDistance = nt_table->GetEntry("Right Climber/Distance Extended");
+  m_baseElevatorLimitSwitch = nt_table->GetEntry("Left Elevator/Limit Switch");
+  m_ElevatorDistance = nt_table->GetEntry("Left Elevator/Distance Extended");
+  m_upperElevatorLimitSwitch = nt_table->GetEntry("Right Elevator/Limit Switch");
 }
 
-bool ClimberSubsystem::LeftClimberAtBase() {
-  return m_leftLimitSwitch.Get();
+bool ElevatorSubsystem::ElevatorAtBase() {
+  return m_baseLimitSwitch.Get();
 }
 
-bool ClimberSubsystem::RightClimberAtBase() {
-  return m_rightLimitSwitch.Get();
+bool ElevatorSubsystem::ElevatorRisen() {
+  return m_upperLimitSwitch.Get();
 }
 
-void ClimberSubsystem::Periodic() {
+void ElevatorSubsystem::Periodic() {
   UpdateNTE();
 
-  if (LeftClimberAtBase())
-    m_leftClimberEncoder.SetPosition(0.0);
-  if (RightClimberAtBase())
-    m_rightClimberEncoder.SetPosition(0.0);
+  if (ElevatorAtBase())
+   m_elevatorEncoder.SetPosition(0.0);
+//  if (ElevatorRisen())
+//    m_rightElevatorEncoder.SetPosition(0.0);
 }
 
-void ClimberSubsystem::UpdateNTE() {
-  m_leftCllimberLimitSwtich.SetBoolean(LeftClimberAtBase());
-  m_leftClimberDistance.SetDouble(m_leftClimberEncoder.GetPosition());
-  m_rightCllimberLimitSwtich.SetBoolean(RightClimberAtBase());
-  m_rightClimberDistance.SetDouble(m_rightClimberEncoder.GetPosition());
+void ElevatorSubsystem::UpdateNTE() {
+  m_baseElevatorLimitSwitch.SetBoolean(ElevatorAtBase());
+  m_ElevatorDistance.SetDouble(m_elevatorEncoder.GetPosition());
+  m_upperElevatorLimitSwitch.SetBoolean(ElevatorRisen());
 }
 
-void ClimberSubsystem::SetClimberPower(double power) {
-  if (power < 0.0 && m_leftClimberEncoder.GetPosition() < -6.2) {
-    m_leftClimberMotor.Set(0.0);
+void ElevatorSubsystem::SetElevatorPower(double power) {
+  if (power < 0.0 &&m_elevatorEncoder.GetPosition() < -6.2) {
+   m_elevatorMotor.Set(0.0);
   }
   else {
-    if (LeftClimberAtBase() && power > 0.0)
-      m_leftClimberMotor.Set(0.0);
+    if (ElevatorAtBase() && power > 0.0)
+     m_elevatorMotor.Set(0.0);
     else
-      m_leftClimberMotor.Set(power);
+     m_elevatorMotor.Set(power);
   }
 
-  if (power < 0.0 && m_rightClimberEncoder.GetPosition() < -6.2) {
-    m_rightClimberMotor.Set(0.0);
-  }
-  else {
-    if (RightClimberAtBase() && power > 0.0)
-      m_rightClimberMotor.Set(0.0);
-    else
-      m_rightClimberMotor.Set(power);
-  }
+//  if (power < 0.0 && m_rightElevatorEncoder.GetPosition() < -6.2) {
+//    m_rightElevatorMotor.Set(0.0);
+//  }
+//  else {
+//    if (ElevatorRisen() && power > 0.0)
+//      m_rightElevatorMotor.Set(0.0);
+//    else
+//      m_rightElevatorMotor.Set(power);
+//  }
   
   
   

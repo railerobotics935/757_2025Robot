@@ -25,6 +25,9 @@
 #include "commands/intake/SimpleIntake.h"
 #include "commands/intake/SimpleOuttake.h"
 #include "commands/intake/StopIntake.h"
+#include "commands/elevator/ExtendElevator.h"
+#include "commands/elevator/RetractElevator.h"
+#include "commands/elevator/StopElevator.h"
 
 
 /**
@@ -60,6 +63,7 @@ class RobotContainer {
   // The robot's subsystems
   DriveSubsystem m_drive;
   IntakeSubsystem m_intake;
+  ElevatorSubsystem m_elevator;
 
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
@@ -68,5 +72,8 @@ class RobotContainer {
   SimpleIntake m_simpleIntake{&m_intake};
   SimpleOuttake m_simpleOuttake{&m_intake};
   StopIntake m_stopIntake{&m_intake};
+  ExtendElevator m_extendElevator{&m_elevator};
+  RetractElevator m_retractElevator{&m_elevator};
+  StopElevator m_stopElevator{&m_elevator};
 
 };
