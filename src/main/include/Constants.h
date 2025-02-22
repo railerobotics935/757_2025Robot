@@ -217,6 +217,7 @@ constexpr int kOperatorRightYIndex = 3; // An input UP creates a NEGATIVE output
 constexpr int kFieldRelativeButtonIndex = 7; // CL
 constexpr int kRobotRelativeButtonIndex = 8; // CR
 constexpr int kResetGyroButtonIndex = 2; // B
+constexpr int kDriveFacingGoalButtonIndex = 3; // X
 
 // Operator Controller
 constexpr int kExtendElevatorTrigger = 6; // Pressing it creates a POSITVE output

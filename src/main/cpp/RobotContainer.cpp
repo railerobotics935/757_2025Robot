@@ -69,6 +69,7 @@ void RobotContainer::ConfigureButtonBindings() {
 //  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
   frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kExtendElevatorTrigger);
   frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kRetractElevatorTrigger);
+  frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
 
   // Bind commands to button triggers
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
@@ -78,7 +79,7 @@ void RobotContainer::ConfigureButtonBindings() {
 //  outtakeButton.WhileTrue(SimpleOuttake{&m_intake}.ToPtr());
   raiseElevatorButton.WhileTrue(ExtendElevator{&m_elevator}.ToPtr());
   lowerElevatorButton.WhileTrue(RetractElevator{&m_elevator}.ToPtr());
-
+  driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
 
 }
 

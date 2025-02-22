@@ -28,6 +28,7 @@
 #include "commands/elevator/ExtendElevator.h"
 #include "commands/elevator/RetractElevator.h"
 #include "commands/elevator/StopElevator.h"
+#include "commands/drive/DriveFacingGoal.h"
 
 
 /**
@@ -75,5 +76,6 @@ class RobotContainer {
   ExtendElevator m_extendElevator{&m_elevator};
   RetractElevator m_retractElevator{&m_elevator};
   StopElevator m_stopElevator{&m_elevator};
+  DriveFacingGoal m_driveFacingGoal{&m_drive, &m_driveController};
 
 };
