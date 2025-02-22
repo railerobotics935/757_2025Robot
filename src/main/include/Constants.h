@@ -203,8 +203,10 @@ constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
 #ifdef USEXBOXCONTROLLER
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
 constexpr int kOperatorRightYIndex = 5; // An input UP creates a NEGATIVE output
-constexpr int kExtendElevatorTrigger = 3; // Pressing it creates a POSITVE output
-constexpr int kRetractElevatorTrigger = 2; // Pressing it creates a POSITVE output
+constexpr int kIntakeTrigger = 6;
+constexpr int kOuttakeTrigger = 5;
+
+
 
 #else
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
@@ -217,8 +219,8 @@ constexpr int kRobotRelativeButtonIndex = 8; // CR
 constexpr int kResetGyroButtonIndex = 2; // B
 
 // Operator Controller
-constexpr int kIntakeButtonIndex = 6;
-constexpr int kOuttakeButtonIndex = 5;
+constexpr int kExtendElevatorTrigger = 6; // Pressing it creates a POSITVE output
+constexpr int kRetractElevatorTrigger = 5; // Pressing it creates a POSITVE output
 
 } // namespace ControllerConstants
 
@@ -267,16 +269,9 @@ namespace BackRightCamera {
 
 namespace ElevatorConstants {
 
-
-  namespace LeftElevator {
-    constexpr int kID = 14;
-    constexpr int kLimitSwitchPort = 9;
-  }
-
-  namespace RightElevator {
-    constexpr int kID = 13;
-    constexpr int kLimitSwitchPort = 8;
-  }
+constexpr int kID = 22;
+constexpr int kBaseLimitSwitchPort = 9;
+constexpr int kUpperLimitSwitchPort = 8;
 
 constexpr double kElevatorGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
 constexpr double kPositionFactor = 4.0 * std::numbers::pi / kElevatorGearRatio; // in meters

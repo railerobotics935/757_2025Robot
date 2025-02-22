@@ -65,8 +65,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); 
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex);
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex);
-  frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex);
-  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
+//  frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex);
+//  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
   frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kExtendElevatorTrigger);
   frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kRetractElevatorTrigger);
 
@@ -74,8 +74,8 @@ void RobotContainer::ConfigureButtonBindings() {
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
-  intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
-  outtakeButton.WhileTrue(SimpleOuttake{&m_intake}.ToPtr());
+//  intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
+//  outtakeButton.WhileTrue(SimpleOuttake{&m_intake}.ToPtr());
   raiseElevatorButton.WhileTrue(ExtendElevator{&m_elevator}.ToPtr());
   lowerElevatorButton.WhileTrue(RetractElevator{&m_elevator}.ToPtr());
 
