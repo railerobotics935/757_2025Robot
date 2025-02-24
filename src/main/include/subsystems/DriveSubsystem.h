@@ -256,6 +256,10 @@ public:
    * @return the rotation of the robot
    */
 
+  frc::Rotation2d AngleToGoal(frc::Translation2d targetTranslation);
+
+  frc::Translation2d TranslationToGoal(frc::Pose2d robotPose);
+
 frc::SwerveDriveKinematics<4> m_driveKinematics{
     frc::Translation2d{units::meter_t(RobotConstants::kWheelBase / 2),units::meter_t(RobotConstants::kWheelWidth/2)},
     frc::Translation2d{units::meter_t(RobotConstants::kWheelBase / 2),units::meter_t(-RobotConstants::kWheelWidth/2)},
@@ -365,7 +369,7 @@ private:
 
   // Initialize variables
   frc::AprilTagFieldLayout fieldLayout{deployDirectory.string()}; 
-  frc::Pose2d centerOfSpeaker{};
+  frc::Pose2d centerOfHex{};
 
   // Apriltag sensor 
   ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstants::FrontCamera::kPose3d};

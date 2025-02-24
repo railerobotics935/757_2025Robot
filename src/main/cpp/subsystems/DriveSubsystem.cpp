@@ -617,3 +617,26 @@ double DriveSubsystem::SignedSquare(double input) {
   else
     return std::pow(input, 2);
 }
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Drive facing goal
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+frc::Translation2d DriveSubsystem::TranslationToGoal(frc::Pose2d robotPose) {
+  
+  // Determine the speaker position based on allience color
+  if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
+    // Get position of center of blue Hex
+    centerOfHex = fieldLayout.GetTagPose(8).value().ToPose2d(); 
+  } else {
+    // Get position of center of red Hex
+    centerOfHex = fieldLayout.GetTagPose(8).value().ToPose2d(); 
+  }
+  
+  // Find Translation of robot
+  return robotPose.operator-(centerOfHex).Translation();
+}
+
+frc::Rotation2d DriveSubsystem::AngleToGoal(frc::Translation2d targetTranslation) {
+  // do math
+  return frc::Rotation2d{(units::radian_t)std::atan(((double)targetTranslation.Y())/((double)targetTranslation.X()))}.operator+((units::degree_t)180.0);
+}
