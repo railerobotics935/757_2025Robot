@@ -264,7 +264,6 @@ frc::SwerveDriveKinematics<4> m_driveKinematics{
 
 
 private:
-  // Declaring all of the network table entries
   nt::NetworkTableEntry nte_fl_set_angle;
   //frc::SmartDashboard::SetNumber("Set Angle Front Left", nte_fl_set_angle);
   nt::NetworkTableEntry nte_fr_set_angle;
