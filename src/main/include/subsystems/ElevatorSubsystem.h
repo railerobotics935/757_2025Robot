@@ -64,11 +64,11 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
 
 
   // Motor Controllers
-  rev::spark::SparkMax m_elevatorMotor{ElevatorConstants::kID, ElevatorConstants::kMotorType};
+  rev::spark::SparkMax m_elevatorSparkMax{ElevatorConstants::kID, ElevatorConstants::kMotorType};
 // rev::spark::SparkMax m_rightElevatorMotor{ElevatorConstants::RightElevator::kID, ElevatorConstants::kMotorType};
   
   // Encoders motor controllers
-  rev::spark::SparkRelativeEncoder m_elevatorEncoder = m_elevatorMotor.GetEncoder();
+  rev::spark::SparkRelativeEncoder m_elevatorEncoder = m_elevatorSparkMax.GetEncoder();
   // rev::spark::SparkRelativeEncoder m_rightElevatorEncoder = m_rightElevatorMotor.GetEncoder();
 
   // Limit switch is a digital input in the DIO port (digital input output)
