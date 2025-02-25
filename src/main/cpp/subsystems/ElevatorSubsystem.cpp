@@ -11,29 +11,30 @@ using namespace ElevatorConstants;
 ElevatorSubsystem::ElevatorSubsystem() {
 
   // Burn flash only if desired - true set in constants
-  #ifdef BURNCLIMBERSPARKMAX
-  // Restore deafults
- m_elevatorMotor.RestoreFactoryDefaults();
-  m_rightElevatorMotor.RestoreFactoryDefaults();
-  
-  // Set converstion factors for encoders
- m_elevatorEncoder.SetPositionConversionFactor(kPositionFactor);
- m_elevatorEncoder.SetVelocityConversionFactor(kVelocityFactor);
+  #ifdef BURNELEVATORSPARKMAX
+  // Restore defaults
+rev::spark::SparkMaxConfig elevatorSparkMaxConfig{};
 
-  m_rightElevatorEncoder.SetPositionConversionFactor(kPositionFactor);
-  m_rightElevatorEncoder.SetVelocityConversionFactor(kVelocityFactor);
-  
-  // Set Idle mode (what to do when not commanded at a speed)
- m_elevatorMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
-  m_rightElevatorMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
- m_elevatorMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
-  m_rightElevatorMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
-  
+  elevatorSparkMaxConfig
+  .VoltageCompensation(RobotConstants::kVoltageCompentationValue)
+  .SetIdleMode(kElevatorMotorIdleMode)
+  .SmartCurrentLimit(kElevatorMotorCurrentLimit.value());
+
+  elevatorSparkMaxConfig.encoder
+  .PositionConversionFactor(kElevatorPositionFactor)
+  .VelocityConversionFactor(kElevatorVelocityFactor);
+
+  std::cout << "drive encoder velocity factor: " << kElevatorVelocityFactor << std::endl;
+
+  elevatorSparkMaxConfig.closedLoop
+  .Pidf(kElevatorP, kElevatorI, kElevatorD, kElevatorFF)
+  .OutputRange(kElevatorMinOutput, kElevatorMaxOutput);
+
+  m_elevatorSparkMax.Configure(elevatorSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);  
   // Invert the left becasue its mirrored
- m_elevatorMotor.SetInverted(true);
+ //m_elevatorSparkMax.SetInverted(true);
 
- m_elevatorMotor.BurnFlash();
-  m_rightElevatorMotor.BurnFlash();
+ // m_elevatorSparkMax.BurnFlash();
 
   std::cout << "Flash Burned on elevator subsystem\r\n";
   #else
@@ -75,13 +76,13 @@ void ElevatorSubsystem::UpdateNTE() {
 
 void ElevatorSubsystem::SetElevatorPower(double power) {
  /* if (power < 0.0 &&m_elevatorEncoder.GetPosition() < -6.2) {
-   m_elevatorMotor.Set(0.0);
+   m_elevatorSparkMax.Set(0.0);
   }
   else {
     if (ElevatorAtBase() && power > 0.0)*/
-     //m_elevatorMotor.Set(0.0);
+     //m_elevatorSparkMax.Set(0.0);
     //else
-     m_elevatorMotor.Set(power);
+     m_elevatorSparkMax.Set(power);
   }
 
 //  if (power < 0.0 && m_rightElevatorEncoder.GetPosition() < -6.2) {
