@@ -55,8 +55,6 @@ void SwerveModule::ConfigureSparkMax() {
   .PositionConversionFactor(kDrivingEncoderPositionFactor)
   .VelocityConversionFactor(kDrivingEncoderVelocityFactor);
 
-  std::cout << "drive encoder velocity factor: " << kDrivingEncoderVelocityFactor << std::endl;
-
   driveSparkMaxConfig.closedLoop
   .Pidf(kDrivingP, kDrivingI, kDrivingD, kDrivingFF)
   .OutputRange(kDrivingMinOutput, kDrivingMaxOutput);
