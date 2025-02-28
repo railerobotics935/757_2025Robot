@@ -30,7 +30,7 @@
 #define USEXBOXCONTROLLER
 //#define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
-//#define
+#define BURNELEVATORSPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -138,7 +138,7 @@ constexpr double kDrivingMaxOutput = 1;
 constexpr double kTurningP = 2.0;
 constexpr double kTurningI = 0.01;
 constexpr double kTurningD = 0.004; //was originally 0.15
-constexpr double kTurningFF = 0;
+constexpr double kTurningFF = 0; 
 constexpr double kTurningMinOutput = -1;
 constexpr double kTurningMaxOutput = 1;
 
@@ -274,12 +274,23 @@ constexpr int kID = 22;
 constexpr int kBaseLimitSwitchPort = 9;
 constexpr int kUpperLimitSwitchPort = 8;
 
-constexpr double kElevatorGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
-constexpr double kPositionFactor = 4.0 * std::numbers::pi / kElevatorGearRatio; // in meters
-constexpr double kVelocityFactor = kPositionFactor;
+constexpr int kElevatorP = 0;
+constexpr int kElevatorI = 0;
+constexpr int kElevatorD = 0;
+constexpr int kElevatorFF = 0;
 
-constexpr units::ampere_t kMotorCurrentLimit = 40_A;
+constexpr int kElevatorMinOutput = -1;
+constexpr int kElevatorMaxOutput = 1;
+
+constexpr double kElevatorGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
+constexpr double kElevatorPositionFactor = 4.0 * std::numbers::pi / kElevatorGearRatio; // in meters
+constexpr double kElevatorVelocityFactor = kElevatorPositionFactor;
+
+constexpr units::ampere_t kElevatorMotorCurrentLimit = 40_A;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
+
+constexpr rev::spark::SparkMaxConfig::IdleMode kElevatorMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
+
 
 } // namespace ElevatorConstants
 
