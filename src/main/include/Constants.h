@@ -273,9 +273,10 @@ constexpr int kID = 22;
 constexpr int kBaseLimitSwitchPort = 9;
 constexpr int kUpperLimitSwitchPort = 8;
 
-constexpr double kElevatorGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
-constexpr double kElevatorPositionFactor = 4.0 * std::numbers::pi / kElevatorGearRatio; // in meters
-constexpr double kElevatorVelocityFactor = ElevatorPositionFactor;
+//constexpr double kElevatorGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
+//constexpr double kElevatorPositionFactor = 4.0 * std::numbers::pi / kElevatorGearRatio; // in meters
+constexpr double kElevatorPositionFactor = 4.0 * std::numbers::pi; // in meters
+constexpr double kElevatorVelocityFactor = kElevatorPositionFactor;
 
 constexpr int kElevatorP = 0;
 constexpr int kElevatorI = 0;

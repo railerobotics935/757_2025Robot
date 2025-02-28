@@ -40,7 +40,7 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
   bool ElevatorRisen();
 
   /**
-   * Set the elevator moter to a power
+   * Set the elevator motor to a power
    * 
    * @param power Power to set the motor power
   */
