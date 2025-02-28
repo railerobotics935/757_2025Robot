@@ -28,5 +28,5 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   // Motor Controllers
-  rev::spark::SparkMax m_intakeMotor;
+  rev::spark::SparkMax m_intakeSparkMax;
 };

@@ -31,6 +31,7 @@
 //#define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
 #define BURNELEVATORSPARKMAX
+#define BURNINTAKESPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -297,5 +298,9 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kElevatorMotorIdleMode = rev::spa
 namespace IntakeConstants {
 // Intake motor 
 constexpr int kMotorID = 27;
+
+constexpr units::ampere_t kIntakeMotorCurrentLimit = 40_A;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
+constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
+
 } // namespace IntakeConstant
