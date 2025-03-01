@@ -270,8 +270,9 @@ namespace BackRightCamera {
 namespace ElevatorConstants {
 
 constexpr int kID = 22;
-constexpr int kBaseLimitSwitchPort = 9;
-constexpr int kUpperLimitSwitchPort = 8;
+constexpr int kLimitSwitchPort = 2;
+constexpr int kElevatorSensA = 0;
+constexpr int kElevatorSensB = 1;
 
 //constexpr double kElevatorGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
 //constexpr double kElevatorPositionFactor = 4.0 * std::numbers::pi / kElevatorGearRatio; // in meters

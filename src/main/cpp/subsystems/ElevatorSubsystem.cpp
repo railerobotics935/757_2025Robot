@@ -31,8 +31,7 @@ rev::spark::SparkMaxConfig elevatorSparkMaxConfig{};
   .OutputRange(kElevatorMinOutput, kElevatorMaxOutput);
 
   m_elevatorSparkMax.Configure(elevatorSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);  
-  // Invert the left becasue its mirrored
- //m_elevatorSparkMax.SetInverted(true);
+  m_elevatorSparkMax.SetInverted(true); 
 
  // m_elevatorSparkMax.BurnFlash();
 
@@ -46,56 +45,41 @@ rev::spark::SparkMaxConfig elevatorSparkMaxConfig{};
   
   auto nt_table = nt_inst.GetTable("Elevator");
 
-  m_baseElevatorLimitSwitch = nt_table->GetEntry("Left Elevator/Limit Switch");
-  m_ElevatorDistance = nt_table->GetEntry("Left Elevator/Distance Extended");
-  m_upperElevatorLimitSwitch = nt_table->GetEntry("Right Elevator/Limit Switch");
+  m_ElevatorLimitSwitch = nt_table->GetEntry("Elevator/Limit Switch");
+  m_ElevatorDistance = nt_table->GetEntry("Elevator/Distance Extended");
+ 
+    // Set the distance per pulse if needed
+  m_elevatorEncoder.SetDistancePerPulse(1.0 / 360.0); // Example for a 360 PPR encoder
+  
 }
 
 bool ElevatorSubsystem::ElevatorAtBase() {
-  return m_baseLimitSwitch.Get();
-}
-
-bool ElevatorSubsystem::ElevatorRisen() {
-  return m_upperLimitSwitch.Get();
+  return !m_LimitSwitch.Get();
 }
 
 void ElevatorSubsystem::Periodic() {
   UpdateNTE();
 
   if (ElevatorAtBase())
-   m_elevatorEncoder.SetPosition(0.0);
-//  if (ElevatorRisen())
-//    m_rightElevatorEncoder.SetPosition(0.0);
+   m_elevatorEncoder.Reset();
 }
 
 void ElevatorSubsystem::UpdateNTE() {
-  m_baseElevatorLimitSwitch.SetBoolean(ElevatorAtBase());
-  m_ElevatorDistance.SetDouble(m_elevatorEncoder.GetPosition());
-  m_upperElevatorLimitSwitch.SetBoolean(ElevatorRisen());
+  m_ElevatorLimitSwitch.SetBoolean(ElevatorAtBase());
+  m_ElevatorDistance.SetDouble(m_elevatorEncoder.GetDistance());
 }
 
 void ElevatorSubsystem::SetElevatorPower(double power) {
- /* if (power < 0.0 &&m_elevatorEncoder.GetPosition() < -6.2) {
+  /*if (power < 0.0 && m_elevatorEncoder.GetDistance() < -6.2) {
    m_elevatorSparkMax.Set(0.0);
   }
   else {
-    if (ElevatorAtBase() && power > 0.0)*/
-     //m_elevatorSparkMax.Set(0.0);
-    //else
-     m_elevatorSparkMax.Set(power);
-  }
+    if (ElevatorAtBase() && power > 0.0)
+     m_elevatorSparkMax.Set(0.0);
 
-//  if (power < 0.0 && m_rightElevatorEncoder.GetPosition() < -6.2) {
-//    m_rightElevatorMotor.Set(0.0);
-//  }
-//  else {
-//    if (ElevatorRisen() && power > 0.0)
-//      m_rightElevatorMotor.Set(0.0);
-//    else
-//      m_rightElevatorMotor.Set(power);
-//  }
+    else {
+     */m_elevatorSparkMax.Set(power);
+    }
+  //}}
   
-  
-  
-//}
 
