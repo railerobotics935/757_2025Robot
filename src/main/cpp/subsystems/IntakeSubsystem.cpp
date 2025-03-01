@@ -6,13 +6,21 @@
 #include "Constants.h"
 
 
-IntakeSubsystem::IntakeSubsystem() : m_intakeMotor{IntakeConstants::kMotorID, IntakeConstants::kMotorType} {
+IntakeSubsystem::IntakeSubsystem() : m_intakeSparkMax{IntakeConstants::kMotorID, IntakeConstants::kMotorType} {
   // Implementation of subsystem constructor goes here.
-  #ifdef BURNSTAGERSPARKMAX
-  m_intakeMotor.RestoreFactoryDefaults();
+  #ifdef BURNINTAKESPARKMAX
+rev::spark::SparkMaxConfig intakeSparkMaxConfig{};
 
-  // Enable Voltage Compensation
-  m_intakeMotor.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+  intakeSparkMaxConfig
+  .VoltageCompensation(RobotConstants::kVoltageCompentationValue)
+  .SetIdleMode(IntakeConstants::kIntakeMotorIdleMode)
+  .SmartCurrentLimit(IntakeConstants::kIntakeMotorCurrentLimit.value());
+
+  //intakeSparkMaxConfig.encoder
+  //.PositionConversionFactor(kIntakePositionFactor)
+  //.VelocityConversionFactor(kIntakeVelocityFactor);
+
+  m_intakeSparkMax.Configure(intakeSparkMaxConfig, rev::spark::SparkMax::ResetMode::kResetSafeParameters, rev::spark::SparkMax::PersistMode::kPersistParameters);
 
   std::cout << "Burned Intake Motor Controller\r\n";
   #else
@@ -26,5 +34,18 @@ void IntakeSubsystem::Periodic() {
 
 void IntakeSubsystem::SetMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
-  m_intakeMotor.Set(power);
+  m_intakeSparkMax.Set(power);
+}
+
+double IntakeSubsystem::SignedSquare(double input) {
+  if (input > 0) {
+    return std::pow(input, 2);
+  }
+  else {
+    return -std::pow(input, 2);
+  }
+}
+
+bool IntakeSubsystem::CoralInIntake() {
+  return m_lightSensor.Get();
 }

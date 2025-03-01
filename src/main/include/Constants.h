@@ -31,6 +31,7 @@
 //#define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
 #define BURNELEVATORSPARKMAX
+#define BURNINTAKESPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -203,8 +204,8 @@ constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
 #ifdef USEXBOXCONTROLLER
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
 constexpr int kOperatorRightYIndex = 5; // An input UP creates a NEGATIVE output
-constexpr int kIntakeTrigger = 6;
-constexpr int kOuttakeTrigger = 5;
+constexpr int kIntakeTrigger = 3;
+constexpr int kOuttakeTrigger = 2;
 
 
 
@@ -297,6 +298,11 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kElevatorMotorIdleMode = rev::spa
 
 namespace IntakeConstants {
 // Intake motor 
-constexpr int kMotorID = 27;
+constexpr int kMotorID = 26;
+constexpr int kLightSensorID = 3;
+
+constexpr units::ampere_t kIntakeMotorCurrentLimit = 40_A;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
+constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
+
 } // namespace IntakeConstant
