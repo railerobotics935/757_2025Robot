@@ -69,7 +69,7 @@ class RobotContainer {
   frc::SendableChooser<std::string> m_autoChooser;
 
   DriveWithController m_driveWithController{&m_drive, &m_driveController};
-  SimpleIntake m_simpleIntake{&m_intake};
+  SimpleIntake m_simpleIntake{&m_intake, &m_operatorController};
   SimpleOuttake m_simpleOuttake{&m_intake};
   StopIntake m_stopIntake{&m_intake};
   ExtendElevator m_extendElevator{&m_elevator};

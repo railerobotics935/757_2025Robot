@@ -43,9 +43,6 @@ using namespace pathplanner;
 RobotContainer::RobotContainer() {
   m_revPDH.SetSwitchableChannel(true); //-------------------------------------------------------------------------------------
 
-  NamedCommands::registerCommand("SimpleIntake", SimpleIntake{&m_intake}.ToPtr());
-  NamedCommands::registerCommand("SimpleOuttake", SimpleOuttake{&m_intake}.ToPtr());
-
   // Configure the button bindings
   ConfigureButtonBindings();
 
@@ -53,7 +50,7 @@ RobotContainer::RobotContainer() {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
-  m_intake.SetDefaultCommand(std::move(m_stopIntake));
+  m_intake.SetDefaultCommand(std::move(m_simpleIntake));
   m_elevator.SetDefaultCommand(std::move(m_stopElevator));
   
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);

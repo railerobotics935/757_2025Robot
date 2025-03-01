@@ -36,3 +36,12 @@ void IntakeSubsystem::SetMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
   m_intakeSparkMax.Set(power);
 }
+
+double IntakeSubsystem::SignedSquare(double input) {
+  if (input > 0) {
+    return std::pow(input, 2);
+  }
+  else {
+    return -std::pow(input, 2);
+  }
+}

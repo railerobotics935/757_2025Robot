@@ -23,6 +23,11 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   // Sets the motor's power (between -1.0 and 1.0).
   void SetMotorPower(double power);
 
+  /**
+   * Returns square of input with the same sign
+   */
+  double SignedSquare(double input);
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
