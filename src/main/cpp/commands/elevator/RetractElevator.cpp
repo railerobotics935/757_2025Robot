@@ -11,7 +11,7 @@ void RetractElevator::Execute() {
   std::cout << "RetractElevator Initialized\r\n";
 #endif
 
-  m_elevator->SetElevatorPower(1.0);
+  m_elevator->SetElevatorPower(-0.5);
 }
 
 void RetractElevator::End(bool interrupted) {

@@ -12,6 +12,7 @@
 #include <networktables/NetworkTableInstance.h>
 #include <frc/DigitalInput.h>
 #include <frc/SensorUtil.h>
+#include <frc/Encoder.h>
 
 #include "Constants.h"
 
@@ -58,20 +59,16 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
 
  private:
 
-  nt::NetworkTableEntry m_baseElevatorLimitSwitch;
+  nt::NetworkTableEntry m_ElevatorLimitSwitch;
   nt::NetworkTableEntry m_ElevatorDistance;
-  nt::NetworkTableEntry m_upperElevatorLimitSwitch;
-
 
   // Motor Controllers
   rev::spark::SparkMax m_elevatorSparkMax{ElevatorConstants::kID, ElevatorConstants::kMotorType};
-// rev::spark::SparkMax m_rightElevatorMotor{ElevatorConstants::RightElevator::kID, ElevatorConstants::kMotorType};
   
   // Encoders motor controllers
-  rev::spark::SparkRelativeEncoder m_elevatorEncoder = m_elevatorSparkMax.GetEncoder();
-  // rev::spark::SparkRelativeEncoder m_rightElevatorEncoder = m_rightElevatorMotor.GetEncoder();
+  frc::Encoder m_elevatorEncoder{ElevatorConstants::kElevatorSensA, ElevatorConstants::kElevatorSensB};  
 
   // Limit switch is a digital input in the DIO port (digital input output)
-  frc::DigitalInput m_baseLimitSwitch{ElevatorConstants::kBaseLimitSwitchPort};
-  frc::DigitalInput m_upperLimitSwitch{ElevatorConstants::kUpperLimitSwitchPort};
+  frc::DigitalInput m_LimitSwitch{ElevatorConstants::kLimitSwitchPort};
+
 };
