@@ -45,3 +45,7 @@ double IntakeSubsystem::SignedSquare(double input) {
     return -std::pow(input, 2);
   }
 }
+
+bool IntakeSubsystem::CoralInIntake() {
+  return m_lightSensor.Get();
+}

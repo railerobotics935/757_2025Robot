@@ -7,6 +7,8 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/SparkMax.h>
+#include <frc/DigitalInput.h>
+#include <Constants.h>
 
 class IntakeSubsystem : public frc2::SubsystemBase {
  public:
@@ -24,9 +26,14 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   void SetMotorPower(double power);
 
   /**
-   * Returns square of input with the same sign
+   * @returns square of input with the same sign
    */
   double SignedSquare(double input);
+
+  /**
+   * @return If light sensor has detected a coral
+   */
+  bool CoralInIntake();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -34,4 +41,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
 
   // Motor Controllers
   rev::spark::SparkMax m_intakeSparkMax;
+
+  // Light Sensor is a digital input in the DIO port (digital input output)
+  frc::DigitalInput m_lightSensor{IntakeConstants::kLightSensorID};
 };
