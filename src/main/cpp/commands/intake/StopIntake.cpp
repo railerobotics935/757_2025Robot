@@ -10,7 +10,7 @@ void StopIntake::Initialize() {
   std::cout << "StopIntake Initialized\r\n";
 #endif
 
-  m_intake->SetMotorPower(0.0);
+  m_intake->SetIntakeMotorPower(0.0);
 }
 
 void StopIntake::End(bool interrupted) {

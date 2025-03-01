@@ -13,12 +13,12 @@ void SimpleOuttake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "SimpleOuttake Initialized\r\n";
 #endif
-  m_intake->SetMotorPower(-1.0);
+  m_intake->SetIntakeMotorPower(-1.0);
 }
 
 void SimpleOuttake::End(bool interrupted) {
 #ifdef PRINTDEBUG
   std::cout << "SimpleOuttake Ended\r\n";
 #endif
-  m_intake->SetMotorPower(0.0);
+  m_intake->SetIntakeMotorPower(0.0);
 }

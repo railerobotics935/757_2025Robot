@@ -297,8 +297,18 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kElevatorMotorIdleMode = rev::spa
 
 namespace IntakeConstants {
 // Intake motor 
-constexpr int kMotorID = 26;
+constexpr int kIntakeMotorID = 26;
+constexpr int kPitchMotorID = 27;
 constexpr int kLightSensorID = 3;
+
+//PID Values
+constexpr int kPitchP = 0;
+constexpr int kPitchI = 0;
+constexpr int kPitchD = 0;
+constexpr int kPitchFF = 0;
+
+constexpr int kPitchMinOutput = -1;
+constexpr int kPitchMaxOutput = 1;
 
 constexpr units::ampere_t kIntakeMotorCurrentLimit = 40_A;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;

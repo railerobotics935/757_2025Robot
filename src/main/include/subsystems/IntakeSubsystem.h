@@ -23,7 +23,10 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   void Periodic() override;
 
   // Sets the motor's power (between -1.0 and 1.0).
-  void SetMotorPower(double power);
+  void SetIntakeMotorPower(double power);
+
+  // Sets the motor's power (between -1.0 and 1.0).
+  void SetPitchPosition(units::radian_t setAngle);
 
   /**
    * @returns square of input with the same sign
@@ -41,6 +44,10 @@ class IntakeSubsystem : public frc2::SubsystemBase {
 
   // Motor Controllers
   rev::spark::SparkMax m_intakeSparkMax;
+  rev::spark::SparkMax m_pitchSparkMax;
+
+  // Encoders
+  rev::spark::SparkAbsoluteEncoder m_pitchAbsoluteEncoder = m_pitchSparkMax.GetAbsoluteEncoder();
 
   // Light Sensor is a digital input in the DIO port (digital input output)
   frc::DigitalInput m_lightSensor{IntakeConstants::kLightSensorID};

@@ -21,13 +21,13 @@ void SimpleIntake::Execute() {
   const auto outtakeSpeed = frc::ApplyDeadband(m_operatorController->GetRawAxis(ControllerConstants::kOuttakeTrigger), 0.05);
 
   if (intakeSpeed < 0) {
-    m_intake->SetMotorPower(m_intake->SignedSquare(intakeSpeed));
+    m_intake->SetIntakeMotorPower(m_intake->SignedSquare(intakeSpeed));
   }
   else if (outtakeSpeed > 0) {
-    m_intake->SetMotorPower(m_intake->SignedSquare(outtakeSpeed));
+    m_intake->SetIntakeMotorPower(m_intake->SignedSquare(outtakeSpeed));
   }
   else {
-    m_intake->SetMotorPower(0);
+    m_intake->SetIntakeMotorPower(0);
   }
 
 }
@@ -46,5 +46,5 @@ void SimpleIntake::End(bool interrupted) {
   std::cout << "SimpleIntake Ended\r\n";
 #endif
 
-  m_intake->SetMotorPower(0.0);
+  m_intake->SetIntakeMotorPower(0.0);
 }
