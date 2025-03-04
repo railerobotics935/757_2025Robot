@@ -315,4 +315,7 @@ constexpr units::ampere_t kIntakeMotorCurrentLimit = 40_A;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
 constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 
+// Pitch limits
+constexpr double kMinimumAngle = 0;
+constexpr double kMaximumAngle = 0;
 } // namespace IntakeConstant

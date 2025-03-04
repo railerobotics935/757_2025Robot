@@ -1,3 +1,4 @@
+
 #include "Constants.h"
 #include "commands/intake/SimpleIntake.h"
 
@@ -33,7 +34,7 @@ void SimpleIntake::Execute() {
 }
 
 bool SimpleIntake::IsFinished() {
-  if(m_intake->CoralInIntake()) {
+  if(m_intake->CoralInIntake() && m_intake->GetDirection() < 0) {
     return true;
   }
   else {

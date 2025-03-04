@@ -28,6 +28,13 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   // Sets the motor's power (between -1.0 and 1.0).
   void SetPitchPosition(units::radian_t setAngle);
 
+  void SetPitchPower(double power);
+
+  /**
+   * @return Direction pitch motor is moving
+   */
+  double GetDirection();
+
   /**
    * @returns square of input with the same sign
    */
@@ -39,6 +46,9 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   bool CoralInIntake();
 
  private:
+
+  void ConfigureSparkMax();
+
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
@@ -51,4 +61,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
 
   // Light Sensor is a digital input in the DIO port (digital input output)
   frc::DigitalInput m_lightSensor{IntakeConstants::kLightSensorID};
+
+  //PID for the pitch
+  rev::spark::SparkClosedLoopController m_pitchPIDController = m_pitchSparkMax.GetClosedLoopController();
 };

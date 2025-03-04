@@ -49,7 +49,7 @@ rev::spark::SparkMaxConfig elevatorSparkMaxConfig{};
   m_ElevatorDistance = nt_table->GetEntry("Elevator/Distance Extended");
  
     // Set the distance per pulse if needed
-  m_elevatorEncoder.SetDistancePerPulse(1.0 / 360.0); // Example for a 360 PPR encoder
+  m_elevatorEncoder.SetDistancePerPulse(0.02 / 360.0); // Example for a 360 PPR encoder
   
 }
 
