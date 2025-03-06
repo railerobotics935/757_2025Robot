@@ -20,6 +20,8 @@
 #include "utils/SwerveUtils.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/IntakeSubsystem.h"
+#include "subsystems/ClimberSubsystem.h"
+#include "subsystems/ElevatorSubsystem.h"
 
 #include "commands/drive/DriveWithController.h"
 #include "commands/intake/SimpleIntake.h"
@@ -28,6 +30,10 @@
 #include "commands/elevator/ExtendElevator.h"
 #include "commands/elevator/RetractElevator.h"
 #include "commands/elevator/StopElevator.h"
+#include "commands/climber/LockServo.h"
+#include "commands/climber/UnlockServo.h"
+#include "commands/climber/LowerClimber.h"
+#include "commands/climber/RaiseClimber.h"
 
 
 /**
@@ -64,6 +70,7 @@ class RobotContainer {
   DriveSubsystem m_drive;
   IntakeSubsystem m_intake;
   ElevatorSubsystem m_elevator;
+  ClimberSubsystem m_climber;
 
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
@@ -75,5 +82,9 @@ class RobotContainer {
   ExtendElevator m_extendElevator{&m_elevator};
   RetractElevator m_retractElevator{&m_elevator};
   StopElevator m_stopElevator{&m_elevator};
-
+  RaiseClimber m_raiseClimber{&m_climber};
+  LowerClimber m_lowerClimber{&m_climber};
+  LockServo m_lockServo{&m_climber};
+  UnlockServo m_unlockServo{&m_climber};
+  
 };

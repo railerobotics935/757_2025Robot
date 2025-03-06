@@ -218,6 +218,10 @@ constexpr int kOperatorRightYIndex = 3; // An input UP creates a NEGATIVE output
 constexpr int kFieldRelativeButtonIndex = 7; // CL
 constexpr int kRobotRelativeButtonIndex = 8; // CR
 constexpr int kResetGyroButtonIndex = 2; // B
+constexpr int kRaiseClimberButtonIndex = 6; // RB
+constexpr int kLowerClimberButtonIndex = 5; // LB
+constexpr int kLockLatchButtonIndex = 3; // X
+constexpr int kUnlockLatchButtonIndex = 4; // Y
 
 // Operator Controller
 constexpr int kExtendElevatorTrigger = 6; // Pressing it creates a POSITVE output
@@ -317,5 +321,21 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark
 
 // Pitch limits
 constexpr double kMinimumAngle = 0;
-constexpr double kMaximumAngle = 0;
+constexpr double kMaximumAngle = (std::numbers::pi / 4);
 } // namespace IntakeConstant
+
+namespace ClimberConstants {
+    constexpr int kMotorID = 0;
+
+    constexpr int kServoPort = 0;
+    constexpr int kLimitSwitchPort = 5;
+
+    constexpr units::ampere_t kClimberMotorCurrentLimit = 40_A;
+    constexpr double kClimberPositionFactor = 4.0 * std::numbers::pi; // in meters
+
+    constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
+    constexpr rev::spark::SparkMaxConfig::IdleMode kClimberMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
+
+    constexpr double kServoUnlockedPosition = 1.0;
+    constexpr double kServoLockedPosition = 0.0; 
+} // namespace ClimberConstants
