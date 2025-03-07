@@ -14,16 +14,8 @@ void ElevatorSetPoint::Execute() {
   std::cout << "ElevatorSetPoint Initialized\r\n";
 #endif
 
-
-  if (m_elevatorEncoder.GetDistance() < 6) {
-    m_elevator->SetElevatorPower(1.0);
-  }
-  else if (m_elevatorEncoder.GetDistance() > 6) {
-    m_elevator->SetElevatorPower(-0.02);
-  }
-  else {
-    m_elevator->SetElevatorPower(0.02);
-  }
+  m_elevator->GoToSetPoint(1.0);
+ 
 }
 
 void ElevatorSetPoint::End(bool interrupted) {

@@ -293,6 +293,9 @@ constexpr int kElevatorFF = 0;
 constexpr int kElevatorMinOutput = -1;
 constexpr int kElevatorMaxOutput = 1;
 
+constexpr double kMaximumHeight = 1.0; // Should be in meters
+constexpr double kMinimumHeight = 0.0;
+
 constexpr units::ampere_t kElevatorMotorCurrentLimit = 40_A;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
 
