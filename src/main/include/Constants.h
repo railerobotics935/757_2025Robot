@@ -226,6 +226,7 @@ constexpr int kUnlockLatchButtonIndex = 4; // Y
 // Operator Controller
 constexpr int kExtendElevatorTrigger = 6; // Pressing it creates a POSITVE output
 constexpr int kRetractElevatorTrigger = 5; // Pressing it creates a POSITVE output
+constexpr int kElevatorSetPointButton = 3; // X
 
 } // namespace ControllerConstants
 
