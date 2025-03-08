@@ -24,6 +24,7 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
    * but coding it as one
   */
   ElevatorSubsystem();
+  
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -57,6 +58,11 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
   */
   void UpdateNTE();
 
+  /**
+   * Uses the PID to go to a set point
+   */
+  void GoToSetPoint(double setPoint);
+
  private:
 
   nt::NetworkTableEntry m_ElevatorLimitSwitch;
@@ -64,9 +70,11 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
 
   // Motor Controllers
   rev::spark::SparkMax m_elevatorSparkMax{ElevatorConstants::kID, ElevatorConstants::kMotorType};
+  rev::spark::SparkRelativeEncoder m_elevatorEncoder = m_elevatorSparkMax.GetEncoder();
+  rev::spark::SparkClosedLoopController m_elevatorPID = m_elevatorSparkMax.GetClosedLoopController();
   
   // Encoders motor controllers
-  frc::Encoder m_elevatorEncoder{ElevatorConstants::kElevatorSensA, ElevatorConstants::kElevatorSensB};  
+  // frc::Encoder m_elevatorEncoder{ElevatorConstants::kElevatorSensA, ElevatorConstants::kElevatorSensB};  
 
   // Limit switch is a digital input in the DIO port (digital input output)
   frc::DigitalInput m_LimitSwitch{ElevatorConstants::kLimitSwitchPort};

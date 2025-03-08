@@ -30,6 +30,7 @@
 #include "commands/elevator/ExtendElevator.h"
 #include "commands/elevator/RetractElevator.h"
 #include "commands/elevator/StopElevator.h"
+#include "commands/elevator/ElevatorSetPoint.h"
 #include "commands/climber/LockServo.h"
 #include "commands/climber/UnlockServo.h"
 #include "commands/climber/LowerClimber.h"
