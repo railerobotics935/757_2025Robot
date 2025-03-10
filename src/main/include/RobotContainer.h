@@ -19,14 +19,14 @@
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
 #include "subsystems/DriveSubsystem.h"
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/CoralIntakeSubsystem.h"
 #include "subsystems/ClimberSubsystem.h"
 #include "subsystems/ElevatorSubsystem.h"
 
 #include "commands/drive/DriveWithController.h"
-#include "commands/intake/SimpleIntake.h"
-#include "commands/intake/SimpleOuttake.h"
-#include "commands/intake/StopIntake.h"
+#include "commands/coralintake/SimpleCoralIntake.h"
+#include "commands/coralintake/SimpleCoralOuttake.h"
+#include "commands/coralintake/StopCoralIntake.h"
 #include "commands/elevator/ExtendElevator.h"
 #include "commands/elevator/RetractElevator.h"
 #include "commands/elevator/StopElevator.h"
@@ -69,7 +69,7 @@ class RobotContainer {
 
   // The robot's subsystems
   DriveSubsystem m_drive;
-  IntakeSubsystem m_intake;
+  CoralIntakeSubsystem m_coralIntake;
   ElevatorSubsystem m_elevator;
   ClimberSubsystem m_climber;
 
@@ -77,9 +77,9 @@ class RobotContainer {
   frc::SendableChooser<std::string> m_autoChooser;
 
   DriveWithController m_driveWithController{&m_drive, &m_driveController};
-  SimpleIntake m_simpleIntake{&m_intake, &m_operatorController};
-  SimpleOuttake m_simpleOuttake{&m_intake};
-  StopIntake m_stopIntake{&m_intake};
+  SimpleCoralIntake m_simpleIntake{&m_coralIntake, &m_operatorController};
+  SimpleCoralOuttake m_simpleOuttake{&m_coralIntake};
+  StopCoralIntake m_stopIntake{&m_coralIntake};
   ExtendElevator m_extendElevator{&m_elevator};
   RetractElevator m_retractElevator{&m_elevator};
   StopElevator m_stopElevator{&m_elevator};

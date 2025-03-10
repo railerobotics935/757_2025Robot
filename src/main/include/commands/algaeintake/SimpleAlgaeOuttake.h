@@ -5,10 +5,10 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/XboxController.h>
 
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/AlgaeIntakeSubsystem.h"
 
-class SimpleOuttake
-  : public frc2::CommandHelper<frc2::Command, SimpleOuttake> {
+class SimpleAlgaeOuttake
+  : public frc2::CommandHelper<frc2::Command, SimpleAlgaeOuttake> {
 public:
   /**
    * Creates a new SimpleOuttake.
@@ -16,11 +16,11 @@ public:
    * @param intake The pointer to the intake subsystem
    * @param opController The pointer to the drive controller
    */
-  explicit SimpleOuttake(IntakeSubsystem* intake);
+  explicit SimpleAlgaeOuttake(AlgaeIntakeSubsystem* intake);
 
   void Initialize() override;
   void End(bool interrupted) override;
   
 private:
-  IntakeSubsystem* m_intake;
+  AlgaeIntakeSubsystem* m_algaeIntake;
 };

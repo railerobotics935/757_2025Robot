@@ -5,21 +5,21 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/XboxController.h>
 
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/AlgaeIntakeSubsystem.h"
 
-class StopIntake
-  : public frc2::CommandHelper<frc2::Command, StopIntake> {
+class StopAlgaeIntake
+  : public frc2::CommandHelper<frc2::Command, StopAlgaeIntake> {
 public:
   /**
    * Creates a new StopIntake.
    *
    * @param intake The pointer to the intake subsystem
    */
-  explicit StopIntake(IntakeSubsystem* intake);
+  explicit StopAlgaeIntake(AlgaeIntakeSubsystem* intake);
 
   void Initialize() override;
   void End(bool interrupted) override;
   
 private:
-  IntakeSubsystem* m_intake;
+  AlgaeIntakeSubsystem* m_algaeIntake;
 };

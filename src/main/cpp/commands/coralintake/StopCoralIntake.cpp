@@ -1,19 +1,19 @@
 #include "Constants.h"
-#include "commands/intake/StopIntake.h"
+#include "commands/coralintake/StopCoralIntake.h"
 
-StopIntake::StopIntake(IntakeSubsystem* intake) : m_intake{intake} {
-  AddRequirements(m_intake);
+StopCoralIntake::StopCoralIntake(CoralIntakeSubsystem* intake) : m_coralIntake{intake} {
+  AddRequirements(m_coralIntake);
 }
 
-void StopIntake::Initialize() {
+void StopCoralIntake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "StopIntake Initialized\r\n";
 #endif
 
-  m_intake->SetIntakeMotorPower(0.0);
+  m_coralIntake->SetCoralIntakeMotorPower(0.0);
 }
 
-void StopIntake::End(bool interrupted) {
+void StopCoralIntake::End(bool interrupted) {
 #ifdef PRINTDEBUG
   std::cout << "StopIntake Ended\r\n";
 #endif

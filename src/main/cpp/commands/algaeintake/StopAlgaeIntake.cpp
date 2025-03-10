@@ -1,19 +1,19 @@
 #include "Constants.h"
-#include "commands/intake/StopIntake.h"
+#include "commands/algaeintake/StopAlgaeIntake.h"
 
-StopIntake::StopIntake(IntakeSubsystem* intake) : m_intake{intake} {
-  AddRequirements(m_intake);
+StopAlgaeIntake::StopAlgaeIntake(AlgaeIntakeSubsystem* intake) : m_algaeIntake{intake} {
+  AddRequirements(m_algaeIntake);
 }
 
-void StopIntake::Initialize() {
+void StopAlgaeIntake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "StopIntake Initialized\r\n";
 #endif
 
-  m_intake->SetIntakeMotorPower(0.0);
+  m_algaeIntake->SetAlgaeIntakeMotorPower(0.0);
 }
 
-void StopIntake::End(bool interrupted) {
+void StopAlgaeIntake::End(bool interrupted) {
 #ifdef PRINTDEBUG
   std::cout << "StopIntake Ended\r\n";
 #endif

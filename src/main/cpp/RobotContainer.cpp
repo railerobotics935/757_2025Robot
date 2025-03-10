@@ -68,8 +68,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton unlockServoButton(&m_driveController, ControllerConstants::kUnlockLatchButtonIndex);
 //  frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex);
 //  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
-  frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kExtendElevatorTrigger);
-  frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kRetractElevatorTrigger);
+  frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kExtendElevatorButton);
+  frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kRetractElevatorButton);
   frc2::JoystickButton setPointOneButton(&m_operatorController, ControllerConstants::kElevatorSetPointButton);
 
   // Bind commands to button triggers

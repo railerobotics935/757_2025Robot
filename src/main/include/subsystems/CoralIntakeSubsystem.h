@@ -10,12 +10,12 @@
 #include <frc/DigitalInput.h>
 #include <Constants.h>
 
-class IntakeSubsystem : public frc2::SubsystemBase {
+class CoralIntakeSubsystem : public frc2::SubsystemBase {
  public:
   /**
    * Picks up game pieces
   */
-  IntakeSubsystem();
+  CoralIntakeSubsystem();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -23,12 +23,12 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   void Periodic() override;
 
   // Sets the motor's power (between -1.0 and 1.0).
-  void SetIntakeMotorPower(double power);
+  void SetCoralIntakeMotorPower(double power);
 
   // Sets the motor's power (between -1.0 and 1.0).
-  void SetPitchPosition(units::radian_t setAngle);
+  void SetCoralPitchPosition(units::radian_t setAngle);
 
-  void SetPitchPower(double power);
+  void SetCoralPitchPower(double power);
 
   /**
    * @return Direction pitch motor is moving
@@ -53,15 +53,15 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   // Motor Controllers
-  rev::spark::SparkMax m_intakeSparkMax;
-  rev::spark::SparkMax m_pitchSparkMax;
+  rev::spark::SparkMax m_coralIntakeSparkMax;
+  rev::spark::SparkMax m_coralPitchSparkMax;
 
   // Encoders
-  rev::spark::SparkAbsoluteEncoder m_pitchAbsoluteEncoder = m_pitchSparkMax.GetAbsoluteEncoder();
+  rev::spark::SparkAbsoluteEncoder m_coralPitchAbsoluteEncoder = m_coralPitchSparkMax.GetAbsoluteEncoder();
 
   // Light Sensor is a digital input in the DIO port (digital input output)
   frc::DigitalInput m_lightSensor{IntakeConstants::kLightSensorID};
 
   //PID for the pitch
-  rev::spark::SparkClosedLoopController m_pitchPIDController = m_pitchSparkMax.GetClosedLoopController();
+  rev::spark::SparkClosedLoopController m_coralPitchPIDController = m_coralPitchSparkMax.GetClosedLoopController();
 };

@@ -5,10 +5,10 @@
 #include <frc/XboxController.h>
 #include <frc/MathUtil.h>
 
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/CoralIntakeSubsystem.h"
 
-class SimpleIntake
-  : public frc2::CommandHelper<frc2::Command, SimpleIntake> {
+class SimpleCoralIntake
+  : public frc2::CommandHelper<frc2::Command, SimpleCoralIntake> {
 public:
   /**
    * Creates a new SimpleIntake.
@@ -16,7 +16,7 @@ public:
    * @param intake The pointer to the intake subsystem
    * @param opController The pointer to the operator controller
    */
-  explicit SimpleIntake(IntakeSubsystem* intake, frc::XboxController* operatorController);
+  explicit SimpleCoralIntake(CoralIntakeSubsystem* intake, frc::XboxController* operatorController);
 
   void Initialize() override;
   void Execute() override;
@@ -24,6 +24,6 @@ public:
   void End(bool interrupted) override;
   
 private:
-  IntakeSubsystem* m_intake;
+  CoralIntakeSubsystem* m_coralIntake;
   frc::XboxController* m_operatorController;
 };

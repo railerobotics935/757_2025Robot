@@ -1,14 +1,14 @@
 
 #include "Constants.h"
-#include "commands/intake/SetPitch.h"
+#include "commands/coralintake/SetCoralPitch.h"
 
-SetPitch::SetPitch(IntakeSubsystem* intake, frc::XboxController* operatorController) 
-: m_intake{intake}, m_operatorController{operatorController} {
+SetCoralPitch::SetCoralPitch(CoralIntakeSubsystem* intake, frc::XboxController* operatorController) 
+: m_coralIntake{intake}, m_operatorController{operatorController} {
 
-  AddRequirements(m_intake);
+  AddRequirements(m_coralIntake);
 }
 
-void SetPitch::Initialize() {
+void SetCoralPitch::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "SetPitch Initialized\r\n";
 #endif
@@ -16,14 +16,14 @@ void SetPitch::Initialize() {
 //  m_intake->SetMotorPower(1.0);
 }
 
-void SetPitch::Execute() {
-  m_intake->SetPitchPosition(units::radian_t(std::numbers::pi / 4));
+void SetCoralPitch::Execute() {
+  m_coralIntake->SetCoralPitchPosition(units::radian_t(std::numbers::pi / 4));
 }
 
-void SetPitch::End(bool interrupted) {
+void SetCoralPitch::End(bool interrupted) {
 #ifdef PRINTDEBUG
   std::cout << "SetPitch Ended\r\n";
 #endif
 
-  m_intake->SetPitchPower(0.0);
+  m_coralIntake->SetCoralPitchPower(0.0);
 }
