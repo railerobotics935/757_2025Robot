@@ -2,8 +2,8 @@
 #include "Constants.h"
 #include "commands/algaeintake/SimpleAlgaeIntake.h"
 
-SimpleAlgaeIntake::SimpleAlgaeIntake(AlgaeIntakeSubsystem* intake, frc::XboxController* operatorController) 
-:m_algaeIntake{intake}, m_operatorController{operatorController} {
+SimpleAlgaeIntake::SimpleAlgaeIntake(AlgaeIntakeSubsystem* algaeintake, frc::XboxController* operatorController) 
+:m_algaeIntake{algaeintake}, m_operatorController{operatorController} {
 
   AddRequirements(m_algaeIntake);
 }
@@ -33,15 +33,17 @@ void SimpleAlgaeIntake::Execute() {
 
 }
 
-/*bool SimpleAlgaeIntake::IsFinished() {
-  if(m_algaeIntake->CoralInIntake() && m_intake->GetDirection() < 0) {
+bool SimpleAlgaeIntake::IsFinished() {
+ /* if(m_algaeIntake->CoralInIntake() && m_intake->GetDirection() < 0) {
     return true;
   }
   else {
     return false;
   }
+  */
+ return true; //quick fix for a linker error, fix when possible
 }
-*/
+
 void SimpleAlgaeIntake::End(bool interrupted) {
 #ifdef PRINTDEBUG
   std::cout << "SimpleIntake Ended\r\n";

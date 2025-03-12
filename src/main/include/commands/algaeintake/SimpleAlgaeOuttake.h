@@ -13,7 +13,7 @@ public:
   /**
    * Creates a new SimpleOuttake.
    *
-   * @param intake The pointer to the intake subsystem
+   * @param algaeintake The pointer to the intake subsystem
    * @param opController The pointer to the drive controller
    */
   explicit SimpleAlgaeOuttake(AlgaeIntakeSubsystem* intake);

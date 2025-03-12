@@ -50,7 +50,7 @@ RobotContainer::RobotContainer() {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
-  m_intake.SetDefaultCommand(std::move(m_simpleIntake));
+  m_coralIntake.SetDefaultCommand(std::move(m_stopCoralIntake));
   m_elevator.SetDefaultCommand(std::move(m_stopElevator));
   
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
@@ -66,8 +66,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton lowerClimberButton(&m_driveController, ControllerConstants::kLowerClimberButtonIndex);
   frc2::JoystickButton lockServoButton(&m_driveController, ControllerConstants::kLockLatchButtonIndex);
   frc2::JoystickButton unlockServoButton(&m_driveController, ControllerConstants::kUnlockLatchButtonIndex);
-//  frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex);
-//  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
+  frc2::JoystickButton coralIntakeButton(&m_operatorController, ControllerConstants::kCoralIntakeButton);
+  frc2::JoystickButton coralOuttakeButton(&m_operatorController, ControllerConstants::kCoralOuttakeButton); 
   frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kExtendElevatorButton);
   frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kRetractElevatorButton);
   frc2::JoystickButton setPointOneButton(&m_operatorController, ControllerConstants::kElevatorSetPointButton);
@@ -76,10 +76,10 @@ void RobotContainer::ConfigureButtonBindings() {
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
-//  intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
-//  outtakeButton.WhileTrue(SimpleOuttake{&m_intake}.ToPtr());
   raiseElevatorButton.WhileTrue(ExtendElevator{&m_elevator}.ToPtr());
   lowerElevatorButton.WhileTrue(RetractElevator{&m_elevator}.ToPtr());
+  coralIntakeButton.WhileTrue(SimpleCoralIntake{&m_coralIntake}.ToPtr());
+  coralOuttakeButton.WhileTrue(SimpleCoralOuttake{&m_coralIntake}.ToPtr());
   lockServoButton.OnTrue(LockServo{&m_climber}.ToPtr());
   unlockServoButton.OnTrue(UnlockServo{&m_climber}.ToPtr());
   raiseClimberButton.WhileTrue(RaiseClimber{&m_climber}.ToPtr());

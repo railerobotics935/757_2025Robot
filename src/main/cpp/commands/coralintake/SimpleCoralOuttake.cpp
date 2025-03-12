@@ -2,9 +2,9 @@
 #include "commands/coralintake/SimpleCoralOuttake.h"
 
 
-SimpleCoralOuttake::SimpleCoralOuttake(CoralIntakeSubsystem* intake) {
+SimpleCoralOuttake::SimpleCoralOuttake(CoralIntakeSubsystem* coralintake) : m_coralIntake{coralintake} {
   // Initilize local copys of pointers
-  m_coralIntake = intake;
+  m_coralIntake = coralintake;
 
   // Add reqierments for the command
   AddRequirements(m_coralIntake);
@@ -14,7 +14,7 @@ void SimpleCoralOuttake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "SimpleOuttake Initialized\r\n";
 #endif
-  m_coralIntake->SetCoralIntakeMotorPower(-1.0);
+  m_coralIntake->SetCoralIntakeMotorPower(0.5);
 }
 
 void SimpleCoralOuttake::End(bool interrupted) {

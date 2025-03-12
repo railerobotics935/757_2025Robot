@@ -1,7 +1,7 @@
 #include "Constants.h"
 #include "commands/algaeintake/StopAlgaeIntake.h"
 
-StopAlgaeIntake::StopAlgaeIntake(AlgaeIntakeSubsystem* intake) : m_algaeIntake{intake} {
+StopAlgaeIntake::StopAlgaeIntake(AlgaeIntakeSubsystem* algaeintake) : m_algaeIntake{algaeintake} {
   AddRequirements(m_algaeIntake);
 }
 

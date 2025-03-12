@@ -2,9 +2,9 @@
 #include "commands/algaeintake/SimpleAlgaeOuttake.h"
 
 
-SimpleAlgaeOuttake::SimpleAlgaeOuttake(AlgaeIntakeSubsystem* intake) {
+SimpleAlgaeOuttake::SimpleAlgaeOuttake(AlgaeIntakeSubsystem* algaeintake) {
   // Initilize local copys of pointers
-  m_algaeIntake = intake;
+  m_algaeIntake = algaeintake;
 
   // Add reqierments for the command
   AddRequirements(m_algaeIntake);

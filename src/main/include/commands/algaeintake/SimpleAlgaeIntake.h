@@ -13,7 +13,7 @@ public:
   /**
    * Creates a new SimpleIntake.
    *
-   * @param intake The pointer to the intake subsystem
+   * @param algaeintake The pointer to the intake subsystem
    * @param opController The pointer to the operator controller
    */
   explicit SimpleAlgaeIntake(AlgaeIntakeSubsystem* intake, frc::XboxController* operatorController);

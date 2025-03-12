@@ -38,7 +38,7 @@ class CoralIntakeSubsystem : public frc2::SubsystemBase {
   /**
    * @returns square of input with the same sign
    */
-  double SignedSquare(double input);
+ //double SignedSquare(double input);
 
   /**
    * @return If light sensor has detected a coral

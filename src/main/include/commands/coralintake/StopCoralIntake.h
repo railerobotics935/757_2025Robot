@@ -13,7 +13,7 @@ public:
   /**
    * Creates a new StopIntake.
    *
-   * @param intake The pointer to the intake subsystem
+   * @param coralintake The pointer to the intake subsystem
    */
   explicit StopCoralIntake(CoralIntakeSubsystem* intake);
 

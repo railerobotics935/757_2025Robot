@@ -13,9 +13,9 @@ public:
   /**
    * Creates a new StopIntake.
    *
-   * @param intake The pointer to the intake subsystem
+   * @param algaeintake The pointer to the intake subsystem
    */
-  explicit StopAlgaeIntake(AlgaeIntakeSubsystem* intake);
+  explicit StopAlgaeIntake(AlgaeIntakeSubsystem* algaeintake);
 
   void Initialize() override;
   void End(bool interrupted) override;

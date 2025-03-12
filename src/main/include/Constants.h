@@ -204,10 +204,6 @@ constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
 #ifdef USEXBOXCONTROLLER
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
 constexpr int kOperatorRightYIndex = 5; // An input UP creates a NEGATIVE output
-constexpr int kIntakeTrigger = 3;
-constexpr int kOuttakeTrigger = 2;
-
-
 
 #else
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
@@ -224,9 +220,13 @@ constexpr int kLockLatchButtonIndex = 3; // X
 constexpr int kUnlockLatchButtonIndex = 4; // Y
 
 // Operator Controller
-constexpr int kExtendElevatorTrigger = 6; // Pressing it creates a POSITVE output
-constexpr int kRetractElevatorTrigger = 5; // Pressing it creates a POSITVE output
+constexpr int kExtendElevatorButton = 6; // Pressing it creates a POSITVE output
+constexpr int kRetractElevatorButton = 5; // Pressing it creates a POSITVE output
 constexpr int kElevatorSetPointButton = 3; // X
+constexpr int kCoralIntakeButton = 8;
+constexpr int kCoralOuttakeButton = 7;
+constexpr int kAlgaeIntakeButton = 3;
+constexpr int kAlgaeOuttakeButton = 2;
 
 } // namespace ControllerConstants
 
@@ -293,8 +293,9 @@ constexpr int kElevatorFF = 0;
 constexpr int kElevatorMinOutput = -1;
 constexpr int kElevatorMaxOutput = 1;
 
-constexpr double kMaximumHeight = 1.0; // Should be in meters
+constexpr double kMaximumHeight = 1.0;
 constexpr double kMinimumHeight = 0.0;
+
 
 constexpr units::ampere_t kElevatorMotorCurrentLimit = 40_A;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
@@ -305,10 +306,14 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kElevatorMotorIdleMode = rev::spa
 } // namespace ElevatorConstants
 
 namespace IntakeConstants {
-// Intake motor 
-constexpr int kIntakeMotorID = 26;
-constexpr int kPitchMotorID = 27;
+// Coral intake motor 
+constexpr int kCoralIntakeMotorID = 26;
+constexpr int kCoralPitchMotorID = 27;
 constexpr int kLightSensorID = 3;
+
+// Algae intake motor
+constexpr int kRightAlgaeIntakeMotorID = 24;
+constexpr int kLeftAlgaeIntakeMotorID = 25;
 
 //PID Values
 constexpr int kPitchP = 0;
@@ -319,7 +324,8 @@ constexpr int kPitchFF = 0;
 constexpr int kPitchMinOutput = -1;
 constexpr int kPitchMaxOutput = 1;
 
-constexpr units::ampere_t kIntakeMotorCurrentLimit = 40_A;
+constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
+constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
 constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 

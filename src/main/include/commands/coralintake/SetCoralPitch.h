@@ -13,10 +13,10 @@ public:
   /**
    * Creates a new SimpleIntake.
    *
-   * @param intake The pointer to the intake subsystem
+   * @param coralintake The pointer to the intake subsystem
    * @param opController The pointer to the operator controller
    */
-  explicit SetCoralPitch(CoralIntakeSubsystem* intake, frc::XboxController* operatorController);
+  explicit SetCoralPitch(CoralIntakeSubsystem* intake);
 
   void Initialize() override;
   void Execute() override;
@@ -25,5 +25,4 @@ public:
   
 private:
   CoralIntakeSubsystem* m_coralIntake;
-  frc::XboxController* m_operatorController;
 };

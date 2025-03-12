@@ -49,7 +49,7 @@ void CoralIntakeSubsystem::SetCoralPitchPosition(units::radian_t setAngle) {
 void CoralIntakeSubsystem::SetCoralPitchPower(double power) {
   m_coralPitchSparkMax.Set(power);
 }
-
+/*
 double CoralIntakeSubsystem::SignedSquare(double input) {
   if (input > 0) {
     return std::pow(input, 2);
@@ -58,6 +58,7 @@ double CoralIntakeSubsystem::SignedSquare(double input) {
     return -std::pow(input, 2);
   }
 }
+*/
 
 bool CoralIntakeSubsystem::CoralInIntake() {
   return m_lightSensor.Get();
