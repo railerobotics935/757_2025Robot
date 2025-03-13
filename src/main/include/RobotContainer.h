@@ -31,10 +31,9 @@
 #include "commands/elevator/RetractElevator.h"
 #include "commands/elevator/StopElevator.h"
 #include "commands/elevator/ElevatorSetPoint.h"
-#include "commands/climber/LockServo.h"
-#include "commands/climber/UnlockServo.h"
 #include "commands/climber/LowerClimber.h"
 #include "commands/climber/RaiseClimber.h"
+#include "commands/climber/StopClimber.h"
 
 
 /**
@@ -74,7 +73,10 @@ class RobotContainer {
   ClimberSubsystem m_climber;
 
   // Sendable chooser for auto
-  frc::SendableChooser<std::string> m_autoChooser;
+   frc::SendableChooser<std::string> m_autoChooser;
+
+  // Auto options coresponding to the name of the autos                                             
+  std::string m_newAuto = "New Auto";
 
   DriveWithController m_driveWithController{&m_drive, &m_driveController};
   SimpleCoralIntake m_simpleCoralIntake{&m_coralIntake};
@@ -85,7 +87,6 @@ class RobotContainer {
   StopElevator m_stopElevator{&m_elevator};
   RaiseClimber m_raiseClimber{&m_climber};
   LowerClimber m_lowerClimber{&m_climber};
-  LockServo m_lockServo{&m_climber};
-  UnlockServo m_unlockServo{&m_climber};
+  StopClimber m_stopClimber{&m_climber};
   
 };

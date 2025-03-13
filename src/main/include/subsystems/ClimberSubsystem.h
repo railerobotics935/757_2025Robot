@@ -13,7 +13,6 @@
 #include <frc/DigitalInput.h>
 #include <frc/SensorUtil.h>
 #include <frc/Encoder.h>
-#include <frc/Servo.h>
 
 #include "Constants.h"
 
@@ -53,11 +52,6 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   */
   void UpdateNTE();
 
-  /**
-   * Locks the servo latch so the robot doesn't fall after being powered off
-   */
-  void LatchServo(double value);
-
  private:
 
   //nt::NetworkTableEntry m_ClimberLimitSwitch;
@@ -71,6 +65,4 @@ class ClimberSubsystem : public frc2::SubsystemBase {
 
   // Limit switch is a digital input in the DIO port (digital input output)
   //frc::DigitalInput m_LimitSwitch{ClimberConstants::kLimitSwitchPort};
-
-  frc::Servo m_climberServo{ClimberConstants::kServoPort};
 };

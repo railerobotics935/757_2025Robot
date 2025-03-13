@@ -25,6 +25,9 @@
 #include <frc/geometry/Translation2d.h>
 #include <units/length.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/config/RobotConfig.h>
+#include <pathplanner/lib/controllers/PPHolonomicDriveController.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -38,6 +41,9 @@ public:
    * for the pathplanner path orientaion
    */
   bool InRedAlliance();
+
+
+
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
