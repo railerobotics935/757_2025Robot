@@ -10,10 +10,13 @@ void StopCoralIntake::Initialize() {
   std::cout << "StopIntake Initialized\r\n";
 #endif
   m_coralIntake->SetCoralIntakeMotorPower(0.0);
+  //m_coralIntake->SetCoralIntakeAngle(0.0);
 }
 
 void StopCoralIntake::End(bool interrupted) {
   m_coralIntake->SetCoralIntakeMotorPower(0.0);
+ // m_coralIntake->SetCoralIntakeAngle(0.0);
+
 #ifdef PRINTDEBUG
   std::cout << "StopIntake Ended\r\n";
 #endif

@@ -13,7 +13,7 @@
 class AlgaeIntakeSubsystem : public frc2::SubsystemBase {
  public:
   /**
-   * Picks up game pieces
+   * Picks up game pieces :)
   */
   AlgaeIntakeSubsystem();
 
@@ -22,28 +22,30 @@ class AlgaeIntakeSubsystem : public frc2::SubsystemBase {
    */
   void Periodic() override;
 
+   bool RightAlgaeIntakeAtBase();
+   bool LeftAlgaeIntakeAtBase();
+
+
+  /**
+   * @returns True if the upper algae limit switch is pressed
+  */
+  bool RightAlgaeIntakeRisen();
+  bool LeftAlgaeIntakeRisen();
+
+
   // Sets the motor's power (between -1.0 and 1.0).
   void SetAlgaeIntakeMotorPower(double power);
 
-  // Sets the motor's power (between -1.0 and 1.0).
+  // Sets the angle of the pitch motor
   void SetPitchPosition(units::radian_t setAngle);
   
+  // Sets the motor's power (between -1.0 and 1.0).
   void SetPitchPower(double power);
 
   /**
    * @return Direction pitch motor is moving
    */
   double GetDirection();
-
-  /**
-   * @returns square of input with the same sign
-   */
- // double SignedSquare(double input);
-
-  /**
-   * @return If light sensor has detected a coral
-   */
-  bool AlgaeInIntake();
 
  private:
 
@@ -56,14 +58,19 @@ class AlgaeIntakeSubsystem : public frc2::SubsystemBase {
   rev::spark::SparkMax m_rightAlgaeIntakeSparkMax;
   rev::spark::SparkMax m_leftAlgaeIntakeSparkMax;
   
-  rev::spark::SparkMax m_pitchSparkMax;
+  rev::spark::SparkMax m_rightPitchSparkMax;
+  rev::spark::SparkMax m_leftPitchSparkMax;
 
   // Encoders
-  rev::spark::SparkAbsoluteEncoder m_pitchAbsoluteEncoder = m_pitchSparkMax.GetAbsoluteEncoder();
-
-  // Light Sensor is a digital input in the DIO port (digital input output)
-  frc::DigitalInput m_lightSensor{IntakeConstants::kLightSensorID};
+  rev::spark::SparkAbsoluteEncoder m_rightPitchAbsoluteEncoder = m_rightPitchSparkMax.GetAbsoluteEncoder();
+  rev::spark::SparkAbsoluteEncoder m_leftPitchAbsoluteEncoder = m_leftPitchSparkMax.GetAbsoluteEncoder();
 
   //PID for the pitch
-  rev::spark::SparkClosedLoopController m_pitchPIDController = m_pitchSparkMax.GetClosedLoopController();
+  rev::spark::SparkClosedLoopController m_rightPitchPIDController = m_rightPitchSparkMax.GetClosedLoopController();
+  rev::spark::SparkClosedLoopController m_leftPitchPIDController = m_leftPitchSparkMax.GetClosedLoopController();
+
+  frc::DigitalInput m_RightAlgaeLimitSwitch{IntakeConstants::kRightAlgaeLimitSwitchPort};
+  frc::DigitalInput m_LeftAlgaeLimitSwitch{IntakeConstants::kLeftAlgaeLimitSwitchPort};
+
+
 };

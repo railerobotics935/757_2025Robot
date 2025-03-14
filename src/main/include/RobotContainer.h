@@ -20,6 +20,7 @@
 #include "utils/SwerveUtils.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/CoralIntakeSubsystem.h"
+#include "subsystems/AlgaeIntakeSubsystem.h"
 #include "subsystems/ClimberSubsystem.h"
 #include "subsystems/ElevatorSubsystem.h"
 
@@ -27,6 +28,9 @@
 #include "commands/coralintake/SimpleCoralIntake.h"
 #include "commands/coralintake/SimpleCoralOuttake.h"
 #include "commands/coralintake/StopCoralIntake.h"
+#include "commands/coralintake/LowerCoralPitch.h"
+#include "commands/coralintake/RaiseCoralPitch.h"
+#include "commands/coralintake/StopCoralPitch.h"
 #include "commands/elevator/ExtendElevator.h"
 #include "commands/elevator/RetractElevator.h"
 #include "commands/elevator/StopElevator.h"
@@ -34,6 +38,9 @@
 #include "commands/climber/LowerClimber.h"
 #include "commands/climber/RaiseClimber.h"
 #include "commands/climber/StopClimber.h"
+#include "commands/algaeintake/SimpleAlgaeIntake.h"
+#include "commands/algaeintake/SimpleAlgaeOuttake.h"
+#include "commands/algaeintake/StopAlgaeIntake.h"
 
 
 /**
@@ -69,6 +76,7 @@ class RobotContainer {
   // The robot's subsystems
   DriveSubsystem m_drive;
   CoralIntakeSubsystem m_coralIntake;
+  AlgaeIntakeSubsystem m_algaeIntake; 
   ElevatorSubsystem m_elevator;
   ClimberSubsystem m_climber;
 
@@ -82,6 +90,12 @@ class RobotContainer {
   SimpleCoralIntake m_simpleCoralIntake{&m_coralIntake};
   SimpleCoralOuttake m_simpleCoralOuttake{&m_coralIntake};
   StopCoralIntake m_stopCoralIntake{&m_coralIntake};
+  RaiseCoralPitch m_raiseCoralPitch{&m_coralIntake};
+  LowerCoralPitch m_lowerCoralPitch{&m_coralIntake};
+  StopCoralPitch m_stopCoralPitch{&m_coralIntake};
+  SimpleAlgaeIntake m_simpleAlgaeIntake{&m_algaeIntake};
+  SimpleAlgaeOuttake m_simpleAlgaeOuttake{&m_algaeIntake};
+  StopAlgaeIntake m_stopAlgaeIntake{&m_algaeIntake};
   ExtendElevator m_extendElevator{&m_elevator};
   RetractElevator m_retractElevator{&m_elevator};
   StopElevator m_stopElevator{&m_elevator};

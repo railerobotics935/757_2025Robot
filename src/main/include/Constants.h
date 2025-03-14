@@ -31,8 +31,11 @@
 //#define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
 #define BURNELEVATORSPARKMAX
+#define BURNCLIMBERSPARKMAX
 #define BURNCORALINTAKESPARKMAX
 #define BURNPITCHSPARKMAX
+#define BURNALGAEINTAKESPARKMAX
+#define BURNALGAEPITCHSPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -215,10 +218,8 @@ constexpr int kOperatorRightYIndex = 3; // An input UP creates a NEGATIVE output
 constexpr int kFieldRelativeButtonIndex = 7; // CL
 constexpr int kRobotRelativeButtonIndex = 8; // CR
 constexpr int kResetGyroButtonIndex = 2; // B
-constexpr int kRaiseClimberButtonIndex = 6; // RB
-constexpr int kLowerClimberButtonIndex = 5; // LB
-constexpr int kLockLatchButtonIndex = 3; // X
-constexpr int kUnlockLatchButtonIndex = 4; // Y
+constexpr int kRaiseClimberButton = 6; // RB
+constexpr int kLowerClimberButton = 5; // LB
 
 // Operator Controller
 constexpr int kExtendElevatorButton = 6; // Pressing it creates a POSITVE output
@@ -226,8 +227,10 @@ constexpr int kRetractElevatorButton = 5; // Pressing it creates a POSITVE outpu
 constexpr int kElevatorSetPointButton = 3; // X
 constexpr int kCoralIntakeButton = 8;
 constexpr int kCoralOuttakeButton = 7;
-constexpr int kAlgaeIntakeButton = 1;
-constexpr int kAlgaeOuttakeButton = 2;
+constexpr int kCoralPitchRaiseButton = 1; // X
+constexpr int kCoralPitchLowerButton = 4; // Y
+constexpr int kAlgaeIntakeButton = 2;
+constexpr int kAlgaeOuttakeButton = 3;
 
 } // namespace ControllerConstants
 
@@ -315,10 +318,16 @@ constexpr int kLightSensorID = 3;
 // Algae intake motor
 constexpr int kRightAlgaeIntakeMotorID = 24;
 constexpr int kLeftAlgaeIntakeMotorID = 25;
+constexpr int kLeftAlgaePitchMotorID = 12;
+constexpr int kRightAlgaePitchMotorID = 17;
+
+constexpr int kRightAlgaeLimitSwitchPort = 4;
+constexpr int kLeftAlgaeLimitSwitchPort = 5;
+
 
 //PID Values
-constexpr int kPitchP = 1.5;
-constexpr int kPitchI = 0;
+constexpr int kPitchP = 2;
+constexpr int kPitchI = 0.5;
 constexpr int kPitchD = 0;
 constexpr int kPitchFF = 0;
 
@@ -327,20 +336,25 @@ constexpr int kPitchMaxOutput = 1;
 
 constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;
+
 constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
+constexpr rev::spark::SparkMaxConfig::IdleMode kPitchMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 
+
+
 // Pitch limits
-constexpr double kMinimumAngle = 0.0;
-constexpr double kMaximumAngle = 0.5;
+constexpr double kMinimumAngle = 0;
+constexpr double kMaximumAngle = 1;
 } // namespace IntakeConstant
 
 namespace ClimberConstants {
-    constexpr int kMotorID = 23;
+    constexpr int kClimberMotorID = 23;
 
     constexpr units::ampere_t kClimberMotorCurrentLimit = 40_A;
     constexpr double kClimberPositionFactor = 4.0 * std::numbers::pi; // in meters
 
     constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
     constexpr rev::spark::SparkMaxConfig::IdleMode kClimberMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
+
 } // namespace ClimberConstants

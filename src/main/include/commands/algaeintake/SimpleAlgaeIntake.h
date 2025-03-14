@@ -14,13 +14,10 @@ public:
    * Creates a new SimpleIntake.
    *
    * @param algaeintake The pointer to the intake subsystem
-   * @param opController The pointer to the operator controller
    */
-  explicit SimpleAlgaeIntake(AlgaeIntakeSubsystem* intake, frc::XboxController* operatorController);
+  explicit SimpleAlgaeIntake(AlgaeIntakeSubsystem *algaeintake);
 
   void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
   void End(bool interrupted) override;
   
 private:

@@ -51,8 +51,10 @@ RobotContainer::RobotContainer() {
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
   m_coralIntake.SetDefaultCommand(std::move(m_stopCoralIntake));
+  m_coralIntake.SetDefaultCommand(std::move(m_stopCoralPitch));
   m_elevator.SetDefaultCommand(std::move(m_stopElevator));
   m_climber.SetDefaultCommand(std::move(m_stopClimber));
+  m_algaeIntake.SetDefaultCommand(std::move(m_stopAlgaeIntake));
   
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 
@@ -65,20 +67,30 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); 
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex);
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex);
-  frc2::JoystickButton raiseClimberButton(&m_driveController, ControllerConstants::kRaiseClimberButtonIndex);
-  frc2::JoystickButton lowerClimberButton(&m_driveController, ControllerConstants::kLowerClimberButtonIndex);
-  frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kCoralIntakeButton);
-  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kCoralOuttakeButton); 
+  frc2::JoystickButton raiseClimberButton(&m_driveController, ControllerConstants::kRaiseClimberButton);
+  frc2::JoystickButton lowerClimberButton(&m_driveController, ControllerConstants::kLowerClimberButton);
+
+  frc2::JoystickButton coralIntakeButton(&m_operatorController, ControllerConstants::kCoralIntakeButton);
+  frc2::JoystickButton coralOuttakeButton(&m_operatorController, ControllerConstants::kCoralOuttakeButton);
+  frc2::JoystickButton algaeIntakeButton(&m_operatorController, ControllerConstants::kAlgaeIntakeButton);
+  frc2::JoystickButton algaeOuttakeButton(&m_operatorController, ControllerConstants::kAlgaeOuttakeButton);  
   frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kExtendElevatorButton);
   frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kRetractElevatorButton);
   frc2::JoystickButton setPointOneButton(&m_operatorController, ControllerConstants::kElevatorSetPointButton);
+  frc2::JoystickButton lowerCoralPitchButton(&m_operatorController, ControllerConstants::kCoralPitchLowerButton);
+  frc2::JoystickButton raiseCoralPitchButton(&m_operatorController, ControllerConstants::kCoralPitchRaiseButton);
+
 
   // Bind commands to button triggers
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
-  intakeButton.WhileTrue(SimpleCoralIntake{&m_coralIntake}.ToPtr());
-  outtakeButton.WhileTrue(SimpleCoralOuttake{&m_coralIntake}.ToPtr());
+  coralIntakeButton.WhileTrue(SimpleCoralIntake{&m_coralIntake}.ToPtr());
+  coralOuttakeButton.WhileTrue(SimpleCoralOuttake{&m_coralIntake}.ToPtr());
+  raiseCoralPitchButton.WhileTrue(RaiseCoralPitch{&m_coralIntake}.ToPtr());
+  lowerCoralPitchButton.WhileTrue(LowerCoralPitch{&m_coralIntake}.ToPtr());
+  algaeIntakeButton.WhileTrue(SimpleAlgaeIntake{&m_algaeIntake}.ToPtr());
+  algaeOuttakeButton.WhileTrue(SimpleAlgaeOuttake{&m_algaeIntake}.ToPtr());
   raiseElevatorButton.WhileTrue(ExtendElevator{&m_elevator}.ToPtr());
   lowerElevatorButton.WhileTrue(RetractElevator{&m_elevator}.ToPtr());
   raiseClimberButton.WhileTrue(RaiseClimber{&m_climber}.ToPtr());

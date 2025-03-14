@@ -68,18 +68,9 @@ void ElevatorSubsystem::UpdateNTE() {
 }
 
 void ElevatorSubsystem::SetElevatorPower(double power) {
-  /*if (power < 0.0 && m_elevatorEncoder.GetDistance() < -6.2) {
-   m_elevatorSparkMax.Set(0.0);
+  m_elevatorSparkMax.Set(power);
   }
-  else {
-    if (ElevatorAtBase() && power > 0.0)
-     m_elevatorSparkMax.Set(0.0);
 
-    else {
-     */m_elevatorSparkMax.Set(power);
-    }
-  //}}
-  
 void ElevatorSubsystem::GoToSetPoint(double setPoint) {
   /**
    * Uses internal SparkMax PID to go to the set point

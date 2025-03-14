@@ -42,7 +42,7 @@ CoralIntakeSubsystem::CoralIntakeSubsystem()
 
   coralPitchSparkMaxConfig
   .VoltageCompensation(RobotConstants::kVoltageCompentationValue)
-  .SetIdleMode(IntakeConstants::kIntakeMotorIdleMode)
+  .SetIdleMode(IntakeConstants::kPitchMotorIdleMode)
   .SmartCurrentLimit(IntakeConstants::kCoralIntakeMotorCurrentLimit.value());
 
   coralPitchSparkMaxConfig.closedLoop

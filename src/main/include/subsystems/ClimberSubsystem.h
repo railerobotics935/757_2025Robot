@@ -31,16 +31,6 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   void Periodic() override; 
 
   /**
-   * @returns True if the base climber limit switch is pressed
-  */
-  bool ClimberAtBase();
-
-  /**
-   * @returns True if the upper climber limit switch is pressed
-  */
-  bool ClimberRisen();
-
-  /**
    * Set the climber motor to a power
    * 
    * @param power Power to set the motor power
@@ -58,11 +48,9 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   nt::NetworkTableEntry m_ClimberDistance;
 
   // Motor Controllers
-  rev::spark::SparkMax m_climberSparkMax{ClimberConstants::kMotorID, ClimberConstants::kMotorType};
+  rev::spark::SparkMax m_climberSparkMax{ClimberConstants::kClimberMotorID, ClimberConstants::kMotorType};
   
   // Encoders motor controllers
   rev::spark::SparkRelativeEncoder m_climberEncoder = m_climberSparkMax.GetEncoder();
 
-  // Limit switch is a digital input in the DIO port (digital input output)
-  //frc::DigitalInput m_LimitSwitch{ClimberConstants::kLimitSwitchPort};
 };

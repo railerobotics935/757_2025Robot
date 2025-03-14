@@ -15,7 +15,7 @@ void SimpleCoralOuttake::Initialize() {
   std::cout << "SimpleOuttake Initialized\r\n";
 #endif
   m_coralIntake->SetCoralIntakeMotorPower(0.5);
-  m_coralIntake->SetCoralIntakeAngle(0.25);
+  //m_coralIntake->SetCoralIntakeAngle(0.25);
 }
 
 void SimpleCoralOuttake::End(bool interrupted) {
@@ -23,6 +23,6 @@ void SimpleCoralOuttake::End(bool interrupted) {
   std::cout << "SimpleOuttake Ended\r\n";
 #endif
   m_coralIntake->SetCoralIntakeMotorPower(0.0);
-//  m_coralIntake->SetCoralIntakeAngle(0.0);
+  //m_coralIntake->SetCoralIntakeAngle(0.0);
 
 }
