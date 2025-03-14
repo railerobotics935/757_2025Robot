@@ -8,10 +8,8 @@
 AlgaeIntakeSubsystem::AlgaeIntakeSubsystem() 
 : m_rightAlgaeIntakeSparkMax{IntakeConstants::kRightAlgaeIntakeMotorID, IntakeConstants::kMotorType},
   m_leftAlgaeIntakeSparkMax{IntakeConstants::kLeftAlgaeIntakeMotorID, IntakeConstants::kMotorType} {
-
+// Implementation of subsystem constructor goes here.
 } 
-
-  // Implementation of subsystem constructor goes here.
 
 
 void AlgaeIntakeSubsystem::Periodic() {
@@ -24,7 +22,7 @@ void AlgaeIntakeSubsystem::SetAlgaeIntakeMotorPower(double power) {
   m_leftAlgaeIntakeSparkMax.Set(power);
 }
 
-/* void AlgaeIntakeSubsystem::SetPitchPosition(units::radian_t setAngle) {
+void AlgaeIntakeSubsystem::SetPitchPosition(units::radian_t setAngle) {
   // Use the Spark MAX internal PID controller to reach the setAngle
   // - downward is counterclockwise along the robot Y-axis => positive direction for Angle
   // - check intake rotates down when applying a positive value to the SetPitchPower method,
@@ -50,23 +48,23 @@ void AlgaeIntakeSubsystem::SetAlgaeIntakeMotorPower(double power) {
   }
 }
 
-void IntakeSubsystem::SetPitchPower(double power) {
+void AlgaeIntakeSubsystem::SetPitchPower(double power) {
   m_pitchSparkMax.Set(power);
 }
-*/
-double AlgaeIntakeSubsystem::SignedSquare(double input) {
+
+/*double AlgaeIntakeSubsystem::SignedSquare(double input) {
   if (input > 0) {
     return std::pow(input, 2);
   }
   else {
     return -std::pow(input, 2);
   }
-}
+} */
 
-/*bool IntakeSubsystem::CoralInIntake() {
+bool AlgaeIntakeSubsystem::AlgaeInIntake() {
   return m_lightSensor.Get();
 }
-*/
+
 void AlgaeIntakeSubsystem::ConfigureAlgaeSparkMax() {
   // Configure the Intake Spark MAX
   rev::spark::SparkMaxConfig rightAlgaeIntakeSparkMaxConfig{};
@@ -76,7 +74,8 @@ void AlgaeIntakeSubsystem::ConfigureAlgaeSparkMax() {
   rightAlgaeIntakeSparkMaxConfig
   .VoltageCompensation(RobotConstants::kVoltageCompentationValue)
   .SetIdleMode(IntakeConstants::kIntakeMotorIdleMode)
-  .SmartCurrentLimit(IntakeConstants::kAlgaeIntakeMotorCurrentLimit.value());
+  .SmartCurrentLimit(IntakeConstants::kAlgaeIntakeMotorCurrentLimit.value())
+  .Follow(IntakeConstants::kLeftAlgaeIntakeMotorID, true);
 
   leftAlgaeIntakeSparkMaxConfig
   .VoltageCompensation(RobotConstants::kVoltageCompentationValue)

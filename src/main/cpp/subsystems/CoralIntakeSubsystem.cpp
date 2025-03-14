@@ -34,13 +34,13 @@ void CoralIntakeSubsystem::SetCoralPitchPosition(units::radian_t setAngle) {
   // - IntakeConstants::kMaximumAngle sets the downward pitch limit, this is the highest angle value
 
   // Limit Pitch going too far up
-  if ((m_coralPitchAbsoluteEncoder.GetPosition() < IntakeConstants::kMinimumAngle) &&
+  if ((m_coralPitchAbsoluteEncoder.GetPosition() > IntakeConstants::kMinimumAngle) &&
       (m_coralPitchSparkMax.Get() < 0.0)) {
     m_coralPitchSparkMax.Set(0.0);
   }
 
   // Limit Pitch going too far down
-  if ((m_coralPitchAbsoluteEncoder.GetPosition() > IntakeConstants::kMaximumAngle) &&
+  if ((m_coralPitchAbsoluteEncoder.GetPosition() < IntakeConstants::kMaximumAngle) &&
       (m_coralPitchSparkMax.Get() > 0.0)) {
     m_coralPitchSparkMax.Set(0.0);
   }
