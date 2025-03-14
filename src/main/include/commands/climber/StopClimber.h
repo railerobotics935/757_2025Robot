@@ -7,15 +7,15 @@
 
 #include "subsystems/ClimberSubsystem.h"
 
-class LockServo
-  : public frc2::CommandHelper<frc2::Command, LockServo> {
+class StopClimber
+  : public frc2::CommandHelper<frc2::Command, StopClimber> {
 public:
   /**
-   * Creates a new LockServo.
+   * Creates a new StopClimber.
    *
    * @param climber The pointer to the intake subsystem
    */
-  explicit LockServo(ClimberSubsystem* climber);
+  explicit StopClimber(ClimberSubsystem* climber);
 
   void Execute() override;
   void End(bool interrupted) override;

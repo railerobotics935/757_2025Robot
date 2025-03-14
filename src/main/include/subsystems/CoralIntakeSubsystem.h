@@ -6,6 +6,8 @@
 
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/SubsystemBase.h>
+#include <networktables/NetworkTableEntry.h>
+#include <networktables/NetworkTableInstance.h>
 #include <rev/SparkMax.h>
 #include <frc/DigitalInput.h>
 #include <Constants.h>
@@ -26,19 +28,14 @@ class CoralIntakeSubsystem : public frc2::SubsystemBase {
   void SetCoralIntakeMotorPower(double power);
 
   // Sets the motor's power (between -1.0 and 1.0).
-  void SetCoralPitchPosition(units::radian_t setAngle);
+  void SetCoralIntakeAngle(double angle);
 
   void SetCoralPitchPower(double power);
 
   /**
-   * @return Direction pitch motor is moving
+   * @return Direction intake motor is moving
    */
   double GetDirection();
-
-  /**
-   * @returns square of input with the same sign
-   */
- //double SignedSquare(double input);
 
   /**
    * @return If light sensor has detected a coral
@@ -64,4 +61,6 @@ class CoralIntakeSubsystem : public frc2::SubsystemBase {
 
   //PID for the pitch
   rev::spark::SparkClosedLoopController m_coralPitchPIDController = m_coralPitchSparkMax.GetClosedLoopController();
+
+  nt::NetworkTableEntry nte_pitchEncoderValue;
 };

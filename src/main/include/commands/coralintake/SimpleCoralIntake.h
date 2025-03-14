@@ -16,7 +16,7 @@ public:
    * @param coralintake The pointer to the intake subsystem
    * @param opController The pointer to the operator controller
    */
-  explicit SimpleCoralIntake(CoralIntakeSubsystem *intake);
+  explicit SimpleCoralIntake(CoralIntakeSubsystem *coralintake);
 
   void Initialize() override;
   //void Execute() override;

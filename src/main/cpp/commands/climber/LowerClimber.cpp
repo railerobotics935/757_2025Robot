@@ -15,7 +15,9 @@ void LowerClimber::Execute() {
 }
 
 void LowerClimber::End(bool interrupted) {
+  m_climber->SetClimberPower(0.0);
 #ifdef PRINTDEBUG
   std::cout << "LowerClimber Ended\r\n";
 #endif
+
 }

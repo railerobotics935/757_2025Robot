@@ -18,4 +18,6 @@ void RaiseClimber::End(bool interrupted) {
 #ifdef PRINTDEBUG
   std::cout << "RaiseClimber Ended\r\n";
 #endif
+  m_climber->SetClimberPower(0.0);
+
 }

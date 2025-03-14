@@ -31,7 +31,8 @@
 //#define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
 #define BURNELEVATORSPARKMAX
-#define BURNINTAKESPARKMAX
+#define BURNCORALINTAKESPARKMAX
+#define BURNPITCHSPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -225,7 +226,7 @@ constexpr int kRetractElevatorButton = 5; // Pressing it creates a POSITVE outpu
 constexpr int kElevatorSetPointButton = 3; // X
 constexpr int kCoralIntakeButton = 8;
 constexpr int kCoralOuttakeButton = 7;
-constexpr int kAlgaeIntakeButton = 3;
+constexpr int kAlgaeIntakeButton = 1;
 constexpr int kAlgaeOuttakeButton = 2;
 
 } // namespace ControllerConstants
@@ -316,7 +317,7 @@ constexpr int kRightAlgaeIntakeMotorID = 24;
 constexpr int kLeftAlgaeIntakeMotorID = 25;
 
 //PID Values
-constexpr int kPitchP = 0;
+constexpr int kPitchP = 1.5;
 constexpr int kPitchI = 0;
 constexpr int kPitchD = 0;
 constexpr int kPitchFF = 0;
@@ -330,22 +331,16 @@ constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLow
 constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 
 // Pitch limits
-constexpr double kMinimumAngle = 0;
-constexpr double kMaximumAngle = (std::numbers::pi / 4);
+constexpr double kMinimumAngle = 0.0;
+constexpr double kMaximumAngle = 0.5;
 } // namespace IntakeConstant
 
 namespace ClimberConstants {
-    constexpr int kMotorID = 0;
-
-    constexpr int kServoPort = 0;
-    constexpr int kLimitSwitchPort = 5;
+    constexpr int kMotorID = 23;
 
     constexpr units::ampere_t kClimberMotorCurrentLimit = 40_A;
     constexpr double kClimberPositionFactor = 4.0 * std::numbers::pi; // in meters
 
     constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLowLevel::MotorType::kBrushless;
     constexpr rev::spark::SparkMaxConfig::IdleMode kClimberMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
-
-    constexpr double kServoUnlockedPosition = 1.0;
-    constexpr double kServoLockedPosition = 0.0; 
 } // namespace ClimberConstants

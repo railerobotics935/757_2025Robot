@@ -76,6 +76,3 @@ void ClimberSubsystem::SetClimberPower(double power) {
 }
   //}}
   
-void ClimberSubsystem::LatchServo(double value) {
- m_climberServo.Set(value);
-}
