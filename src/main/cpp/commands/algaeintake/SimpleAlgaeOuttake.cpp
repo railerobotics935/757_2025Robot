@@ -14,7 +14,7 @@ void SimpleAlgaeOuttake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "SimpleOuttake Initialized\r\n";
 #endif
-  m_algaeIntake->SetAlgaeIntakeMotorPower(-1.0);
+  m_algaeIntake->SetAlgaeIntakeMotorPower(-0.3);
 }
 
 void SimpleAlgaeOuttake::End(bool interrupted) {

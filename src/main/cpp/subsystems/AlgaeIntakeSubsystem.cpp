@@ -61,12 +61,12 @@ AlgaeIntakeSubsystem::AlgaeIntakeSubsystem()
 
 } 
 
-bool AlgaeIntakeSubsystem::RightAlgaeIntakeAtBase() {
-  return !m_RightAlgaeLimitSwitch.Get();
+bool AlgaeIntakeSubsystem::RightAlgaeIntakeRisen() {
+  return !m_rightAlgaeLimitSwitch.Get();
 }
 
-bool AlgaeIntakeSubsystem::LeftAlgaeIntakeAtBase() {
-  return !m_LeftAlgaeLimitSwitch.Get();
+bool AlgaeIntakeSubsystem::LeftAlgaeIntakeRisen() {
+  return !m_leftAlgaeLimitSwitch.Get();
 }
 
 
@@ -76,7 +76,6 @@ void AlgaeIntakeSubsystem::Periodic() {
 
 void AlgaeIntakeSubsystem::SetAlgaeIntakeMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
-  m_rightAlgaeIntakeSparkMax.Set(power);
   m_leftAlgaeIntakeSparkMax.Set(power);
 }
 
@@ -87,18 +86,18 @@ void AlgaeIntakeSubsystem::SetPitchPosition(units::radian_t setAngle) {
   //   if this is not the case, invert the Pitch Spark MAX motor controller.
   // - check absolute encoder on the pitch angle to have an increasing value when rotating downward
   //   if this is not the case, add minus sign to m_pitchAbsoluteEncoder.GetPosition() references.
-  m_rightPitchPIDController.SetReference(setAngle.value(), rev::spark::SparkLowLevel::ControlType::kPosition);
+  //m_rightPitchPIDController.SetReference(setAngle.value(), rev::spark::SparkLowLevel::ControlType::kPosition);
 
   // Automatically disable control control direction goes outside mechanical operating limits
   // - IntakeConstants::kMinimumAngle sets the upper pitch limit, this is the lowest angle value
   // - IntakeConstants::kMaximumAngle sets the downward pitch limit, this is the highest angle value
 
   // Limit Pitch going too far up
- 
+  
 }
 
 void AlgaeIntakeSubsystem::SetPitchPower(double power) {
-  m_rightPitchSparkMax.Set(power);
+  m_leftPitchSparkMax.Set(power);
 }
 
 void AlgaeIntakeSubsystem::ConfigureAlgaeSparkMax() {

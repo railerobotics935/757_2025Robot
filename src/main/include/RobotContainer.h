@@ -41,6 +41,9 @@
 #include "commands/algaeintake/SimpleAlgaeIntake.h"
 #include "commands/algaeintake/SimpleAlgaeOuttake.h"
 #include "commands/algaeintake/StopAlgaeIntake.h"
+#include "commands/algaeintake/LowerAlgaePitch.h"
+#include "commands/algaeintake/RaiseAlgaePitch.h"
+#include "commands/algaeintake/StopAlgaePitch.h"
 
 
 /**
@@ -96,6 +99,9 @@ class RobotContainer {
   SimpleAlgaeIntake m_simpleAlgaeIntake{&m_algaeIntake};
   SimpleAlgaeOuttake m_simpleAlgaeOuttake{&m_algaeIntake};
   StopAlgaeIntake m_stopAlgaeIntake{&m_algaeIntake};
+  RaiseAlgaePitch m_raiseAlgaePitch{&m_algaeIntake};
+  LowerAlgaePitch m_lowerAlgaePitch{&m_algaeIntake};
+  StopAlgaePitch m_stopAlgaePitch{&m_algaeIntake};
   ExtendElevator m_extendElevator{&m_elevator};
   RetractElevator m_retractElevator{&m_elevator};
   StopElevator m_stopElevator{&m_elevator};

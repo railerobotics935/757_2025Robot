@@ -229,8 +229,11 @@ constexpr int kCoralIntakeButton = 8;
 constexpr int kCoralOuttakeButton = 7;
 constexpr int kCoralPitchRaiseButton = 1; // X
 constexpr int kCoralPitchLowerButton = 4; // Y
-constexpr int kAlgaeIntakeButton = 2;
-constexpr int kAlgaeOuttakeButton = 3;
+constexpr int kAlgaeIntakeButton = 3;
+constexpr int kAlgaeOuttakeButton = 2;
+constexpr int kAlgaePitchRaiseButton = 10; // CR
+constexpr int kAlgaePitchLowerButton = 9; // CL
+
 
 } // namespace ControllerConstants
 

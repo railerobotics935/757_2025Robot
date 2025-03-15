@@ -55,6 +55,7 @@ RobotContainer::RobotContainer() {
   m_elevator.SetDefaultCommand(std::move(m_stopElevator));
   m_climber.SetDefaultCommand(std::move(m_stopClimber));
   m_algaeIntake.SetDefaultCommand(std::move(m_stopAlgaeIntake));
+  m_algaeIntake.SetDefaultCommand(std::move(m_stopAlgaePitch));
   
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 
@@ -73,7 +74,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton coralIntakeButton(&m_operatorController, ControllerConstants::kCoralIntakeButton);
   frc2::JoystickButton coralOuttakeButton(&m_operatorController, ControllerConstants::kCoralOuttakeButton);
   frc2::JoystickButton algaeIntakeButton(&m_operatorController, ControllerConstants::kAlgaeIntakeButton);
-  frc2::JoystickButton algaeOuttakeButton(&m_operatorController, ControllerConstants::kAlgaeOuttakeButton);  
+  frc2::JoystickButton algaeOuttakeButton(&m_operatorController, ControllerConstants::kAlgaeOuttakeButton);
+  frc2::JoystickButton raiseAlgaePitchButton(&m_operatorController, ControllerConstants::kAlgaePitchRaiseButton);
+  frc2::JoystickButton lowerAlgaePitchButton(&m_operatorController, ControllerConstants::kAlgaePitchLowerButton);
   frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kExtendElevatorButton);
   frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kRetractElevatorButton);
   frc2::JoystickButton setPointOneButton(&m_operatorController, ControllerConstants::kElevatorSetPointButton);
@@ -91,6 +94,8 @@ void RobotContainer::ConfigureButtonBindings() {
   lowerCoralPitchButton.WhileTrue(LowerCoralPitch{&m_coralIntake}.ToPtr());
   algaeIntakeButton.WhileTrue(SimpleAlgaeIntake{&m_algaeIntake}.ToPtr());
   algaeOuttakeButton.WhileTrue(SimpleAlgaeOuttake{&m_algaeIntake}.ToPtr());
+  raiseAlgaePitchButton.WhileTrue(RaiseAlgaePitch{&m_algaeIntake}.ToPtr());
+  lowerAlgaePitchButton.WhileTrue(LowerAlgaePitch{&m_algaeIntake}.ToPtr());
   raiseElevatorButton.WhileTrue(ExtendElevator{&m_elevator}.ToPtr());
   lowerElevatorButton.WhileTrue(RetractElevator{&m_elevator}.ToPtr());
   raiseClimberButton.WhileTrue(RaiseClimber{&m_climber}.ToPtr());

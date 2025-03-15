@@ -22,10 +22,6 @@ class AlgaeIntakeSubsystem : public frc2::SubsystemBase {
    */
   void Periodic() override;
 
-   bool RightAlgaeIntakeAtBase();
-   bool LeftAlgaeIntakeAtBase();
-
-
   /**
    * @returns True if the upper algae limit switch is pressed
   */
@@ -69,8 +65,8 @@ class AlgaeIntakeSubsystem : public frc2::SubsystemBase {
   rev::spark::SparkClosedLoopController m_rightPitchPIDController = m_rightPitchSparkMax.GetClosedLoopController();
   rev::spark::SparkClosedLoopController m_leftPitchPIDController = m_leftPitchSparkMax.GetClosedLoopController();
 
-  frc::DigitalInput m_RightAlgaeLimitSwitch{IntakeConstants::kRightAlgaeLimitSwitchPort};
-  frc::DigitalInput m_LeftAlgaeLimitSwitch{IntakeConstants::kLeftAlgaeLimitSwitchPort};
+  frc::DigitalInput m_rightAlgaeLimitSwitch{IntakeConstants::kRightAlgaeLimitSwitchPort};
+  frc::DigitalInput m_leftAlgaeLimitSwitch{IntakeConstants::kLeftAlgaeLimitSwitchPort};
 
 
 };
