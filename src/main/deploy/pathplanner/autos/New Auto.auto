@@ -7,7 +7,17 @@
         {
           "type": "path",
           "data": {
+<<<<<<< HEAD
             "pathName": null
+=======
+            "pathName": "SpeakerTravel"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
+>>>>>>> 4c2cb955c3a090d1fc0f6396cff88a4a8083efd9
           }
         }
       ]

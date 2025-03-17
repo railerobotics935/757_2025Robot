@@ -2,24 +2,25 @@
 #include "Constants.h"
 #include "commands/coralintake/RaiseCoralPitch.h"
 
-RaiseCoralPitch::RaiseCoralPitch(CoralIntakeSubsystem *coralintake) : m_coralIntake{coralintake} {
+RaiseCoralPitch::RaiseCoralPitch(CoralPitchSubsystem *coralpitch) : m_coralPitch{coralpitch} {
 
-  m_coralIntake = coralintake;
 
-  AddRequirements(m_coralIntake);
+  AddRequirements(m_coralPitch);
 }
 
 void RaiseCoralPitch::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "SimpleIntake Initialized\r\n";
 #endif
-  m_coralIntake->SetCoralPitchPower(-0.4);
-  //m_coralIntake->SetCoralIntakeAngle(0.3);
+currentCoralAngle = m_coralPitch->GetCoralIntakeAngle();
+}
+
+void RaiseCoralPitch::Execute() {
+  currentCoralAngle -= 0.004;
+  m_coralPitch->SetCoralIntakeAngle(currentCoralAngle);
 }
 
 void RaiseCoralPitch::End(bool interrupted) {
-  m_coralIntake->SetCoralPitchPower(0.0);
-  //m_coralIntake->SetCoralIntakeAngle(0.0);
 #ifdef PRINTDEBUG
   std::cout << "SimpleIntake Ended\r\n";
 #endif

@@ -5,7 +5,7 @@
 #include <frc/XboxController.h>
 #include <frc/MathUtil.h>
 
-#include "subsystems/CoralIntakeSubsystem.h"
+#include "subsystems/CoralPitchSubsystem.h"
 
 class LowerCoralPitch
   : public frc2::CommandHelper<frc2::Command, LowerCoralPitch> {
@@ -13,15 +13,16 @@ public:
   /**
    * Creates a new SimpleIntake.
    *
-   * @param coralintake The pointer to the intake subsystem
+   * @param coralpitch The pointer to the pitch subsystem
    * @param opController The pointer to the operator controller
    */
-  explicit LowerCoralPitch(CoralIntakeSubsystem *coralintake);
+  explicit LowerCoralPitch(CoralPitchSubsystem *coralpitch);
 
   void Initialize() override;
-  //void Execute() override;
+  void Execute() override;
   void End(bool interrupted) override;
   
 private:
-  CoralIntakeSubsystem* m_coralIntake;
+  CoralPitchSubsystem* m_coralPitch;
+  double currentCoralAngle;
 };

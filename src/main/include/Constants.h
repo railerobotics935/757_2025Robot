@@ -52,9 +52,9 @@ namespace RobotConstants {
 constexpr double kVoltageCompentationValue = 11.0;
 
 const units::meter_t kWheelBase =
-    0.6795_m;  // Distance between centers of front and back wheels on robot
+    0.6731_m; 
 const units::meter_t kWheelWidth =
-    0.51_m; // Distance between centers of left and right wheels on robot
+    0.4953_m; 
 
 }
 
@@ -163,12 +163,12 @@ namespace AutoConstants {
 
 // Only Constants here are the PID constants. Look in path planner for max veleocty/acceleration constants
 // PID Constants for the tranlation (X and Y movement) of the robot during auto
-constexpr double kPTanslationController = 0.0;//4.0; // 6.0
-constexpr double kITanslationController = 0.0; // 1.7
+constexpr double kPTanslationController = 4.0;//4.0; // 6.0
+constexpr double kITanslationController = 1.7; // 1.7
 constexpr double kDTanslationController = 0.0; // 0.0
 
 // PID Constants for the rotation, or Yaw of the robot
-constexpr double kPRotationController = 0.0; // 5.0
+constexpr double kPRotationController = 5.0; // 5.0
 constexpr double kIRotationController = 0.0; // 0.0
 constexpr double kDRotationController = 0.0; // 0.0
 
@@ -292,10 +292,10 @@ constexpr int kElevatorSensB = 1;
 constexpr double kElevatorPositionFactor = 4.0 * std::numbers::pi; // in meters
 constexpr double kElevatorVelocityFactor = kElevatorPositionFactor;
 
-constexpr int kElevatorP = 0;
-constexpr int kElevatorI = 0;
-constexpr int kElevatorD = 0;
-constexpr int kElevatorFF = 0;
+constexpr double kElevatorP = 0;
+constexpr double kElevatorI = 0;
+constexpr double kElevatorD = 0;
+constexpr double kElevatorFF = 0;
 
 constexpr int kElevatorMinOutput = -1;
 constexpr int kElevatorMaxOutput = 1;
@@ -329,13 +329,13 @@ constexpr int kLeftAlgaeLimitSwitchPort = 5;
 
 
 //PID Values
-constexpr int kPitchP = 2;
-constexpr int kPitchI = 0.5;
-constexpr int kPitchD = 0;
-constexpr int kPitchFF = 0;
+constexpr double kPitchP = 5.0; // 5.0
+constexpr double kPitchI = 0.0; // 0.0
+constexpr double kPitchD = 0.0; // 0.0
+constexpr double kPitchFF = 0;
 
-constexpr int kPitchMinOutput = -1;
-constexpr int kPitchMaxOutput = 1;
+constexpr double kPitchMinOutput = -0.2;
+constexpr double kPitchMaxOutput = 0.2;
 
 constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;
@@ -347,8 +347,8 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark
 
 
 // Pitch limits
-constexpr double kMinimumAngle = 0;
-constexpr double kMaximumAngle = 1;
+constexpr double kMinimumAngle = 0.02;
+constexpr double kMaximumAngle = 0.29;
 } // namespace IntakeConstant
 
 namespace ClimberConstants {
