@@ -292,10 +292,10 @@ constexpr int kElevatorSensB = 1;
 constexpr double kElevatorPositionFactor = 4.0 * std::numbers::pi; // in meters
 constexpr double kElevatorVelocityFactor = kElevatorPositionFactor;
 
-constexpr int kElevatorP = 0;
-constexpr int kElevatorI = 0;
-constexpr int kElevatorD = 0;
-constexpr int kElevatorFF = 0;
+constexpr double kElevatorP = 0;
+constexpr double kElevatorI = 0;
+constexpr double kElevatorD = 0;
+constexpr double kElevatorFF = 0;
 
 constexpr int kElevatorMinOutput = -1;
 constexpr int kElevatorMaxOutput = 1;
@@ -329,13 +329,13 @@ constexpr int kLeftAlgaeLimitSwitchPort = 5;
 
 
 //PID Values
-constexpr int kPitchP = 5.0;
-constexpr int kPitchI = 0.7;
-constexpr int kPitchD = 0;
-constexpr int kPitchFF = 0;
+constexpr double kPitchP = 5.0; // 5.0
+constexpr double kPitchI = 0.0; // 0.0
+constexpr double kPitchD = 0.0; // 0.0
+constexpr double kPitchFF = 0;
 
-constexpr int kPitchMinOutput = -1;
-constexpr int kPitchMaxOutput = 1;
+constexpr double kPitchMinOutput = -0.2;
+constexpr double kPitchMaxOutput = 0.2;
 
 constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;
@@ -348,7 +348,7 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark
 
 // Pitch limits
 constexpr double kMinimumAngle = 0.02;
-constexpr double kMaximumAngle = 0.3;
+constexpr double kMaximumAngle = 0.29;
 } // namespace IntakeConstant
 
 namespace ClimberConstants {

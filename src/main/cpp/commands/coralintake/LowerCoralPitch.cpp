@@ -4,7 +4,6 @@
 
 LowerCoralPitch::LowerCoralPitch(CoralPitchSubsystem *coralpitch) : m_coralPitch{coralpitch} {
 
-  m_coralPitch = coralpitch;
 
   AddRequirements(m_coralPitch);
 }
