@@ -45,6 +45,7 @@
 #include "commands/algaeintake/LowerAlgaePitch.h"
 #include "commands/algaeintake/RaiseAlgaePitch.h"
 #include "commands/algaeintake/StopAlgaePitch.h"
+#include "commands/autocommands/ResetHome.h"
 
 
 /**
@@ -111,5 +112,6 @@ class RobotContainer {
   RaiseClimber m_raiseClimber{&m_climber};
   LowerClimber m_lowerClimber{&m_climber};
   StopClimber m_stopClimber{&m_climber};
+  ResetHome m_resetHome{&m_resetHome};
   
 };

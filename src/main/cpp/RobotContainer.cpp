@@ -63,12 +63,6 @@ RobotContainer::RobotContainer() {
   NamedCommands::registerCommand("Raise Coral Pitch", std::move(m_raiseCoralPitch).ToPtr());
   NamedCommands::registerCommand("Lower Coral Pitch", std::move(m_lowerCoralPitch).ToPtr());
   NamedCommands::registerCommand("Stop Coral Pitch", std::move(m_stopCoralPitch).ToPtr());
-  NamedCommands::registerCommand("Simple Algae Intake", std::move(m_simpleAlgaeIntake).ToPtr());
-  NamedCommands::registerCommand("Simple Algae Outtake", std::move(m_simpleAlgaeOuttake).ToPtr());
-  NamedCommands::registerCommand("Stop Algae Intake", std::move(m_stopAlgaeIntake).ToPtr());
-  NamedCommands::registerCommand("Raise Algae Pitch", std::move(m_raiseAlgaePitch).ToPtr());
-  NamedCommands::registerCommand("Lower Algae Pitch", std::move(m_lowerAlgaePitch).ToPtr());
-  NamedCommands::registerCommand("Stop Algae Pitch", std::move(m_stopAlgaePitch).ToPtr());
   NamedCommands::registerCommand("Elevator L4", std::move(m_elevatorSetPointL4).ToPtr());
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
