@@ -7,15 +7,15 @@
 
 #include "subsystems/ElevatorSubsystem.h"
 
-class ElevatorSetPoint
-  : public frc2::CommandHelper<frc2::Command, ElevatorSetPoint> {
+class ElevatorSetPointL4
+  : public frc2::CommandHelper<frc2::Command, ElevatorSetPointL4> {
 public:
   /**
    * Creates a new ElevatorSetPoint.
    *
    * @param elevator The pointer to the intake subsystem
    */
-  explicit ElevatorSetPoint(ElevatorSubsystem* elevator);
+  explicit ElevatorSetPointL4(ElevatorSubsystem* elevator);
 
   void Execute() override;
   void End(bool interrupted) override;
@@ -24,5 +24,4 @@ private:
   ElevatorSubsystem* m_elevator;
 
   // Encoder motor controllers
-  frc::Encoder m_elevatorEncoder{ElevatorConstants::kElevatorSensA, ElevatorConstants::kElevatorSensB};
 };
