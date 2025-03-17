@@ -66,6 +66,32 @@ DriveSubsystem::DriveSubsystem()
                 
 {
 
+RobotConfig config = RobotConfig::fromGUISettings();
+
+AutoBuilder::configure(
+        [this](){ return GetOdometryPose(); }, // Robot pose supplier
+        [this](frc::Pose2d pose){ ResetOdometry(pose); }, // Method to reset odometry (will be called if your auto has a starting pose)
+        [this](){ return GetRobotRelativeSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        [this](auto speeds, auto feedforwards){ DriveWithChassisSpeeds(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+        std::make_shared<PPHolonomicDriveController>( // PPHolonomicController is the built in path following controller for holonomic drive trains
+            PIDConstants(AutoConstants::kPTanslationController, AutoConstants::kPTanslationController, AutoConstants::kDTanslationController), // Translation PID constants
+            PIDConstants(AutoConstants::kPRotationController, AutoConstants::kIRotationController, AutoConstants::kDRotationController) // Rotation PID constants
+        ),
+        config, // The robot configuration
+        []() {
+            // Boolean supplier that controls when the path will be mirrored for the red alliance
+            // This will flip the path being followed to the red side of the field.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+            auto alliance = frc::DriverStation::GetAlliance(); 
+
+            if (alliance) {
+                return alliance.value() == frc::DriverStation::Alliance::kRed;
+            }
+            return false;
+        },
+        this // Reference to this subsystem to set requirements
+    );
+
 
   // Initialize shuffleboard communication
   auto nt_inst = nt::NetworkTableInstance::GetDefault();
@@ -306,8 +332,8 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
     m_currentRotation = rot.value();
   }
   if (!m_fieldRelative) {
-    xSpeedCommanded = -xSpeedCommanded; 
-    ySpeedCommanded = -ySpeedCommanded; 
+    xSpeedCommanded = xSpeedCommanded; 
+    ySpeedCommanded = ySpeedCommanded; 
   }
 
   // Convert the commanded speeds into the correct units for the drivetrain

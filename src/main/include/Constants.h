@@ -52,9 +52,9 @@ namespace RobotConstants {
 constexpr double kVoltageCompentationValue = 11.0;
 
 const units::meter_t kWheelBase =
-    0.6795_m;  // Distance between centers of front and back wheels on robot
+    0.6731_m; 
 const units::meter_t kWheelWidth =
-    0.51_m; // Distance between centers of left and right wheels on robot
+    0.4953_m; 
 
 }
 
@@ -163,12 +163,12 @@ namespace AutoConstants {
 
 // Only Constants here are the PID constants. Look in path planner for max veleocty/acceleration constants
 // PID Constants for the tranlation (X and Y movement) of the robot during auto
-constexpr double kPTanslationController = 0.0;//4.0; // 6.0
-constexpr double kITanslationController = 0.0; // 1.7
+constexpr double kPTanslationController = 4.0;//4.0; // 6.0
+constexpr double kITanslationController = 1.7; // 1.7
 constexpr double kDTanslationController = 0.0; // 0.0
 
 // PID Constants for the rotation, or Yaw of the robot
-constexpr double kPRotationController = 0.0; // 5.0
+constexpr double kPRotationController = 5.0; // 5.0
 constexpr double kIRotationController = 0.0; // 0.0
 constexpr double kDRotationController = 0.0; // 0.0
 
@@ -329,8 +329,8 @@ constexpr int kLeftAlgaeLimitSwitchPort = 5;
 
 
 //PID Values
-constexpr int kPitchP = 2;
-constexpr int kPitchI = 0.5;
+constexpr int kPitchP = 5.0;
+constexpr int kPitchI = 0.7;
 constexpr int kPitchD = 0;
 constexpr int kPitchFF = 0;
 
@@ -347,8 +347,8 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark
 
 
 // Pitch limits
-constexpr double kMinimumAngle = 0;
-constexpr double kMaximumAngle = 1;
+constexpr double kMinimumAngle = 0.02;
+constexpr double kMaximumAngle = 0.3;
 } // namespace IntakeConstant
 
 namespace ClimberConstants {

@@ -51,7 +51,7 @@ RobotContainer::RobotContainer() {
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
   m_coralIntake.SetDefaultCommand(std::move(m_stopCoralIntake));
-  m_coralIntake.SetDefaultCommand(std::move(m_stopCoralPitch));
+  m_coralPitch.SetDefaultCommand(std::move(m_stopCoralPitch));
   m_elevator.SetDefaultCommand(std::move(m_stopElevator));
   m_climber.SetDefaultCommand(std::move(m_stopClimber));
   m_algaeIntake.SetDefaultCommand(std::move(m_stopAlgaeIntake));
@@ -90,8 +90,8 @@ void RobotContainer::ConfigureButtonBindings() {
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
   coralIntakeButton.WhileTrue(SimpleCoralIntake{&m_coralIntake}.ToPtr());
   coralOuttakeButton.WhileTrue(SimpleCoralOuttake{&m_coralIntake}.ToPtr());
-  raiseCoralPitchButton.WhileTrue(RaiseCoralPitch{&m_coralIntake}.ToPtr());
-  lowerCoralPitchButton.WhileTrue(LowerCoralPitch{&m_coralIntake}.ToPtr());
+  raiseCoralPitchButton.WhileTrue(RaiseCoralPitch{&m_coralPitch}.ToPtr());
+  lowerCoralPitchButton.WhileTrue(LowerCoralPitch{&m_coralPitch}.ToPtr());
   algaeIntakeButton.WhileTrue(SimpleAlgaeIntake{&m_algaeIntake}.ToPtr());
   algaeOuttakeButton.WhileTrue(SimpleAlgaeOuttake{&m_algaeIntake}.ToPtr());
   raiseAlgaePitchButton.WhileTrue(RaiseAlgaePitch{&m_algaeIntake}.ToPtr());

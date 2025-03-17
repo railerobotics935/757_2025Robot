@@ -20,6 +20,7 @@
 #include "utils/SwerveUtils.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/CoralIntakeSubsystem.h"
+#include "subsystems/CoralPitchSubsystem.h"
 #include "subsystems/AlgaeIntakeSubsystem.h"
 #include "subsystems/ClimberSubsystem.h"
 #include "subsystems/ElevatorSubsystem.h"
@@ -79,6 +80,7 @@ class RobotContainer {
   // The robot's subsystems
   DriveSubsystem m_drive;
   CoralIntakeSubsystem m_coralIntake;
+  CoralPitchSubsystem m_coralPitch;
   AlgaeIntakeSubsystem m_algaeIntake; 
   ElevatorSubsystem m_elevator;
   ClimberSubsystem m_climber;
@@ -93,9 +95,9 @@ class RobotContainer {
   SimpleCoralIntake m_simpleCoralIntake{&m_coralIntake};
   SimpleCoralOuttake m_simpleCoralOuttake{&m_coralIntake};
   StopCoralIntake m_stopCoralIntake{&m_coralIntake};
-  RaiseCoralPitch m_raiseCoralPitch{&m_coralIntake};
-  LowerCoralPitch m_lowerCoralPitch{&m_coralIntake};
-  StopCoralPitch m_stopCoralPitch{&m_coralIntake};
+  RaiseCoralPitch m_raiseCoralPitch{&m_coralPitch};
+  LowerCoralPitch m_lowerCoralPitch{&m_coralPitch};
+  StopCoralPitch m_stopCoralPitch{&m_coralPitch};
   SimpleAlgaeIntake m_simpleAlgaeIntake{&m_algaeIntake};
   SimpleAlgaeOuttake m_simpleAlgaeOuttake{&m_algaeIntake};
   StopAlgaeIntake m_stopAlgaeIntake{&m_algaeIntake};

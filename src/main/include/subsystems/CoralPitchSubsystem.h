@@ -12,27 +12,22 @@
 #include <frc/DigitalInput.h>
 #include <Constants.h>
 
-class CoralIntakeSubsystem : public frc2::SubsystemBase {
+class CoralPitchSubsystem : public frc2::SubsystemBase {
  public:
-  /**
-   * Picks up game pieces
-  */
-  CoralIntakeSubsystem();
 
-  // Sets the motor's power (between -1.0 and 1.0).
-  void SetCoralIntakeMotorPower(double power);
+ CoralPitchSubsystem();
 
-  /**
-   * @return Direction intake motor is moving
-   */
-  double GetDirection();
+ void Periodic() override;
 
-  /**
-   * @return If light sensor has detected a coral
-   */
-  bool CoralInIntake();
+ // Sets the angle of the coral intake
+  void SetCoralIntakeAngle(double angle);
 
- private:
+  // Gets the angle of the coral intake
+  double GetCoralIntakeAngle();
+
+  void SetCoralPitchPower(double power);
+
+private:
 
   void ConfigureSparkMax();
 
@@ -40,9 +35,14 @@ class CoralIntakeSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   // Motor Controllers
-  rev::spark::SparkMax m_coralIntakeSparkMax;
+  rev::spark::SparkMax m_coralPitchSparkMax;
 
-  // Light Sensor is a digital input in the DIO port (digital input output)
-  frc::DigitalInput m_lightSensor{IntakeConstants::kLightSensorID};
+  // Encoders
+  rev::spark::SparkAbsoluteEncoder m_coralPitchAbsoluteEncoder = m_coralPitchSparkMax.GetAbsoluteEncoder();
 
+  //PID for the pitch
+  rev::spark::SparkClosedLoopController m_coralPitchPIDController = m_coralPitchSparkMax.GetClosedLoopController();
+
+  nt::NetworkTableEntry nte_pitchEncoderValue;
 };
+
