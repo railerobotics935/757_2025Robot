@@ -58,8 +58,8 @@ bool ElevatorSubsystem::ElevatorAtBase() {
 void ElevatorSubsystem::Periodic() {
   UpdateNTE();
 
-//  if (ElevatorAtBase())
-//   m_elevatorEncoder.Reset();
+  if (ElevatorAtBase())
+   m_elevatorEncoder.SetPosition(0.0);
 }
 
 void ElevatorSubsystem::UpdateNTE() {
@@ -90,4 +90,8 @@ void ElevatorSubsystem::GoToSetPoint(double setPoint) {
     m_elevatorSparkMax.Set(0.0);
   }
 
+}
+
+double ElevatorSubsystem::GetElevatorPosition(){
+  return m_elevatorEncoder.GetPosition();
 }

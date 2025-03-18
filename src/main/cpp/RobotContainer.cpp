@@ -25,6 +25,7 @@
 #include "pathplanner/lib/commands/PathPlannerAuto.h"
 #include "pathplanner/lib/auto/NamedCommands.h"
 
+
 #include "subsystems/DriveSubsystem.h"
 #include "Constants.h"
 
@@ -63,7 +64,10 @@ RobotContainer::RobotContainer() {
   NamedCommands::registerCommand("Raise Coral Pitch", std::move(m_raiseCoralPitch).ToPtr());
   NamedCommands::registerCommand("Lower Coral Pitch", std::move(m_lowerCoralPitch).ToPtr());
   NamedCommands::registerCommand("Stop Coral Pitch", std::move(m_stopCoralPitch).ToPtr());
-  NamedCommands::registerCommand("Elevator L4", std::move(m_elevatorSetPointL4).ToPtr());
+  NamedCommands::registerCommand("Elevator L1", std::move(m_elevatorSetPointL1).ToPtr());
+  NamedCommands::registerCommand("Reset Home", std::move(m_resetHome).ToPtr());
+  NamedCommands::registerCommand("Set wrist to L4",std::move(m_setWristToL4).ToPtr());
+  NamedCommands::registerCommand("Auto Coral Outtake", std::move(m_autoCoralOuttake).ToPtr());
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 
@@ -114,5 +118,5 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   // Builds and returns auto commands from pathplanner
-  return PathPlannerAuto(m_autoChooser.GetSelected()).ToPtr();
+  return PathPlannerAuto ("New Auto").ToPtr();
 }

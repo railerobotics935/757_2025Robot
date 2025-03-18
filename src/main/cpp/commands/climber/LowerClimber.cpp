@@ -14,6 +14,7 @@ void LowerClimber::Execute() {
   m_climber->SetClimberPower(1.0);
 }
 
+
 void LowerClimber::End(bool interrupted) {
   m_climber->SetClimberPower(0.0);
 #ifdef PRINTDEBUG

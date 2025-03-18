@@ -292,7 +292,7 @@ constexpr int kElevatorSensB = 1;
 constexpr double kElevatorPositionFactor = 4.0 * std::numbers::pi; // in meters
 constexpr double kElevatorVelocityFactor = kElevatorPositionFactor;
 
-constexpr double kElevatorP = 0;
+constexpr double kElevatorP = 1;
 constexpr double kElevatorI = 0;
 constexpr double kElevatorD = 0;
 constexpr double kElevatorFF = 0;
@@ -302,6 +302,8 @@ constexpr int kElevatorMaxOutput = 1;
 
 constexpr double kMaximumHeight = 1.0;
 constexpr double kMinimumHeight = 0.0;
+
+constexpr double kElevatorL1Position = 246.2;
 
 
 constexpr units::ampere_t kElevatorMotorCurrentLimit = 40_A;
@@ -336,6 +338,8 @@ constexpr double kPitchFF = 0;
 
 constexpr double kPitchMinOutput = -0.2;
 constexpr double kPitchMaxOutput = 0.2;
+
+constexpr double kPitchL1Angle = 0.1638;
 
 constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;

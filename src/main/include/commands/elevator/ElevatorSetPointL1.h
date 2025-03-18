@@ -7,17 +7,18 @@
 
 #include "subsystems/ElevatorSubsystem.h"
 
-class ElevatorSetPointL4
-  : public frc2::CommandHelper<frc2::Command, ElevatorSetPointL4> {
+class ElevatorSetPointL1
+  : public frc2::CommandHelper<frc2::Command, ElevatorSetPointL1> {
 public:
   /**
    * Creates a new ElevatorSetPoint.
    *
    * @param elevator The pointer to the intake subsystem
    */
-  explicit ElevatorSetPointL4(ElevatorSubsystem* elevator);
+  explicit ElevatorSetPointL1(ElevatorSubsystem* elevator);
 
   void Execute() override;
+  bool IsFinished() override;
   void End(bool interrupted) override;
 
 private:

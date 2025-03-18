@@ -14,6 +14,15 @@ void RetractElevator::Execute() {
   m_elevator->SetElevatorPower(-0.5);
 }
 
+bool RetractElevator::IsFinished() {
+  if (m_elevator->ElevatorAtBase()) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 void RetractElevator::End(bool interrupted) {
 #ifdef PRINTDEBUG
   std::cout << "RetractElevator Ended\r\n";

@@ -35,7 +35,7 @@
 #include "commands/elevator/ExtendElevator.h"
 #include "commands/elevator/RetractElevator.h"
 #include "commands/elevator/StopElevator.h"
-#include "commands/elevator/ElevatorSetPointL4.h"
+#include "commands/elevator/ElevatorSetPointL1.h"
 #include "commands/climber/LowerClimber.h"
 #include "commands/climber/RaiseClimber.h"
 #include "commands/climber/StopClimber.h"
@@ -46,7 +46,8 @@
 #include "commands/algaeintake/RaiseAlgaePitch.h"
 #include "commands/algaeintake/StopAlgaePitch.h"
 #include "commands/autocommands/ResetHome.h"
-
+#include "commands/autocommands/WristL4.h"
+#include "commands/autocommands/AutoCoralOuttake.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -107,11 +108,13 @@ class RobotContainer {
   StopAlgaePitch m_stopAlgaePitch{&m_algaeIntake};
   ExtendElevator m_extendElevator{&m_elevator};
   RetractElevator m_retractElevator{&m_elevator};
-  ElevatorSetPointL4 m_elevatorSetPointL4{&m_elevator};
+  ElevatorSetPointL1 m_elevatorSetPointL1{&m_elevator};
   StopElevator m_stopElevator{&m_elevator};
   RaiseClimber m_raiseClimber{&m_climber};
   LowerClimber m_lowerClimber{&m_climber};
   StopClimber m_stopClimber{&m_climber};
-  ResetHome m_resetHome{&m_resetHome};
+  ResetHome m_resetHome{&m_elevator, &m_coralPitch};
+  SetWristToL4 m_setWristToL4{&m_coralPitch};
+  AutoCoralOuttake m_autoCoralOuttake{&m_coralIntake};
   
 };

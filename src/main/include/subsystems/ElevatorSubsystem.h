@@ -48,10 +48,6 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
   */
   void SetElevatorPower(double power);
 
-  /**
-   * Set the elevator motor power invidualy
-  */
-  void SetIndividualElevatorPower(double power);
 
   /**
    * Updates NetworkTableEntries
@@ -62,6 +58,8 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
    * Uses the PID to go to a set point
    */
   void GoToSetPoint(double setPoint);
+
+  double GetElevatorPosition();
 
  private:
 

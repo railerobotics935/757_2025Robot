@@ -7,17 +7,37 @@
         {
           "type": "path",
           "data": {
-<<<<<<< HEAD
-            "pathName": null
-=======
-            "pathName": "SpeakerTravel"
+            "pathName": "ine"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": null
->>>>>>> 4c2cb955c3a090d1fc0f6396cff88a4a8083efd9
+            "name": "Elevator L1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Set wrist to L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Auto Coral Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 7.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Reset Home"
           }
         }
       ]

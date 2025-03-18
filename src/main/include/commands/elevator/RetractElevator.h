@@ -18,6 +18,7 @@ public:
   explicit RetractElevator(ElevatorSubsystem* elevator);
 
   void Execute() override;
+  bool IsFinished() override;
   void End(bool interrupted) override;
   
 private:
