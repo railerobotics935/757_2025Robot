@@ -16,7 +16,7 @@ currentCoralAngle = m_coralPitch->GetCoralIntakeAngle();
 }
 
 void RaiseCoralPitch::Execute() {
-  currentCoralAngle -= 0.004;
+  currentCoralAngle += 0.004;
   m_coralPitch->SetCoralIntakeAngle(currentCoralAngle);
 }
 

@@ -17,7 +17,7 @@ void LowerCoralPitch::Initialize() {
 }
 
 void LowerCoralPitch::Execute() {
-  currentCoralAngle += 0.004;
+  currentCoralAngle -= 0.004;
   m_coralPitch->SetCoralIntakeAngle(currentCoralAngle);
 
 }

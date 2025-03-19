@@ -227,8 +227,8 @@ constexpr int kRetractElevatorButton = 5; // Pressing it creates a POSITVE outpu
 constexpr int kElevatorSetPointButton = 3; // X
 constexpr int kCoralIntakeButton = 8; // RT
 constexpr int kCoralOuttakeButton = 7; //LT
-constexpr int kCoralPitchRaiseButton = 1; // X
-constexpr int kCoralPitchLowerButton = 4; // Y
+constexpr int kCoralPitchRaiseButton = 4; // Y
+constexpr int kCoralPitchLowerButton = 1; // X
 constexpr int kAlgaeIntakeButton = 3; // B
 constexpr int kAlgaeOuttakeButton = 2; // A
 constexpr int kAlgaePitchRaiseButton = 10; // CR
@@ -339,8 +339,8 @@ constexpr double kPitchFF = 0;
 constexpr double kPitchMinOutput = -0.2;
 constexpr double kPitchMaxOutput = 0.2;
 
-constexpr double kPitchToIntake = 0.256;
-constexpr double kPitchL1Angle = 0.18;
+constexpr double kPitchToIntake = 0.270;
+constexpr double kPitchL1Angle = 0.18;  // No Longer correct within our new limits
 
 constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;
@@ -352,8 +352,8 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark
 
 
 // Pitch limits
-constexpr double kMinimumAngle = 0.02;
-constexpr double kMaximumAngle = 0.29;
+constexpr double kMinimumAngle = 0.343;
+constexpr double kMaximumAngle = 0.606;
 } // namespace IntakeConstant
 
 namespace ClimberConstants {
