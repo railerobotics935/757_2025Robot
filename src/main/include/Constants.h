@@ -339,8 +339,8 @@ constexpr double kPitchFF = 0;
 constexpr double kPitchMinOutput = -0.2;
 constexpr double kPitchMaxOutput = 0.2;
 
-constexpr double kPitchToIntake = 0.270;
-constexpr double kPitchL1Angle = 0.18;  // No Longer correct within our new limits
+constexpr double kPitchToIntake = 0.602; // Should be checked but might work
+constexpr double kPitchL1Angle = 0.466;  // No Longer correct within our new limits
 
 constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;

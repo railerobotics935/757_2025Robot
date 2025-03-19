@@ -95,6 +95,12 @@ class RobotContainer {
 
   // Auto options coresponding to the name of the autos                                             
   std::string m_newAuto = "New Auto";
+  std::string m_cLeave = "C Leave";
+  std::string m_mLeave = "M Leave";
+  std::string m_fLeave = "F Leave";
+  std::string m_f43t = "F4&3T";
+  std::string m_m43t = "M4&3T";
+  std::string m_c43t = "C4&3T";
 
   DriveWithController m_driveWithController{&m_drive, &m_driveController};
   SimpleCoralIntake m_simpleCoralIntake{&m_coralIntake};

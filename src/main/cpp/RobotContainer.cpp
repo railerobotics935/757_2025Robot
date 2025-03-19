@@ -73,7 +73,12 @@ RobotContainer::RobotContainer() {
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 
-  m_autoChooser.SetDefaultOption("New Auto", m_newAuto);
+  m_autoChooser.SetDefaultOption("F4&3T", m_f43t);
+  m_autoChooser.AddOption("C Leave", m_cLeave);
+  m_autoChooser.AddOption("M Leave", m_mLeave);
+  m_autoChooser.AddOption("F Leave", m_fLeave);
+  m_autoChooser.AddOption("M4&3T", m_m43t);
+  m_autoChooser.AddOption("C4&3T", m_c43t);
 }
 
 void RobotContainer::ConfigureButtonBindings() {

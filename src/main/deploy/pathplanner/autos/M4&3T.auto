@@ -1,0 +1,99 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "M4T"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Set wrist to L1"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Simple Coral Outtake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4TCS"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Set wrist to L1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Wrist To Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CS3T"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Simple Coral Intake"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Simple Coral Outtake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Reset Home"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
