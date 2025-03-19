@@ -15,6 +15,8 @@
 #include <frc2/command/RunCommand.h>
 #include <frc/filter/SlewRateLimiter.h>
 #include <frc/PowerDistribution.h>
+#include <pathplanner/lib/auto/AutoBuilder.h>
+
 
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
@@ -46,7 +48,8 @@
 #include "commands/algaeintake/RaiseAlgaePitch.h"
 #include "commands/algaeintake/StopAlgaePitch.h"
 #include "commands/autocommands/ResetHome.h"
-#include "commands/autocommands/WristL4.h"
+#include "commands/autocommands/WristL1.h"
+#include "commands/autocommands/WristToIntake.h"
 #include "commands/autocommands/AutoCoralOuttake.h"
 
 /**
@@ -114,7 +117,8 @@ class RobotContainer {
   LowerClimber m_lowerClimber{&m_climber};
   StopClimber m_stopClimber{&m_climber};
   ResetHome m_resetHome{&m_elevator, &m_coralPitch};
-  SetWristToL4 m_setWristToL4{&m_coralPitch};
+  SetWristToL1 m_setWristToL1{&m_coralPitch};
   AutoCoralOuttake m_autoCoralOuttake{&m_coralIntake};
+  SetWristToIntake m_wristToIntake{&m_coralPitch};
   
 };

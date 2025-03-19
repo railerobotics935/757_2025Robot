@@ -5,33 +5,95 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "ine"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Elevator L1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Set wrist to L4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Auto Coral Outtake"
+            "name": "Set wrist to L1"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 7.0
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Simple Coral Outtake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New New Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Wrist To Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Simple Coral Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Set wrist to L1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Simple Coral Outtake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 4.0
           }
         },
         {

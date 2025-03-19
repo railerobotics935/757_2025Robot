@@ -140,7 +140,7 @@ constexpr double kDrivingFF = (1 / kDriveWheelFreeSpeedRps);
 constexpr double kDrivingMinOutput = -1;
 constexpr double kDrivingMaxOutput = 1;
 
-constexpr double kTurningP = 2.0;
+constexpr double kTurningP = 8.0;
 constexpr double kTurningI = 0.01;
 constexpr double kTurningD = 0.004; //was originally 0.15
 constexpr double kTurningFF = 0;
@@ -225,12 +225,12 @@ constexpr int kLowerClimberButton = 5; // LB
 constexpr int kExtendElevatorButton = 6; // Pressing it creates a POSITVE output
 constexpr int kRetractElevatorButton = 5; // Pressing it creates a POSITVE output
 constexpr int kElevatorSetPointButton = 3; // X
-constexpr int kCoralIntakeButton = 8;
-constexpr int kCoralOuttakeButton = 7;
+constexpr int kCoralIntakeButton = 8; // RT
+constexpr int kCoralOuttakeButton = 7; //LT
 constexpr int kCoralPitchRaiseButton = 1; // X
 constexpr int kCoralPitchLowerButton = 4; // Y
-constexpr int kAlgaeIntakeButton = 3;
-constexpr int kAlgaeOuttakeButton = 2;
+constexpr int kAlgaeIntakeButton = 3; // B
+constexpr int kAlgaeOuttakeButton = 2; // A
 constexpr int kAlgaePitchRaiseButton = 10; // CR
 constexpr int kAlgaePitchLowerButton = 9; // CL
 
@@ -339,7 +339,8 @@ constexpr double kPitchFF = 0;
 constexpr double kPitchMinOutput = -0.2;
 constexpr double kPitchMaxOutput = 0.2;
 
-constexpr double kPitchL1Angle = 0.1638;
+constexpr double kPitchToIntake = 0.256;
+constexpr double kPitchL1Angle = 0.18;
 
 constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;

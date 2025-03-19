@@ -20,7 +20,7 @@ void AutoCoralOuttake::Initialize() {
 }
 
 bool AutoCoralOuttake::IsFinished(){
-    if (m_timer.Get() > units::time::second_t(0.25))
+    if (m_timer.Get() > units::time::second_t(1.0))
         return true;
     else
         return false;

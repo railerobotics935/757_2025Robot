@@ -66,8 +66,10 @@ RobotContainer::RobotContainer() {
   NamedCommands::registerCommand("Stop Coral Pitch", std::move(m_stopCoralPitch).ToPtr());
   NamedCommands::registerCommand("Elevator L1", std::move(m_elevatorSetPointL1).ToPtr());
   NamedCommands::registerCommand("Reset Home", std::move(m_resetHome).ToPtr());
-  NamedCommands::registerCommand("Set wrist to L4",std::move(m_setWristToL4).ToPtr());
+  NamedCommands::registerCommand("Set wrist to L1",std::move(m_setWristToL1).ToPtr());
   NamedCommands::registerCommand("Auto Coral Outtake", std::move(m_autoCoralOuttake).ToPtr());
+  NamedCommands::registerCommand("Wrist To Intake", std::move(m_wristToIntake).ToPtr());
+
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 
@@ -118,5 +120,5 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   // Builds and returns auto commands from pathplanner
-  return PathPlannerAuto ("New Auto").ToPtr();
+  return PathPlannerAuto (m_autoChooser.GetSelected()).ToPtr();
 }

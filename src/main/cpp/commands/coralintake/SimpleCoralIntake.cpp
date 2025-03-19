@@ -13,7 +13,7 @@ void SimpleCoralIntake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "SimpleIntake Initialized\r\n";
 #endif
-  m_coralIntake->SetCoralIntakeMotorPower(-0.5);
+  m_coralIntake->SetCoralIntakeMotorPower(-0.3);
 
 }
 
