@@ -4,7 +4,7 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/XboxController.h>
-#include <frc/Timer.h>
+
 #include "subsystems/CoralIntakeSubsystem.h"
 
 class AutoCoralOuttake
@@ -20,9 +20,7 @@ public:
 
   void Initialize() override;
   void End(bool interrupted) override;
-  bool IsFinished();
   
 private:
   CoralIntakeSubsystem* m_coralIntake;
-  frc::Timer m_timer;
 };

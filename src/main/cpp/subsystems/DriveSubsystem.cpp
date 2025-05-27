@@ -179,18 +179,18 @@ void DriveSubsystem::Periodic() {
                     {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), 
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
-  m_poseEstimator.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
-                      {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
+  //m_poseEstimator.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+                      //{m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
   // set odometry relative to the apriltag
-  if (GetLinearRobotSpeed() < 1.0 && GetTurnRate() < 20.0)
-    EstimatePoseWithApriltag();
+ // if (GetLinearRobotSpeed() < 1.0 && GetTurnRate() < 20.0)
+   // EstimatePoseWithApriltag();
   
   UpdateNTE();
   GetTurningPIDParameters();
   GetDrivingPIDParameters();
 
-  m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
+  //m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
   //m_robotAngleController.SetP(nte_ktp.GetDouble(4.5));
   //m_robotAngleController.SetI(nte_kti.GetDouble(0.002));
@@ -220,7 +220,7 @@ void DriveSubsystem::UpdateNTE() {
   nte_br_encoder_position.SetDouble((double)m_backRight.GetPosition().angle.Radians());
 
   // Set robot position to shuffleboard field :)
-  m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
+  m_field.SetRobotPose(GetOdometryPose());
 
 
 

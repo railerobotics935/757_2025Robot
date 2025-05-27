@@ -69,16 +69,21 @@ RobotContainer::RobotContainer() {
   NamedCommands::registerCommand("Set wrist to L1",std::move(m_setWristToL1).ToPtr());
   NamedCommands::registerCommand("Auto Coral Outtake", std::move(m_autoCoralOuttake).ToPtr());
   NamedCommands::registerCommand("Wrist To Intake", std::move(m_wristToIntake).ToPtr());
+  NamedCommands::registerCommand("Auto Coral Outtake", std::move(m_autoCoralOuttake).ToPtr());
 
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 
-  m_autoChooser.SetDefaultOption("F4&3T", m_f43t);
+  m_autoChooser.SetDefaultOption("F Leave", m_fLeave);
   m_autoChooser.AddOption("C Leave", m_cLeave);
   m_autoChooser.AddOption("M Leave", m_mLeave);
-  m_autoChooser.AddOption("F Leave", m_fLeave);
-  m_autoChooser.AddOption("M4&3T", m_m43t);
-  m_autoChooser.AddOption("C4&3T", m_c43t);
+  m_autoChooser.AddOption("M 6T Escape", m_m6tescape);
+  m_autoChooser.AddOption("C 6T Escape", m_c6tescape);
+  m_autoChooser.AddOption("F 6T Escape", m_f6tescape);
+  m_autoChooser.AddOption("F 4&3T", m_f43t);
+  m_autoChooser.AddOption("M 4&3T", m_m43t);
+  m_autoChooser.AddOption("C 4&3T", m_c43t);
+  m_autoChooser.AddOption ("C1T", m_c1t);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -92,16 +97,19 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton coralIntakeButton(&m_operatorController, ControllerConstants::kCoralIntakeButton);
   frc2::JoystickButton coralOuttakeButton(&m_operatorController, ControllerConstants::kCoralOuttakeButton);
-  frc2::JoystickButton algaeIntakeButton(&m_operatorController, ControllerConstants::kAlgaeIntakeButton);
-  frc2::JoystickButton algaeOuttakeButton(&m_operatorController, ControllerConstants::kAlgaeOuttakeButton);
-  frc2::JoystickButton raiseAlgaePitchButton(&m_operatorController, ControllerConstants::kAlgaePitchRaiseButton);
-  frc2::JoystickButton lowerAlgaePitchButton(&m_operatorController, ControllerConstants::kAlgaePitchLowerButton);
+  //frc2::JoystickButton algaeIntakeButton(&m_operatorController, ControllerConstants::kAlgaeIntakeButton);
+  //frc2::JoystickButton algaeOuttakeButton(&m_operatorController, ControllerConstants::kAlgaeOuttakeButton);
+  //frc2::JoystickButton raiseAlgaePitchButton(&m_operatorController, ControllerConstants::kAlgaePitchRaiseButton);
+  //frc2::JoystickButton lowerAlgaePitchButton(&m_operatorController, ControllerConstants::kAlgaePitchLowerButton);
   frc2::JoystickButton raiseElevatorButton(&m_operatorController, ControllerConstants::kExtendElevatorButton);
   frc2::JoystickButton lowerElevatorButton(&m_operatorController, ControllerConstants::kRetractElevatorButton);
   frc2::JoystickButton setPointOneButton(&m_operatorController, ControllerConstants::kElevatorSetPointButton);
   frc2::JoystickButton lowerCoralPitchButton(&m_operatorController, ControllerConstants::kCoralPitchLowerButton);
   frc2::JoystickButton raiseCoralPitchButton(&m_operatorController, ControllerConstants::kCoralPitchRaiseButton);
-
+  frc2::JoystickButton goToIntake(&m_operatorController, ControllerConstants::kGoToIntakeButton);
+  frc2::JoystickButton goToL4(&m_operatorController, ControllerConstants::kGoToL4Button);
+  frc2::JoystickButton goToL3(&m_operatorController, ControllerConstants::kGoToL3Button);
+  frc2::JoystickButton goToL2(&m_operatorController, ControllerConstants::kGoToL2Button);
 
   // Bind commands to button triggers
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
@@ -111,14 +119,18 @@ void RobotContainer::ConfigureButtonBindings() {
   coralOuttakeButton.WhileTrue(SimpleCoralOuttake{&m_coralIntake}.ToPtr());
   raiseCoralPitchButton.WhileTrue(RaiseCoralPitch{&m_coralPitch}.ToPtr());
   lowerCoralPitchButton.WhileTrue(LowerCoralPitch{&m_coralPitch}.ToPtr());
-  algaeIntakeButton.WhileTrue(SimpleAlgaeIntake{&m_algaeIntake}.ToPtr());
-  algaeOuttakeButton.WhileTrue(SimpleAlgaeOuttake{&m_algaeIntake}.ToPtr());
-  raiseAlgaePitchButton.WhileTrue(RaiseAlgaePitch{&m_algaeIntake}.ToPtr());
-  lowerAlgaePitchButton.WhileTrue(LowerAlgaePitch{&m_algaeIntake}.ToPtr());
+  //algaeIntakeButton.WhileTrue(SimpleAlgaeIntake{&m_algaeIntake}.ToPtr());
+  //algaeOuttakeButton.WhileTrue(SimpleAlgaeOuttake{&m_algaeIntake}.ToPtr());
+  //raiseAlgaePitchButton.WhileTrue(RaiseAlgaePitch{&m_algaeIntake}.ToPtr());
+  //lowerAlgaePitchButton.WhileTrue(LowerAlgaePitch{&m_algaeIntake}.ToPtr());
   raiseElevatorButton.WhileTrue(ExtendElevator{&m_elevator}.ToPtr());
   lowerElevatorButton.WhileTrue(RetractElevator{&m_elevator}.ToPtr());
   raiseClimberButton.WhileTrue(RaiseClimber{&m_climber}.ToPtr());
   lowerClimberButton.WhileTrue(LowerClimber{&m_climber}.ToPtr());
+  goToIntake.WhileTrue(GoToIntake{&m_coralPitch, &m_elevator}.ToPtr());
+  goToL4.WhileTrue(GoToL4{&m_coralPitch, &m_elevator}.ToPtr());
+  goToL3.WhileTrue(GoToL3{&m_coralPitch, &m_elevator}.ToPtr());
+  goToL2.WhileTrue(GoToL2{&m_coralPitch, &m_elevator}.ToPtr());
 //  setPointOneButton.OnTrue(ElevatorSetPoint{&m_elevator}.ToPtr());
 
 }

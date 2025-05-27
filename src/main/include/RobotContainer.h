@@ -50,8 +50,11 @@
 #include "commands/autocommands/ResetHome.h"
 #include "commands/autocommands/WristL1.h"
 #include "commands/autocommands/WristToIntake.h"
-#include "commands/autocommands/AutoCoralOuttake.h"
-
+#include "commands/coralintake/AutoCoralOuttake.h"
+#include "commands/coralintake/GoToIntake.h"
+#include "commands/coralintake/GoToL4.h"
+#include "commands/coralintake/GoToL3.h"
+#include "commands/coralintake/GoToL2.h"
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -94,13 +97,16 @@ class RobotContainer {
    frc::SendableChooser<std::string> m_autoChooser;
 
   // Auto options coresponding to the name of the autos                                             
-  std::string m_newAuto = "New Auto";
   std::string m_cLeave = "C Leave";
   std::string m_mLeave = "M Leave";
   std::string m_fLeave = "F Leave";
-  std::string m_f43t = "F4&3T";
-  std::string m_m43t = "M4&3T";
-  std::string m_c43t = "C4&3T";
+  std::string m_c6tescape = "C 6T Escape";
+  std::string m_m6tescape = "M 6T Escape";
+  std::string m_f6tescape = "F 6T Escape";
+  std::string m_f43t = "F 4&3T";
+  std::string m_m43t = "M 4&3T";
+  std::string m_c43t = "C 4&3T";
+  std::string m_c1t = "C1T";
 
   DriveWithController m_driveWithController{&m_drive, &m_driveController};
   SimpleCoralIntake m_simpleCoralIntake{&m_coralIntake};

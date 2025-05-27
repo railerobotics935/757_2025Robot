@@ -11,11 +11,11 @@ void SetWristToIntake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "SimpleIntake Initialized\r\n";
 #endif
-m_coralPitch->SetCoralIntakeAngle(IntakeConstants::kPitchToIntake);
+m_coralPitch->SetCoralIntakeAngle(IntakeConstants::kPitchL1Angle);
 }
 
 bool SetWristToIntake::IsFinished(){
-    if (abs(IntakeConstants::kPitchToIntake - m_coralPitch->GetCoralIntakeAngle()) < 0.001)
+    if (abs(IntakeConstants::kPitchL1Angle - m_coralPitch->GetCoralIntakeAngle()) < 0.001)
         return true;
     else
         return false; 

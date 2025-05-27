@@ -47,6 +47,8 @@ class AlgaeIntakeSubsystem : public frc2::SubsystemBase {
 
   void ConfigureAlgaeSparkMax();
 
+
+
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 

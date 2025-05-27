@@ -70,6 +70,7 @@ bool AlgaeIntakeSubsystem::LeftAlgaeIntakeRisen() {
 }
 
 
+
 void AlgaeIntakeSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
 }

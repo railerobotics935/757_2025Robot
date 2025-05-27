@@ -1,6 +1,5 @@
 
-#include "commands/autocommands/AutoCoralOuttake.h"
-#include <frc/Timer.h>
+#include "commands/coralintake/AutoCoralOuttake.h"
 
 
 AutoCoralOuttake::AutoCoralOuttake(CoralIntakeSubsystem* coralintake) : m_coralIntake{coralintake} {
@@ -15,15 +14,8 @@ void AutoCoralOuttake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "SimpleOuttake Initialized\r\n";
 #endif
-  m_timer.Start();
-  m_coralIntake->SetCoralIntakeMotorPower(0.5);
-}
-
-bool AutoCoralOuttake::IsFinished(){
-    if (m_timer.Get() > units::time::second_t(1.0))
-        return true;
-    else
-        return false;
+  m_coralIntake->SetCoralIntakeMotorPower(0.2);
+  
 }
 
 void AutoCoralOuttake::End(bool interrupted) {

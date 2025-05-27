@@ -17,6 +17,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [
@@ -44,13 +50,26 @@
         {
           "type": "named",
           "data": {
-            "name": "Set wrist to L1"
+            "name": "Wrist To Intake"
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "Wrist To Intake"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Simple Coral Intake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              }
+            ]
           }
         },
         {
@@ -62,7 +81,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Simple Coral Intake"
+            "name": "Set wrist to L1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {

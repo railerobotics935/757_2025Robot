@@ -229,10 +229,14 @@ constexpr int kCoralIntakeButton = 8; // RT
 constexpr int kCoralOuttakeButton = 7; //LT
 constexpr int kCoralPitchRaiseButton = 4; // Y
 constexpr int kCoralPitchLowerButton = 1; // X
-constexpr int kAlgaeIntakeButton = 3; // B
-constexpr int kAlgaeOuttakeButton = 2; // A
-constexpr int kAlgaePitchRaiseButton = 10; // CR
-constexpr int kAlgaePitchLowerButton = 9; // CL
+//constexpr int kAlgaeIntakeButton = 3; // B
+//constexpr int kAlgaeOuttakeButton = 2; // A
+//constexpr int kAlgaePitchRaiseButton = 10; // CR
+//constexpr int kAlgaePitchLowerButton = 9; // CL
+constexpr int kGoToIntakeButton = 2; //A logitech controller
+constexpr int kGoToL4Button = 3; //B logitech controller
+constexpr int kGoToL3Button = 9;
+constexpr int kGoToL2Button = 10;
 
 
 } // namespace ControllerConstants
@@ -311,6 +315,10 @@ constexpr rev::spark::SparkLowLevel::MotorType kMotorType = rev::spark::SparkLow
 
 constexpr rev::spark::SparkMaxConfig::IdleMode kElevatorMotorIdleMode = rev::spark::SparkMaxConfig::IdleMode::kBrake;
 
+constexpr double kElevatorIntakeHeight = 422.465;
+constexpr double kElevatorL4Height = 2009.953;
+constexpr double kElevatorL3Height = 912.285;
+constexpr double kElevatorL2Height = 0.0;
 
 } // namespace ElevatorConstants
 
@@ -339,8 +347,11 @@ constexpr double kPitchFF = 0;
 constexpr double kPitchMinOutput = -0.2;
 constexpr double kPitchMaxOutput = 0.2;
 
-constexpr double kPitchToIntake = 0.602; // Should be checked but might work
+constexpr double kPitchToL4 = 0.673; // Should be checked but might work
+constexpr double kPitchToIntake = 0.470;
 constexpr double kPitchL1Angle = 0.466;  // No Longer correct within our new limits
+constexpr double kPitchL3Angle = 0.679;
+constexpr double kPitchL2Angle = 0.679;
 
 constexpr units::ampere_t kCoralIntakeMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kAlgaeIntakeMotorCurrentLimit = 40_A;
@@ -353,7 +364,7 @@ constexpr rev::spark::SparkMaxConfig::IdleMode kIntakeMotorIdleMode = rev::spark
 
 // Pitch limits
 constexpr double kMinimumAngle = 0.343;
-constexpr double kMaximumAngle = 0.606;
+constexpr double kMaximumAngle = 0.682;
 } // namespace IntakeConstant
 
 namespace ClimberConstants {
